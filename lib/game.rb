@@ -3,10 +3,14 @@ class Game
 
   attr_reader :board, :computer, :human
 
+  COMPUTER_MARKER = "X"
+  HUMAN_MARKER = "O"
+  BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+
   def initialize
-    @board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
-    @computer = "X"
-    @human = "O"
+    @board = BOARD
+    @computer = COMPUTER_MARKER
+    @human = HUMAN_MARKER
   end
 
   def start_game
@@ -39,7 +43,7 @@ class Game
     square = nil
     until square
       square = gets.chomp.to_i
-      if @board[square] != "X" && @board[square] != "O"
+      if @board[square] != COMPUTER_MARKER && @board[square] != HUMAN_MARKER
         @board[square] = @human
       else
         square = nil
@@ -55,7 +59,7 @@ class Game
         @board[square] = @computer
       else
         square = get_best_move(@board, @computer)
-        if @board[square] != "X" && @board[square] != "O"
+        if @board[square] != COMPUTER_MARKER && @board[square] != HUMAN_MARKER
           @board[square] = @computer
         else
           square = nil
@@ -68,7 +72,7 @@ class Game
     empty_squares = []
     best_move = nil
     board.each do |square|
-      if square != "X" && square != "O"
+      if square != COMPUTER_MARKER && square != HUMAN_MARKER
         empty_squares << square
       end
     end
@@ -109,7 +113,7 @@ class Game
   end
 
   def tie(board)
-    board.all? { |square| square == "X" || square == "O" }
+    board.all? { |square| square == COMPUTER_MARKER || square == HUMAN_MARKER }
   end
 
 end
