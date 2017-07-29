@@ -11,11 +11,11 @@ Clone repository:
 $ git clone git@github.com:nazwhale/TTT.git
 $ cd TTT
 ```
-Install dependencies with [bundler](http://bundler.io/):
+Install dependencies with [Bundler](http://bundler.io/):
 ```
-$ gem install bundler
+$ gem install bundler     
 $ bundle install
 ```
-To start the game, enter `ruby game.rb` in the command-line and follow the instructions.
+To start the game, enter `ruby lib/game.rb` in the command-line and follow the instructions.
 
 ### Example Game
