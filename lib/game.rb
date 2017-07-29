@@ -20,7 +20,7 @@ class Game
     until game_is_over(@board) || tie(@board)
       get_human_square
       if !game_is_over(@board) && !tie(@board)
-        eval_board
+        get_computer_square
       end
       show_current_board
     end
@@ -48,7 +48,7 @@ class Game
     end
   end
 
-  def eval_board
+  def get_computer_square
     square = nil
     until square
       if @board[4] == "4"
