@@ -1,52 +1,64 @@
+require_relative 'output_messages'
 class Game
 
   attr_reader :board, :computer, :human
 
   def initialize
     @board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
-    @computer = "X" # the computer's marker
-    @human = "O" # the user's marker
+    @computer = "X"
+    @human = "O"
   end
 
   def start_game
-    # start by printing the board
-    puts " #{@board[0]} | #{@board[1]} | #{@board[2]} \n===+===+===\n #{@board[3]} | #{@board[4]} | #{@board[5]} \n===+===+===\n #{@board[6]} | #{@board[7]} | #{@board[8]} \n"
-    puts "Enter [0-8]:"
+    puts "#{@board[0]} | #{@board[1]} | #{@board[2]}"
+    Messages.line
+    puts "#{@board[3]} | #{@board[4]} | #{@board[5]}"
+    Messages.line
+    puts "#{@board[6]} | #{@board[7]} | #{@board[8]}"
+    Messages.move_prompt
+
     # loop through until the game was won or tied
     until game_is_over(@board) || tie(@board)
-      get_human_spot
+      get_human_square
       if !game_is_over(@board) && !tie(@board)
         eval_board
       end
-      puts " #{@board[0]} | #{@board[1]} | #{@board[2]} \n===+===+===\n #{@board[3]} | #{@board[4]} | #{@board[5]} \n===+===+===\n #{@board[6]} | #{@board[7]} | #{@board[8]} \n"
+
+      puts "#{@board[0]} | #{@board[1]} | #{@board[2]}"
+      Messages.line
+      puts "#{@board[3]} | #{@board[4]} | #{@board[5]}"
+      Messages.line
+      puts "#{@board[6]} | #{@board[7]} | #{@board[8]}"
+      Messages.move_prompt
+
     end
-    puts "Game over"
+    Messages.game_over_message
   end
 
-  def get_human_spot
-    spot = nil
-    until spot
-      spot = gets.chomp.to_i
-      if @board[spot] != "X" && @board[spot] != "O"
-        @board[spot] = @human
+  def get_human_square
+    square = nil
+    until square
+      square = gets.chomp.to_i
+      if @board[square] != "X" && @board[square] != "O"
+        @board[square] = @human
       else
-        spot = nil
+        square = nil
       end
     end
   end
 
   def eval_board
-    spot = nil
-    until spot
+    square = nil
+    until square
       if @board[4] == "4"
-        spot = 4
-        @board[spot] = @computer
+        square = 4
+        @board[square] = @computer
       else
-        spot = get_best_move(@board, @computer)
-        if @board[spot] != "X" && @board[spot] != "O"
-          @board[spot] = @computer
+        square = get_best_move(@board, @computer)
+        if @board[square] != "X" && @board[square] != "O"
+          @board[square] = @computer
         else
-          spot = nil
+          square = nil
         end
       end
     end
