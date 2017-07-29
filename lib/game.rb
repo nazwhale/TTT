@@ -14,12 +14,7 @@ class Game
   end
 
   def start_game
-    puts "#{@board[0]} | #{@board[1]} | #{@board[2]}"
-    Messages.line
-    puts "#{@board[3]} | #{@board[4]} | #{@board[5]}"
-    Messages.line
-    puts "#{@board[6]} | #{@board[7]} | #{@board[8]}"
-    Messages.move_prompt
+    show_current_board
 
     # loop through until the game was won or tied
     until game_is_over(@board) || tie(@board)
@@ -27,16 +22,18 @@ class Game
       if !game_is_over(@board) && !tie(@board)
         eval_board
       end
-
-      puts "#{@board[0]} | #{@board[1]} | #{@board[2]}"
-      Messages.line
-      puts "#{@board[3]} | #{@board[4]} | #{@board[5]}"
-      Messages.line
-      puts "#{@board[6]} | #{@board[7]} | #{@board[8]}"
-      Messages.move_prompt
-
+      show_current_board
     end
     Messages.game_over_message
+  end
+
+  def show_current_board
+    puts "#{@board[0]} | #{@board[1]} | #{@board[2]}"
+    Messages.line
+    puts "#{@board[3]} | #{@board[4]} | #{@board[5]}"
+    Messages.line
+    puts "#{@board[6]} | #{@board[7]} | #{@board[8]}"
+    Messages.move_prompt
   end
 
   def get_human_square
