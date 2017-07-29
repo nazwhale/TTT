@@ -18,6 +18,37 @@ describe Game do
     end
   end
 
+  describe '#tie' do
+
+    context 'true' do
+
+      it 'is a tie' do
+        board = ["X", "X", "O", "X", "O", "O", "X", "O", "X"]
+        expect(game.tie(board)).to be true
+      end
+
+    end
+
+    context 'false' do
+
+      it 'is an empty board' do
+        board = Game::EMPTY_BOARD
+        expect(game.tie(board)).to be false
+      end
+
+      it 'is a win' do
+        board = ["1", "X", "X", "O", "O", "O", "6", "7", "X"]
+        expect(game.tie(board)).to be false
+      end
+
+      it 'is an incomplete board win no win' do
+        board = ["X", "O", "X", "O", "X", "5", "O", "X", "O"]
+        expect(game.tie(board)).to be false
+      end
+
+    end
+  end
+
   describe '#game_is_over' do
 
     context 'true' do
