@@ -1,6 +1,8 @@
-# Tic-Tac-Toe
 
-A command-line game of Noughts and Crosses (or, for the non-British, [Tic-Tac-Toe](https://en.wikipedia.org/wiki/Tic-tac-toe))
+# Tic-Tac-Toe
+[![Build Status](https://travis-ci.org/nazwhale/TTT.svg?branch=master)](https://travis-ci.org/nazwhale/TTT)
+
+A command-line game of Noughts and Crosses (or, for the non-British, [Tic-Tac-Toe](https://en.wikipedia.org/wiki/Tic-tac-toe)).
 
 ### Installation and Initiation
 
