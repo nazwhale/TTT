@@ -1,4 +1,7 @@
 class Game
+
+  attr_reader :board, :computer, :human
+
   def initialize
     @board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
     @computer = "X" # the computer's marker
@@ -98,6 +101,3 @@ class Game
   end
 
 end
-
-game = Game.new
-game.start_game
