@@ -5,10 +5,10 @@ class Game
 
   COMPUTER_MARKER = "X"
   HUMAN_MARKER = "O"
-  BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+  EMPTY_BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
 
   def initialize
-    @board = BOARD
+    @board = EMPTY_BOARD
     @computer = COMPUTER_MARKER
     @human = HUMAN_MARKER
   end
