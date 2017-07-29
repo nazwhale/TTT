@@ -6,18 +6,15 @@ describe Game do
 
   describe '#initialize' do
     it 'has a board' do
-      test_board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
-      expect(game.board).to eq test_board
+      expect(game.board).to eq Game::BOARD
     end
 
-    it 'has a computer player with an emblem' do
-      computer_emblem = "X"
-      expect(game.computer).to eq computer_emblem
+    it 'has a computer player with an marker' do
+      expect(game.computer).to eq Game::COMPUTER_MARKER
     end
 
-    it 'has a human player with an emblem' do
-      human_emblem = "O"
-      expect(game.human).to eq human_emblem
+    it 'has a human player with an marker' do
+      expect(game.human).to eq Game::HUMAN_MARKER
     end
   end
 
