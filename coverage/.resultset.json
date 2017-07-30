@@ -53,8 +53,6 @@
         null,
         null,
         null,
-        null,
-        null,
         null
       ],
       "/Users/nadeemmalik/GoogleDrive/Projects/TTT/lib/computer.rb": [
@@ -100,17 +98,14 @@
         null,
         null,
         1,
-        0,
-        null,
-        1,
-        null,
-        1,
-        1,
-        1,
-        null,
         null,
         null,
         1,
+        null,
+        1,
+        1,
+        1,
+        null,
         null,
         1,
         4,
@@ -363,6 +358,6 @@
         null
       ]
     },
-    "timestamp": 1501418126
+    "timestamp": 1501418399
   }
 }

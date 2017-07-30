@@ -39,18 +39,15 @@ class Computer
     end
 
     #if no best_move found, make a random move
-    if best_move
-      return best_move
-    else
-      n = rand(0..empty_squares.count) -1
-
-      p empty_squares
-      p n
-      return empty_squares[n].to_i
-    end
+    best_move ? best_move : make_random_move(empty_squares)
   end
 
   private
+
+  def make_random_move(empty_squares)
+    random_index = rand(empty_squares.count - 1)
+    empty_squares[random_index].to_i
+  end
 
   def get_empty_squares(board)
     empty_squares = []
