@@ -3,24 +3,14 @@ class Computer
   attr_reader :marker
 
   MARKER = "X"
-  MIDDLE_SQUARE_INDEX = "4"
+  MIDDLE_SQUARE = "4"
 
   def initialize
     @marker = MARKER
   end
 
   def choose_square(board)
-      if board[4] == MIDDLE_SQUARE_INDEX
-        4
-      else
-        square = get_best_move(board, @computer)
-        if board[square] != COMPUTER_MARKER && board[square] != HUMAN_MARKER
-          board[square] = @computer
-        else
-          square = nil
-        end
-    end
-
+    board[4] == MIDDLE_SQUARE ? 4 : get_best_move(board, @marker)
   end
 
   def get_best_move(board, next_player, depth = 0, best_score = {})

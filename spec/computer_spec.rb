@@ -17,6 +17,13 @@ describe Computer do
       expect(computer.choose_square(board)).to eq 4
     end
 
+    it 'calls get_best_move if middle square is taken' do
+      board = ["0", "1", "2", "3", "O", "5", "6", "7", "8"]
+      expect(computer).to receive(:get_best_move).and_return 1
+      computer.choose_square(board)
+    end
+
+
   end
 
 end
