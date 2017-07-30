@@ -1,28 +1,29 @@
 require_relative 'output_messages'
+require_relative 'computer'
+
 class Game
 
   attr_reader :board, :computer, :human
   attr_writer :board
 
-  COMPUTER_MARKER = "X"
   HUMAN_MARKER = "O"
   EMPTY_BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
   MIDDLE_SQUARE_INDEX = "4"
 
   def initialize
     @board = EMPTY_BOARD
-    @computer = COMPUTER_MARKER
+    @computer = Computer.new
     @human = HUMAN_MARKER
   end
 
   def start_game
     show_current_board
-
     # loop through until the game was won or tied
     until game_is_over(@board) || tie(@board)
       get_human_square
       if !game_is_over(@board) && !tie(@board)
-        get_computer_square
+        computers_choice = @computer.choose_square(@board)
+        @board[computers_choice] = @computer.marker
       end
       show_current_board
     end
@@ -42,61 +43,11 @@ class Game
     square = nil
     until square
       square = gets.chomp.to_i
-      if @board[square] != COMPUTER_MARKER && @board[square] != HUMAN_MARKER
+      if @board[square] != @computer.marker && @board[square] != HUMAN_MARKER
         @board[square] = @human
       else
         square = nil
       end
-    end
-  end
-
-  def get_computer_square
-    square = nil
-    until square
-      if @board[4] == MIDDLE_SQUARE_INDEX
-        square = 4
-        @board[square] = @computer
-      else
-        square = get_best_move(@board, @computer)
-        if @board[square] != COMPUTER_MARKER && @board[square] != HUMAN_MARKER
-          @board[square] = @computer
-        else
-          square = nil
-        end
-      end
-    end
-  end
-
-  def get_best_move(board, next_player, depth = 0, best_score = {})
-    empty_squares = []
-    best_move = nil
-    board.each do |square|
-      if square != COMPUTER_MARKER && square != HUMAN_MARKER
-        empty_squares << square
-      end
-    end
-    empty_squares.each do |squares|
-      board[squares.to_i] = @computer
-      if game_is_over(board)
-        best_move = squares.to_i
-        board[squares.to_i] = squares
-        return best_move
-      else
-        board[squares.to_i] = @human
-        if game_is_over(board)
-          best_move = squares.to_i
-          board[squares.to_i] = squares
-          return best_move
-        else
-          board[squares.to_i] = squares
-        end
-      end
-    end
-    if best_move
-      return best_move
-    else
-      n = rand(0..empty_squares.count)
-      return empty_squares[n].to_i
     end
   end
 
@@ -112,7 +63,7 @@ class Game
   end
 
   def tie(board)
-    board.all? { |square| square == COMPUTER_MARKER || square == HUMAN_MARKER }
+    board.all? { |square| square == @computer.marker || square == HUMAN_MARKER }
   end
 
 end

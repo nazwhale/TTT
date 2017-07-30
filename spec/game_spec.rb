@@ -2,35 +2,20 @@ require 'game'
 
 describe Game do
 
-  let(:game) { described_class.new }
+  subject(:game) { described_class.new }
 
   describe '#initialize' do
     it 'has a board' do
       expect(game.board).to eq Game::EMPTY_BOARD
     end
 
-    it 'has a computer player with an marker' do
-      expect(game.computer).to eq Game::COMPUTER_MARKER
+    it 'has an instance of computer' do
+      expect(game.computer).to be_a Computer
     end
 
     it 'has a human player with an marker' do
       expect(game.human).to eq Game::HUMAN_MARKER
     end
-  end
-
-  describe '#get_computer_square' do
-
-    it 'chooses the middle square when it is available' do
-      game.get_computer_square
-      expect(game.board[4]).to eq Game::COMPUTER_MARKER
-    end
-
-    it 'calls get_best_move if middle square is taken' do
-      game.board = ["0", "1", "2", "3", "O", "5", "6", "7", "8"]
-      expect(game).to receive(:get_best_move).and_return 1
-      game.get_computer_square
-    end
-
   end
 
   describe '#tie' do
