@@ -14,7 +14,6 @@ class Computer
   end
 
   def get_best_move(board)
-    best_move = nil
     empty_squares = get_empty_squares(board)
 
     empty_squares.each do |square|
@@ -27,7 +26,7 @@ class Computer
 
       reset_square(board, square)
     end
-    best_move ? best_move : make_random_move(empty_squares)
+    make_random_move(empty_squares)
   end
 
   private
