@@ -2,10 +2,12 @@ require_relative 'output_messages'
 class Game
 
   attr_reader :board, :computer, :human
+  attr_writer :board
 
   COMPUTER_MARKER = "X"
   HUMAN_MARKER = "O"
   EMPTY_BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+  MIDDLE_SQUARE_INDEX = "4"
 
   def initialize
     @board = EMPTY_BOARD
@@ -20,7 +22,7 @@ class Game
     until game_is_over(@board) || tie(@board)
       get_human_square
       if !game_is_over(@board) && !tie(@board)
-        eval_board
+        get_computer_square
       end
       show_current_board
     end
@@ -48,10 +50,10 @@ class Game
     end
   end
 
-  def eval_board
+  def get_computer_square
     square = nil
     until square
-      if @board[4] == "4"
+      if @board[4] == MIDDLE_SQUARE_INDEX
         square = 4
         @board[square] = @computer
       else
