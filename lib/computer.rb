@@ -18,31 +18,23 @@ class Computer
     empty_squares = get_empty_squares(board)
 
     empty_squares.each do |square|
-      #if choosing the square results in a win, choose it
-      board[square.to_i] = @marker
-      if game_is_over(board)
-        best_move = square.to_i
-        board[square.to_i] = square
-        return best_move
-      else
-        #if the other player choosing the square wins, choose it
-        board[square.to_i] = "O"
-        if game_is_over(board)
-          best_move = square.to_i
-          board[square.to_i] = square
-          return best_move
-        else
-          #reset the square
-          board[square.to_i] = square
-        end
-      end
-    end
+      square_index = square.to_i
 
-    #if no best_move found, make a random move
+      board[square_index] = @marker
+      return square_index if game_is_over(board)
+      board[square.to_i] = "O"
+      return square_index if game_is_over(board)
+
+      reset_square(board, square)
+    end
     best_move ? best_move : make_random_move(empty_squares)
   end
 
   private
+
+  def reset_square(board, square)
+    board[square.to_i] = square
+  end
 
   def make_random_move(empty_squares)
     random_index = rand(empty_squares.count - 1)
