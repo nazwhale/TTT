@@ -1,4 +1,6 @@
 require_relative 'output_messages'
+require_relative 'computer'
+
 class Game
 
   attr_reader :board, :computer, :human

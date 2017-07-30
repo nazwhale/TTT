@@ -2,7 +2,7 @@ require 'game'
 
 describe Game do
 
-  let(:game) { described_class.new }
+  subject(:game) { described_class.new }
 
   describe '#initialize' do
     it 'has a board' do
