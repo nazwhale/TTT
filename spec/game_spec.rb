@@ -18,6 +18,21 @@ describe Game do
     end
   end
 
+  describe '#get_computer_square' do
+
+    it 'chooses the middle square when it is available' do
+      game.get_computer_square
+      expect(game.board[4]).to eq Game::COMPUTER_MARKER
+    end
+
+    it 'calls get_best_move if middle square is taken' do
+      game.board = ["0", "1", "2", "3", "O", "5", "6", "7", "8"]
+      expect(game).to receive(:get_best_move).and_return 1
+      game.get_computer_square
+    end
+
+  end
+
   describe '#tie' do
 
     context 'true' do
