@@ -9,7 +9,7 @@ class Computer
     @marker = MARKER
   end
 
-  def choose_square(board)
+  def get_square(board)
     board[4] == MIDDLE_SQUARE ? 4 : get_best_move(board)
   end
 

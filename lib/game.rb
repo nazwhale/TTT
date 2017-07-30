@@ -1,30 +1,40 @@
 require_relative 'output_messages'
 require_relative 'computer'
+require_relative 'human'
+
 
 class Game
 
   attr_reader :board, :computer, :human
   attr_writer :board
 
-  HUMAN_MARKER = "O"
   EMPTY_BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
-  MIDDLE_SQUARE_INDEX = "4"
 
   def initialize
     @board = EMPTY_BOARD
     @computer = Computer.new
-    @human = HUMAN_MARKER
+    @human = Human.new
   end
 
-  def start_game
+  def play
     show_current_board
-    # loop through until the game was won or tied
+    # loop through until the game is won or tied
     until game_is_over(@board) || tie(@board)
-      get_human_square
-      if !game_is_over(@board) && !tie(@board)
-        computers_choice = @computer.choose_square(@board)
+      
+      humans_choice = nil
+      #if choice taken, ask again
+      until humans_choice
+        humans_choice = gets.chomp.to_i
+        humans_choice = nil if board[humans_choice] == "X" || board[humans_choice] == "O"
+      end
+
+      @board[humans_choice] = @human.marker
+
+      unless game_is_over(@board) || tie(@board)
+        computers_choice = @computer.get_square(@board)
         @board[computers_choice] = @computer.marker
       end
+
       show_current_board
     end
     Messages.game_over_message
@@ -39,18 +49,6 @@ class Game
     Messages.move_prompt
   end
 
-  def get_human_square
-    square = nil
-    until square
-      square = gets.chomp.to_i
-      if @board[square] != @computer.marker && @board[square] != HUMAN_MARKER
-        @board[square] = @human
-      else
-        square = nil
-      end
-    end
-  end
-
   def game_is_over(board)
     [board[0], board[1], board[2]].uniq.length == 1 ||
     [board[3], board[4], board[5]].uniq.length == 1 ||
@@ -63,7 +61,7 @@ class Game
   end
 
   def tie(board)
-    board.all? { |square| square == @computer.marker || square == HUMAN_MARKER }
+    board.all? { |square| square == @computer.marker || square == @human.marker }
   end
 
 end
