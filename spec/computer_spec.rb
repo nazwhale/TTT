@@ -27,22 +27,25 @@ describe Computer do
 
   describe '#get_best_move' do
 
-    it 'will seize the win' do
+    it 'seizes the win' do
       board = ["0", "X", "2", "O", "X", "O", "6", "7", "8"]
       expect(computer.get_best_move(board)).to eq 7
     end
 
-    it 'will prevent a loss' do
+    it 'prevents a loss' do
       board = ["X", "1", "2", "O", "O", "5", "6", "7", "X"]
       expect(computer.get_best_move(board)).to eq 5
     end
 
-    it 'will seize the win, even when within one move of losing' do
+    it 'seizes the win, even when within one move of losing' do
       board = ["X", "X", "2", "3", "O", "O", "6", "7", "8"]
       expect(computer.get_best_move(board)).to eq 2
     end
 
-
+    it 'makes a random move if no win or loss is in sight' do
+      board = ["X", "O", "O", "O", "X", "X", "6", "7", "O"]
+      expect(computer.get_best_move(board)).to eq(6).or(eq(7))
+    end
 
   end
 

@@ -14,15 +14,8 @@ class Computer
   end
 
   def get_best_move(board)
-    empty_squares = []
     best_move = nil
-
-    #get array of available squares
-    board.each do |square|
-      unless square == "X" || square == "O"
-        empty_squares << square
-      end
-    end
+    empty_squares = get_empty_squares(board)
 
     empty_squares.each do |square|
       #if choosing the square results in a win, choose it
@@ -49,9 +42,24 @@ class Computer
     if best_move
       return best_move
     else
-      n = rand(0..empty_squares.count)
+      n = rand(0..empty_squares.count) -1
+
+      p empty_squares
+      p n
       return empty_squares[n].to_i
     end
+  end
+
+  private
+
+  def get_empty_squares(board)
+    empty_squares = []
+
+    board.each do |square|
+      empty_squares << square unless square == "X" || square == "O"
+    end
+
+    empty_squares
   end
 
   def game_is_over(board)
