@@ -3,6 +3,8 @@ require 'computer'
 describe Computer do
 
   subject(:computer) { described_class.new }
+
+  # stub board object
   subject(:board) { Board.new }
 
   describe '#initialize' do
