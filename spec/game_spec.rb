@@ -6,7 +6,7 @@ describe Game do
 
   describe '#initialize' do
     it 'has a board' do
-      expect(game.board).to eq Game::EMPTY_BOARD
+      expect(game.board).to be_a Board
     end
 
     it 'has an instance of computer' do

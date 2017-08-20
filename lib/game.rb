@@ -2,16 +2,12 @@ require_relative 'output_messages'
 require_relative 'computer'
 require_relative 'human'
 
-
 class Game
 
   attr_reader :board, :computer, :human
-  attr_writer :board
-
-  EMPTY_BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
 
   def initialize
-    @board = EMPTY_BOARD
+    @board = Board.new
     @computer = Computer.new
     @human = Human.new
   end
@@ -20,7 +16,7 @@ class Game
     show_current_board
     # loop through until the game is won or tied
     until game_is_over(@board) || tie(@board)
-      
+
       humans_choice = nil
       #if choice taken, ask again
       until humans_choice
