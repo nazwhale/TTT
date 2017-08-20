@@ -10,7 +10,7 @@ class Board
   end
 
   def tie?
-    @state.all? { |square| square == "X" || square == "O" }
+    @state.all? { |square| occupied?(square) }
   end
 
   def game_over?
@@ -22,6 +22,10 @@ class Board
     [@state[2], @state[5], @state[8]].uniq.length == 1 ||
     [@state[0], @state[4], @state[8]].uniq.length == 1 ||
     [@state[2], @state[4], @state[6]].uniq.length == 1
+  end
+
+  def occupied?(square)
+    square == "X" || square == "O"
   end
 
 end

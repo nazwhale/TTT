@@ -22,7 +22,7 @@ class Game
       #if choice taken, ask again
       until humans_choice
         humans_choice = gets.chomp.to_i
-        humans_choice = nil if @board.state[humans_choice] == "X" || @board.state[humans_choice] == "O"
+        humans_choice = nil if @board.occupied?(@board.state[humans_choice])
       end
 
       @board.state[humans_choice] = @human.marker

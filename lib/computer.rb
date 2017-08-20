@@ -44,7 +44,7 @@ class Computer
     empty_squares = []
 
     board.state.each do |square|
-      empty_squares << square unless square == "X" || square == "O"
+      empty_squares << square unless board.occupied?(square)
     end
 
     empty_squares
