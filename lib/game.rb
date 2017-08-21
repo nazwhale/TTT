@@ -26,19 +26,19 @@ class Game
   private
 
   def make_human_move
-      humans_choice = nil
-      until humans_choice
-        humans_choice = gets.chomp.to_i
-        current_value = @board.state[humans_choice]
-        humans_choice = nil if @board.occupied?(current_value)
+      choice = nil
+      until choice
+        choice = gets.chomp.to_i
+        current_value = @board.state[choice]
+        choice = nil if @board.occupied?(current_value)
       end
-      place_marker(@human, humans_choice)
+      place_marker(@human, choice)
   end
 
   def make_computer_move
     unless @board.game_over?
-      computers_choice = @computer.get_square(@board)
-      place_marker(@computer, computers_choice)
+      choice = @computer.get_square(@board)
+      place_marker(@computer, choice)
     end
   end
 
