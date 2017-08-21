@@ -28,9 +28,8 @@ class Game
   def make_human_move
       choice = nil
       until choice
-        choice = gets.chomp.to_i
-        current_value = @board.state[choice]
-        choice = nil if @board.occupied?(current_value)
+        choice = @human.get_move
+        choice = nil if @board.occupied?(choice)
       end
       place_marker(@human, choice)
   end
