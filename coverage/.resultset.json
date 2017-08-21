@@ -344,9 +344,6 @@
         null,
         null,
         null,
-        null,
-        null,
-        null,
         null
       ],
       "/Users/nadeemmalik/GoogleDrive/Projects/TTT/lib/game.rb": [
@@ -391,11 +388,8 @@
         null,
         null,
         1,
-        0,
-        0,
-        0,
-        0,
-        0,
+        null,
+        1,
         0,
         null,
         null,
@@ -407,6 +401,15 @@
         1,
         null,
         1,
+        null,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        null,
         null,
         1,
         0,
@@ -451,6 +454,6 @@
         null
       ]
     },
-    "timestamp": 1503318029
+    "timestamp": 1503321105
   }
 }

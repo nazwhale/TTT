@@ -4,11 +4,20 @@ class Messages
 
   attr_reader :game
 
-  def self.line
+  def self.print_board(board)
+    puts "#{board.state[0]} | #{board.state[1]} | #{board.state[2]}"
+    print_line
+    puts "#{board.state[3]} | #{board.state[4]} | #{board.state[5]}"
+    print_line
+    puts "#{board.state[6]} | #{board.state[7]} | #{board.state[8]}"
+    prompt_move
+  end
+
+  def self.print_line
     puts "=========="
   end
 
-  def self.move_prompt
+  def self.prompt_move
     puts "Choose your move! Enter a number between 0 and 8"
   end
 

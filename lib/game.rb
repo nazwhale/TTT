@@ -38,13 +38,10 @@ class Game
     Messages.game_over_message
   end
 
+  private
+
   def show_current_board
-    puts "#{@board.state[0]} | #{@board.state[1]} | #{@board.state[2]}"
-    Messages.line
-    puts "#{@board.state[3]} | #{@board.state[4]} | #{@board.state[5]}"
-    Messages.line
-    puts "#{@board.state[6]} | #{@board.state[7]} | #{@board.state[8]}"
-    Messages.move_prompt
+    Messages.print_board(board)
   end
 
 end
