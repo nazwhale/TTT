@@ -9,11 +9,15 @@ class Board
     @state = EMPTY_BOARD
   end
 
+  def game_over?
+    game_won? || tie?
+  end
+
   def tie?
     @state.all? { |square| occupied?(square) }
   end
 
-  def game_over?
+  def game_won?
     [@state[0], @state[1], @state[2]].uniq.length == 1 ||
     [@state[3], @state[4], @state[5]].uniq.length == 1 ||
     [@state[6], @state[7], @state[8]].uniq.length == 1 ||

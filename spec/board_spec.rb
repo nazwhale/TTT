@@ -10,6 +10,31 @@ describe Board do
     end
   end
 
+  describe '#game_over' do
+
+    context 'true' do
+
+      it 'is a tie' do
+        board.state = ["X", "X", "O", "X", "O", "O", "X", "O", "X"]
+        expect(board.game_over?).to be true
+      end
+
+      it 'is won' do
+        board.state = ["1", "X", "X", "O", "O", "O", "6", "7", "X"]
+        expect(board.game_won?).to be true
+      end
+    end
+
+    context 'false' do
+
+      it 'has unoccupied squares and no win' do
+        board.state = ["X", "O", "X", "O", "X", "5", "O", "X", "O"]
+        expect(board.tie?).to be false
+      end
+
+    end
+  end
+
   describe '#tie' do
 
     context 'true' do
@@ -32,7 +57,7 @@ describe Board do
         expect(board.tie?).to be false
       end
 
-      it 'is an incomplete board win no win' do
+      it 'has unoccupied squares with no win' do
         board.state = ["X", "O", "X", "O", "X", "5", "O", "X", "O"]
         expect(board.tie?).to be false
       end
@@ -41,24 +66,24 @@ describe Board do
   end
 
 
-  describe '#game_over?' do
+  describe '#game_won?' do
 
     context 'true' do
       context 'horizontal win' do
 
         it 'top row' do
           board.state = ["X", "X", "X", "O", "4", "O", "6", "7", "O"]
-          expect(board.game_over?).to be true
+          expect(board.game_won?).to be true
         end
 
         it 'middle row' do
           board.state = ["1", "X", "X", "O", "O", "O", "6", "7", "X"]
-          expect(board.game_over?).to be true
+          expect(board.game_won?).to be true
         end
 
         it 'bottom row' do
           board.state = ["1", "2", "3", "O", "O", "6", "X", "X", "X"]
-          expect(board.game_over?).to be true
+          expect(board.game_won?).to be true
         end
 
       end
@@ -67,17 +92,17 @@ describe Board do
 
         it 'left column' do
           board.state = ["X", "2", "3", "X", "O", "6", "X", "O", "O"]
-          expect(board.game_over?).to be true
+          expect(board.game_won?).to be true
         end
 
         it 'middle column' do
           board.state = ["1", "X", "3", "O", "X", "6", "7", "X", "O"]
-          expect(board.game_over?).to be true
+          expect(board.game_won?).to be true
         end
 
         it 'right column' do
           board.state = ["X", "O", "X", "O", "O", "X", "O", "X", "X"]
-          expect(board.game_over?).to be true
+          expect(board.game_won?).to be true
         end
 
       end
@@ -86,12 +111,12 @@ describe Board do
 
         it 'bottom-left to top-right' do
           board.state = ["1", "X", "O", "X", "O", "6", "O", "8", "X"]
-          expect(board.game_over?).to be true
+          expect(board.game_won?).to be true
         end
 
         it 'top-right to bottom-left' do
           board.state = ["X", "O", "O", "4", "X", "O", "X", "O", "X"]
-          expect(board.game_over?).to be true
+          expect(board.game_won?).to be true
         end
 
       end
@@ -100,7 +125,7 @@ describe Board do
 
         it 'tie' do
           board.state = ["X", "X", "O", "X", "O", "O", "X", "O", "X"]
-          expect(board.game_over?).to be true
+          expect(board.game_won?).to be true
         end
 
       end
@@ -110,12 +135,12 @@ describe Board do
 
       it 'empty board' do
         board.state = Board::EMPTY_BOARD
-        expect(board.game_over?).to be false
+        expect(board.game_won?).to be false
       end
 
-      it 'one empty square and no win' do
+      it 'one unoccupied square and no win' do
         board.state = ["X", "O", "X", "O", "X", "6", "O", "X", "O"]
-        expect(board.game_over?).to be false
+        expect(board.game_won?).to be false
       end
 
     end

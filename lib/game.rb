@@ -16,7 +16,7 @@ class Game
   def play
     show_current_board
     # loop through until the game is won or tied
-    until @board.game_over? || @board.tie?
+    until @board.game_over?
 
       humans_choice = nil
       #if choice taken, ask again
@@ -28,7 +28,7 @@ class Game
 
       @board.state[humans_choice] = @human.marker
 
-      unless @board.game_over? || @board.tie?
+      unless @board.game_over?
         computers_choice = @computer.get_square(@board)
         @board.state[computers_choice] = @computer.marker
       end
