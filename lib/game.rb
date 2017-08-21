@@ -15,7 +15,6 @@ class Game
 
   def play
     show_current_board
-    # loop through until the game is won or tied
     until @board.game_over?
       make_human_move
       make_computer_move
@@ -33,14 +32,18 @@ class Game
         current_value = @board.state[humans_choice]
         humans_choice = nil if @board.occupied?(current_value)
       end
-      @board.state[humans_choice] = @human.marker
+      place_marker(@human, humans_choice)
   end
 
   def make_computer_move
     unless @board.game_over?
       computers_choice = @computer.get_square(@board)
-      @board.state[computers_choice] = @computer.marker
+      place_marker(@computer, computers_choice)
     end
+  end
+
+  def place_marker(player, square)
+    @board.state[square] = player.marker
   end
 
   def show_current_board
