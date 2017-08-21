@@ -14,12 +14,12 @@ class Game
   end
 
   def play
-    show_current_board
     until @board.game_over?
+      show_current_board
       make_human_move
       make_computer_move
-      show_current_board
     end
+    show_current_board
     Messages.game_over_message
   end
 

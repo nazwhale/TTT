@@ -19,9 +19,9 @@ describe Game do
   end
 
   describe '#play' do
-    xit 'calls board.occupied' do
-      allow(game.human).to receive(:get_move).and_return("3")
-      expect(game.board).to receive(:occupied?).with("3")
+    it 'calls show_current_board' do
+      allow(game.human).to receive(get_move) { "2" }
+      expect(game).to receive(:show_current_board)
       game.play
     end
   end
