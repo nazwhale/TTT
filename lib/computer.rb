@@ -22,9 +22,13 @@ class Computer
       square_index = square.to_i
 
       board.state[square_index] = @marker
-      return square_index if board.game_won?
+      if board.game_won?
+        return square_index
+      end
       board.state[square.to_i] = OPPONENT
-      return square_index if board.game_won?
+      if board.game_won?
+        return square_index
+      end
 
       reset_square(board, square)
     end
@@ -45,8 +49,8 @@ class Computer
   def get_empty_squares(board)
     empty_squares = []
 
-    board.state.each do |square|
-      empty_squares << square unless board.occupied?(square)
+    board.state.each_with_index do |square, index|
+      empty_squares << square unless board.occupied?(index)
     end
 
     empty_squares
