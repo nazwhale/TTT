@@ -10,7 +10,7 @@ class Game
   def initialize
     @board = Board.new
     @computer = Computer.new("X")
-    @human = Human.new
+    @human = Human.new("O")
   end
 
   def play

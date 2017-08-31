@@ -2,10 +2,8 @@ class Human
 
   attr_reader :symbol
 
-  SYMBOL = "O"
-
-  def initialize
-    @symbol = SYMBOL
+  def initialize(symbol)
+    @symbol = symbol
   end
 
   def get_move
