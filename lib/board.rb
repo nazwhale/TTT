@@ -22,25 +22,35 @@ class Board
   end
 
   def game_won?
-    horizontal_win? || vertical_win? || diagonal_win?
+    all_wins.any? { |line| line.uniq.length == 1 }
   end
 
   private
 
-  def horizontal_win?
-    [@state[0], @state[1], @state[2]].uniq.length == 1 ||
-    [@state[3], @state[4], @state[5]].uniq.length == 1 ||
-    [@state[6], @state[7], @state[8]].uniq.length == 1
+  def all_wins
+    row_wins + column_wins + diagonal_wins
   end
 
-  def vertical_win?
-    [@state[0], @state[3], @state[6]].uniq.length == 1 ||
-    [@state[1], @state[4], @state[7]].uniq.length == 1 ||
-    [@state[2], @state[5], @state[8]].uniq.length == 1
+  def row_wins
+    [
+      [@state[0], @state[1], @state[2]],
+      [@state[3], @state[4], @state[5]],
+      [@state[6], @state[7], @state[8]]
+    ]
   end
 
-  def diagonal_win?
-    [@state[0], @state[4], @state[8]].uniq.length == 1 ||
-    [@state[2], @state[4], @state[6]].uniq.length == 1
+  def column_wins
+    [
+      [@state[0], @state[3], @state[6]],
+      [@state[1], @state[4], @state[7]],
+      [@state[2], @state[5], @state[8]]
+    ]
+  end
+
+  def diagonal_wins
+    [
+      [@state[0], @state[4], @state[8]],
+      [@state[2], @state[4], @state[6]]
+    ]
   end
 end
