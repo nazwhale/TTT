@@ -20,7 +20,7 @@ class Game
       make_computer_move
     end
     show_current_board
-    Messages.game_over_message
+    show_game_over
   end
 
   private
@@ -47,6 +47,10 @@ class Game
 
   def show_current_board
     Messages.print_board(board)
+  end
+
+  def show_game_over
+    Messages.game_over_message
   end
 
 end

@@ -18,12 +18,4 @@ describe Game do
     end
   end
 
-  describe '#play' do
-    it 'calls show_current_board' do
-      allow(game.human).to receive(get_move) { "2" }
-      expect(game).to receive(:show_current_board)
-      game.play
-    end
-  end
-
 end
