@@ -14,37 +14,43 @@ class Game
   end
 
   def play
-    show_current_board
-    # loop through until the game is won or tied
     until @board.game_over?
-
-      humans_choice = nil
-      #if choice taken, ask again
-      until humans_choice
-        humans_choice = gets.chomp.to_i
-        current_value = @board.state[humans_choice]
-        humans_choice = nil if @board.occupied?(current_value)
-      end
-
-      @board.state[humans_choice] = @human.marker
-
-      unless @board.game_over?
-        computers_choice = @computer.get_square(@board)
-        @board.state[computers_choice] = @computer.marker
-      end
-
       show_current_board
+      make_human_move
+      make_computer_move
     end
-    Messages.game_over_message
+    show_current_board
+    show_game_over
+  end
+
+  private
+
+  def make_human_move
+      choice = nil
+      until choice
+        choice = @human.get_move
+        choice = nil if @board.occupied?(choice)
+      end
+      place_marker(@human, choice)
+  end
+
+  def make_computer_move
+    unless @board.game_over?
+      choice = @computer.get_square(@board)
+      place_marker(@computer, choice)
+    end
+  end
+
+  def place_marker(player, square)
+    @board.state[square] = player.marker
   end
 
   def show_current_board
-    puts "#{@board.state[0]} | #{@board.state[1]} | #{@board.state[2]}"
-    Messages.line
-    puts "#{@board.state[3]} | #{@board.state[4]} | #{@board.state[5]}"
-    Messages.line
-    puts "#{@board.state[6]} | #{@board.state[7]} | #{@board.state[8]}"
-    Messages.move_prompt
+    Messages.print_board(board)
+  end
+
+  def show_game_over
+    Messages.game_over_message
   end
 
 end
