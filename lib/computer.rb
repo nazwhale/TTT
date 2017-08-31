@@ -2,12 +2,11 @@ class Computer
 
   attr_reader :symbol
 
-  SYMBOL = "X"
   OPPONENT = "O"
   MIDDLE_SQUARE = "4"
 
-  def initialize
-    @symbol = SYMBOL
+  def initialize(symbol)
+    @symbol = symbol
     @opponent = OPPONENT
   end
 

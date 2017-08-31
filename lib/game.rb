@@ -9,7 +9,7 @@ class Game
 
   def initialize
     @board = Board.new
-    @computer = Computer.new
+    @computer = Computer.new("X")
     @human = Human.new
   end
 
