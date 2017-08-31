@@ -3,13 +3,23 @@ require 'game_maker'
 describe GameMaker do
 
   subject(:game_maker) { described_class.new }
-  let(:player1) { Player.new("X") }
-  let(:player2) { Player.new("O") }
+  let(:player1) { Human.new("X") }
+  let(:player2) { Computer.new("O") }
   let(:game) { Game.new(player1, player2) }
 
   describe '#initialize' do
     it 'has a board' do
       expect(game_maker.game).to be nil
+    end
+  end
+
+  describe '#play' do
+    it 'calls choose_game_type' do
+      allow(game_maker).to receive(:choose_game_type)
+      game_maker.instance_variable_set(:@game, game)
+      allow(game_maker.game).to receive(:play)
+      game_maker.play
+      expect(game_maker).to have_received(:choose_game_type)
     end
   end
 

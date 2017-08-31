@@ -10,7 +10,6 @@ class GameMaker
 
   def play
     choose_game_type
-    Messages.game_type_confirmation(@game.player1.class.to_s, @game.player2.class.to_s)
     @game.play
   end
 
@@ -45,6 +44,10 @@ class GameMaker
   def get_symbol
     Messages.choose_symbol_prompt
     gets.chomp
+  end
+
+  def show_game_type_confirmation
+    Messages.game_type_confirmation(@game.player1.class.to_s, @game.player2.class.to_s)
   end
 
 end
