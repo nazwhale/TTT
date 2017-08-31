@@ -1,4 +1,4 @@
-require_relative 'output_messages'
+require_relative 'messages'
 require_relative 'computer'
 require_relative 'human'
 require_relative 'board'
@@ -9,8 +9,8 @@ class Game
 
   def initialize
     @board = Board.new
-    @computer = Computer.new
-    @human = Human.new
+    @human = create_human
+    @computer = create_computer
   end
 
   def play
@@ -25,24 +25,38 @@ class Game
 
   private
 
+  def create_human
+    choose_symbol_prompt("1")
+    Human.new(gets.chomp)
+  end
+
+  def create_computer
+    choose_symbol_prompt("2")
+    Computer.new(gets.chomp, @human.symbol)
+  end
+
   def make_human_move
       choice = nil
       until choice
         choice = @human.get_move
         choice = nil if @board.occupied?(choice)
       end
-      place_marker(@human, choice)
+      place_symbol(@human, choice)
   end
 
   def make_computer_move
     unless @board.game_over?
       choice = @computer.get_square(@board)
-      place_marker(@computer, choice)
+      place_symbol(@computer, choice)
     end
   end
 
-  def place_marker(player, square)
-    @board.state[square] = player.marker
+  def place_symbol(player, square)
+    @board.state[square] = player.symbol
+  end
+
+  def choose_symbol_prompt(player)
+    Messages.choose_symbol_prompt(player)
   end
 
   def show_current_board

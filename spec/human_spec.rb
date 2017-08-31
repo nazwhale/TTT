@@ -2,11 +2,11 @@ require 'human'
 
 describe Human do
 
-  subject(:human) { described_class.new }
+  subject(:human) { described_class.new("O") }
 
   describe '#initialize' do
-    it 'has a marker' do
-      expect(human.marker).to eq Human::MARKER
+    it 'has a symbol' do
+      expect(human.symbol).to eq "O"
     end
   end
 
