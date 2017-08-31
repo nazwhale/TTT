@@ -5,7 +5,7 @@ require_relative 'board'
 
 class Game
 
-  attr_reader :board, :computer, :human
+  attr_reader :board, :player1, :player2
 
   def initialize(player1, player2)
     @board = Board.new
@@ -17,26 +17,23 @@ class Game
     until @board.game_over?
       show_current_board
       @player1.class == Human ? make_human_move(@player1) : make_computer_move(@player1)
+      show_current_board
       @player2.class == Human ? make_human_move(@player2) : make_computer_move(@player2)
     end
     show_current_board
     show_game_over
   end
 
+
   private
 
-  def get_symbol
-    choose_symbol_prompt
-    gets.chomp
-  end
-
   def make_human_move(player)
-      choice = nil
-      until choice
-        choice = player.get_move
-        choice = nil if @board.occupied?(choice)
-      end
-      place_symbol(player, choice)
+    choice = nil
+    until choice
+      choice = player.get_move
+      choice = nil if @board.occupied?(choice)
+    end
+    place_symbol(player, choice)
   end
 
   def make_computer_move(player)

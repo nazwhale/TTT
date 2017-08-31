@@ -21,6 +21,14 @@ class Messages
     puts "Choose your symbol!"
   end
 
+  def self.game_type_confirmation(player1, player2)
+    puts "You chose to play " + player1 + " vs. " + player2
+  end
+
+  def self.try_again
+    puts "Invalid input! Please choose 1, 2, or 3"
+  end
+
   def self.prompt_move
     puts "Choose your move! Enter a number between 0 and 8"
   end
