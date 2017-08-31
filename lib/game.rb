@@ -26,13 +26,13 @@ class Game
   private
 
   def create_human
-    symbol = gets.chomp
-    Human.new(symbol)
+    choose_symbol_prompt("1")
+    Human.new(gets.chomp)
   end
 
   def create_computer
-    symbol = gets.chomp
-    Computer.new(symbol, @human.symbol)
+    choose_symbol_prompt("2")
+    Computer.new(gets.chomp, @human.symbol)
   end
 
   def make_human_move
@@ -53,6 +53,10 @@ class Game
 
   def place_symbol(player, square)
     @board.state[square] = player.symbol
+  end
+
+  def choose_symbol_prompt(player)
+    Messages.choose_symbol_prompt(player)
   end
 
   def show_current_board
