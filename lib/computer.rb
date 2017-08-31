@@ -2,12 +2,11 @@ class Computer
 
   attr_reader :symbol
 
-  OPPONENT = "O"
   MIDDLE_SQUARE = "4"
 
-  def initialize(symbol)
+  def initialize(symbol, opponent)
     @symbol = symbol
-    @opponent = OPPONENT
+    @opponent = opponent
   end
 
   def get_square(board)
@@ -21,13 +20,10 @@ class Computer
       square_index = square.to_i
 
       board.state[square_index] = @symbol
-      if board.game_won?
-        return square_index
-      end
-      board.state[square.to_i] = OPPONENT
-      if board.game_won?
-        return square_index
-      end
+      return square_index if board.game_won?
+
+      board.state[square.to_i] = @opponent
+      return square_index if board.game_won?
 
       reset_square(board, square)
     end

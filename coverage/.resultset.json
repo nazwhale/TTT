@@ -276,7 +276,6 @@
         1,
         null,
         1,
-        1,
         null,
         1,
         10,
@@ -295,12 +294,9 @@
         null,
         10,
         10,
-        2,
         null,
         8,
         8,
-        1,
-        null,
         null,
         7,
         null,
@@ -382,6 +378,17 @@
         1,
         null,
         1,
+        3,
+        3,
+        null,
+        null,
+        1,
+        3,
+        3,
+        null,
+        null,
+        null,
+        1,
         0,
         0,
         0,
@@ -411,7 +418,7 @@
         null,
         null
       ],
-      "/Users/nadeemmalik/GoogleDrive/Projects/TTT/lib/output_messages.rb": [
+      "/Users/nadeemmalik/GoogleDrive/Projects/TTT/lib/messages.rb": [
         1,
         null,
         1,
@@ -480,6 +487,6 @@
         null
       ]
     },
-    "timestamp": 1504181688
+    "timestamp": 1504182925
   }
 }
