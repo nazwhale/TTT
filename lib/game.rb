@@ -16,9 +16,9 @@ class Game
   def play
     until @board.game_over?
       show_current_board
-      @player1.class == Human ? make_human_move(@player1) : make_computer_move(@player1)
+      make_move(@player1)
       show_current_board
-      @player2.class == Human ? make_human_move(@player2) : make_computer_move(@player2)
+      make_move(@player2)
     end
     show_current_board
     show_game_over
@@ -26,11 +26,18 @@ class Game
 
   private
 
+  def human_player?(player)
+    player.class == Human
+  end
+
+  def make_move(player)
+    human_player?(player) ? make_human_move(player) : make_computer_move(player)
+  end
+
   def make_human_move(player)
     choice = nil
     until choice
       choice = player.get_move
-      require 'pry'; binding.pry;
       choice = nil if @board.occupied?(choice)
     end
     place_symbol(player, choice)
