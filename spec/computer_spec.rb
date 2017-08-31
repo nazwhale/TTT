@@ -2,7 +2,7 @@ require 'computer'
 
 describe Computer do
 
-  subject(:computer) { described_class.new("X", "O") }
+  subject(:computer) { described_class.new("X") }
   let(:board) { Board.new }
 
   describe '#initialize' do

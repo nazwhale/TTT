@@ -17,8 +17,8 @@ class Messages
     puts "=========="
   end
 
-  def self.choose_symbol_prompt(player)
-    puts "Player " + player + ", Choose your symbol!"
+  def self.choose_symbol_prompt
+    puts "Choose your symbol!"
   end
 
   def self.prompt_move

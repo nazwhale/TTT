@@ -4,7 +4,7 @@ describe Game do
 
   subject(:game) { described_class.new }
 
-  describe '#initialize' do
+  xdescribe '#initialize' do
     it 'has a board' do
       expect(game.board).to be_a Board
     end

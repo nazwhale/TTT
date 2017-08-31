@@ -7,17 +7,17 @@ class Game
 
   attr_reader :board, :computer, :human
 
-  def initialize
+  def initialize(player1, player2)
     @board = Board.new
-    @human = create_human
-    @computer = create_computer
+    @player1 = player1
+    @player2 = player2
   end
 
   def play
     until @board.game_over?
       show_current_board
-      make_human_move
-      make_computer_move
+      @player1.class == Human ? make_human_move(@player1) : make_computer_move(@player1)
+      @player2.class == Human ? make_human_move(@player2) : make_computer_move(@player2)
     end
     show_current_board
     show_game_over
@@ -25,29 +25,24 @@ class Game
 
   private
 
-  def create_human
-    choose_symbol_prompt("1")
-    Human.new(gets.chomp)
+  def get_symbol
+    choose_symbol_prompt
+    gets.chomp
   end
 
-  def create_computer
-    choose_symbol_prompt("2")
-    Computer.new(gets.chomp, @human.symbol)
-  end
-
-  def make_human_move
+  def make_human_move(player)
       choice = nil
       until choice
-        choice = @human.get_move
+        choice = player.get_move
         choice = nil if @board.occupied?(choice)
       end
-      place_symbol(@human, choice)
+      place_symbol(player, choice)
   end
 
-  def make_computer_move
+  def make_computer_move(player)
     unless @board.game_over?
-      choice = @computer.get_square(@board)
-      place_symbol(@computer, choice)
+      choice = player.get_square(@board)
+      place_symbol(player, choice)
     end
   end
 
