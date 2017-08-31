@@ -14,6 +14,7 @@ class GameMaker
   end
 
   def choose_game_type
+    Messages.prompt_game_type
     game_type = gets.chomp.to_i
     case game_type
     when 1

@@ -21,6 +21,13 @@ class Messages
     puts "Choose your symbol!"
   end
 
+  def self.prompt_game_type
+    puts "What kind of game would you like to play?"
+    puts "Select 1 for Human vs. Human"
+    puts "Select 2 for Human vs. Computer"
+    puts "Select 3 for Computer vs. Computer"
+  end
+
   def self.game_type_confirmation(player1, player2)
     puts "You chose to play " + player1 + " vs. " + player2
   end
