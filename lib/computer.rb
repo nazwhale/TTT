@@ -8,7 +8,7 @@ class Computer
     @symbol = symbol
   end
 
-  def get_square(board)
+  def get_move(board)
     board.state[4] == MIDDLE_SQUARE ? 4 : get_best_move(board)
   end
 

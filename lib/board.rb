@@ -1,4 +1,3 @@
-
 class Board
 
   EMPTY_BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
@@ -10,7 +9,7 @@ class Board
   end
 
   def occupied?(square)
-    state[square.to_i] == "X" || state[square.to_i] == "O"
+    !EMPTY_BOARD.include?(state[square.to_i])
   end
 
   def game_over?
@@ -40,7 +39,11 @@ class Board
   end
 
   def column_wins
-    row_wins.transpose
+    [
+      [@state[0], @state[3], @state[6]],
+      [@state[1], @state[4], @state[7]],
+      [@state[2], @state[5], @state[8]]
+    ]
   end
 
   def diagonal_wins

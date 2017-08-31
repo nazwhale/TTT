@@ -11,17 +11,17 @@ describe Computer do
     end
   end
 
-  describe '#get_square' do
+  describe '#get_move' do
 
     it 'gets the middle square when it is available' do
       board.state = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
-      expect(computer.get_square(board)).to eq 4
+      expect(computer.get_move(board)).to eq 4
     end
 
     it 'calls get_best_move if middle square is taken' do
       board.state = ["0", "1", "2", "3", "O", "5", "6", "7", "8"]
       expect(computer).to receive(:get_best_move).and_return 1
-      computer.get_square(board)
+      computer.get_move(board)
     end
 
   end

@@ -24,13 +24,13 @@ class Game
     show_game_over
   end
 
-
   private
 
   def make_human_move(player)
     choice = nil
     until choice
       choice = player.get_move
+      require 'pry'; binding.pry;
       choice = nil if @board.occupied?(choice)
     end
     place_symbol(player, choice)
@@ -38,13 +38,13 @@ class Game
 
   def make_computer_move(player)
     unless @board.game_over?
-      choice = player.get_square(@board)
+      choice = player.get_move(@board)
       place_symbol(player, choice)
     end
   end
 
-  def place_symbol(player, square)
-    @board.state[square] = player.symbol
+  def place_symbol(player, choice)
+    @board.state[choice] = player.symbol
   end
 
   def choose_symbol_prompt(player)
