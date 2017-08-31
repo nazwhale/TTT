@@ -2,14 +2,12 @@ require 'computer'
 
 describe Computer do
 
-  subject(:computer) { described_class.new }
-
-  # stub board object
-  subject(:board) { Board.new }
+  subject(:computer) { described_class.new("X") }
+  let(:board) { Board.new }
 
   describe '#initialize' do
-    it 'has a marker' do
-      expect(computer.marker).to eq Computer::MARKER
+    it 'has a symbol' do
+      expect(computer.symbol).to eq "X"
     end
   end
 

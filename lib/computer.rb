@@ -1,13 +1,13 @@
 class Computer
 
-  attr_reader :marker
+  attr_reader :symbol
 
-  MARKER = "X"
+  SYMBOL = "X"
   OPPONENT = "O"
   MIDDLE_SQUARE = "4"
 
   def initialize
-    @marker = MARKER
+    @symbol = SYMBOL
     @opponent = OPPONENT
   end
 
@@ -21,7 +21,7 @@ class Computer
     empty_squares.each do |square|
       square_index = square.to_i
 
-      board.state[square_index] = @marker
+      board.state[square_index] = @symbol
       if board.game_won?
         return square_index
       end

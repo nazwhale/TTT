@@ -1,11 +1,11 @@
 class Human
 
-  attr_reader :marker
+  attr_reader :symbol
 
-  MARKER = "O"
+  SYMBOL = "O"
 
   def initialize
-    @marker = MARKER
+    @symbol = SYMBOL
   end
 
   def get_move
