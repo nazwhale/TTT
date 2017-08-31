@@ -22,14 +22,31 @@ class Board
   end
 
   def game_won?
-    [@state[0], @state[1], @state[2]].uniq.length == 1 ||
-    [@state[3], @state[4], @state[5]].uniq.length == 1 ||
-    [@state[6], @state[7], @state[8]].uniq.length == 1 ||
-    [@state[0], @state[3], @state[6]].uniq.length == 1 ||
-    [@state[1], @state[4], @state[7]].uniq.length == 1 ||
-    [@state[2], @state[5], @state[8]].uniq.length == 1 ||
-    [@state[0], @state[4], @state[8]].uniq.length == 1 ||
-    [@state[2], @state[4], @state[6]].uniq.length == 1
+    all_wins.any? { |line| line.uniq.length == 1 }
   end
 
+  private
+
+  def all_wins
+    row_wins + column_wins + diagonal_wins
+  end
+
+  def row_wins
+    [
+      [@state[0], @state[1], @state[2]],
+      [@state[3], @state[4], @state[5]],
+      [@state[6], @state[7], @state[8]]
+    ]
+  end
+
+  def column_wins
+    row_wins.transpose
+  end
+
+  def diagonal_wins
+    [
+      [@state[0], @state[4], @state[8]],
+      [@state[2], @state[4], @state[6]]
+    ]
+  end
 end
