@@ -26,7 +26,7 @@ describe Game do
         allow(game.board).to receive(:game_over?).and_return(false, true)
         allow(game).to receive(:show_current_board)
         allow(game).to receive(:make_move)
-        allow(game).to receive(:show_game_over)
+        allow(game).to receive(:game_over_message)
         game.play
         expect(game).to have_received(:make_move)
       end
@@ -35,7 +35,7 @@ describe Game do
         allow(game.board).to receive(:game_over?).and_return(false, false, true)
         allow(game).to receive(:show_current_board)
         allow(game).to receive(:make_move)
-        allow(game).to receive(:show_game_over)
+        allow(game).to receive(:game_over_message)
         game.play
         expect(game).to have_received(:make_move).twice
       end
@@ -44,7 +44,7 @@ describe Game do
         allow(game.board).to receive(:game_over?).and_return(false, true)
         allow(game).to receive(:show_current_board)
         allow(game).to receive(:make_move)
-        allow(game).to receive(:show_game_over)
+        allow(game).to receive(:game_over_message)
         game.play
         expect(game.current_player).to eq player2
       end
@@ -53,7 +53,7 @@ describe Game do
         allow(game.board).to receive(:game_over?).and_return(false, false, true)
         allow(game).to receive(:show_current_board)
         allow(game).to receive(:make_move)
-        allow(game).to receive(:show_game_over)
+        allow(game).to receive(:game_over_message)
         game.play
         expect(game.current_player).to eq player1
       end
@@ -63,17 +63,17 @@ describe Game do
       it 'shows the final state of the board' do
         allow(game.board).to receive(:game_over?).and_return(true)
         allow(game).to receive(:show_current_board)
-        allow(game).to receive(:show_game_over)
+        allow(game).to receive(:game_over_message)
         game.play
         expect(game).to have_received(:show_current_board)
       end
 
-      it 'calls show_game_over' do
+      it 'calls game_over_message' do
         allow(game.board).to receive(:game_over?).and_return(true)
         allow(game).to receive(:show_current_board)
-        allow(game).to receive(:show_game_over)
+        allow(game).to receive(:game_over_message)
         game.play
-        expect(game).to have_received(:show_game_over)
+        expect(game).to have_received(:game_over_message)
       end
     end
   end

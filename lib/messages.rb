@@ -4,7 +4,6 @@ class Messages
 
   attr_reader :game
 
-
   def self.ready_to_play(player1, player2)
     puts
     puts "Player 1 will play as: " + player1.symbol
@@ -54,15 +53,23 @@ class Messages
     puts "Choose your move! Enter a number between 0 and 8..."
   end
 
-  def self.game_over_message
-    puts "Game over!"
-  end
-
   def self.computer_thinking
     puts "The Computer is thinking..."
     sleep(0.5)
     puts "..."
     sleep(1)
+  end
+
+  def self.tie_message
+    puts "Even stevens!"
+  end
+
+  def self.win_message(winner)
+    puts "Congratulations " + winner.symbol + ", you won!"
+  end
+
+  def self.see_you_again
+    puts "See you next time 👋 "
   end
 
 end

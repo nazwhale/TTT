@@ -10,13 +10,13 @@ class GameMaker
 
   def new_game
     choose_game_type
-    Messages.ready_to_play(@game.player1, @game.player2)
+    ready_to_play_message
     @game.play
   end
 
   def choose_game_type
     loop do
-    Messages.prompt_game_type
+    prompt_game_type
     game_type = gets.chomp.to_i
       case game_type
       when 1
@@ -35,6 +35,14 @@ class GameMaker
   end
 
   private
+
+  def ready_to_play_message
+    Messages.ready_to_play(@game.player1, @game.player2)
+  end
+
+  def prompt_game_type
+    Messages.prompt_game_type
+  end
 
   def human_vs_human
     @game = Game.new(Human.new(get_player1_symbol), Human.new(get_player2_symbol))

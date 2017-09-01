@@ -21,7 +21,8 @@ class Game
       whose_move?
     end
     show_current_board
-    show_game_over
+    #win message / tie messgae
+    game_over_message
   end
 
   private
@@ -70,8 +71,9 @@ class Game
     Messages.print_board(board)
   end
 
-  def show_game_over
-    Messages.game_over_message
+  def game_over_message
+    @board.tie? ? Messages.tie_message : Messages.win_message(@current_player)
+    Messages.see_you_again
   end
 
 end
