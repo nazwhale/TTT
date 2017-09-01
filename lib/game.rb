@@ -35,19 +35,23 @@ class Game
   end
 
   def make_human_move(player)
+    Messages.prompt_move
     choice = nil
     until choice
       choice = player.get_move
       choice = nil if @board.occupied?(choice)
     end
     place_symbol(player, choice)
+    puts "You chose: " + choice.to_s
   end
 
   def make_computer_move(player)
+    Messages.computer_thinking
     unless @board.game_over?
       choice = player.get_move(@board)
       place_symbol(player, choice)
     end
+    puts "The Computer chose: " + choice.to_s
   end
 
   def place_symbol(player, choice)
@@ -60,7 +64,6 @@ class Game
 
   def show_current_board
     Messages.print_board(board)
-    Messages.prompt_move
   end
 
   def show_game_over

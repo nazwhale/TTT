@@ -8,7 +8,7 @@ describe Messages do
   describe '#print_board' do
     it 'outputs the current board state' do
       board = double("board", :state => ["0", "X", "2", "O", "X", "O", "6", "7", "8"] )
-      printed_board = "0 | X | 2\n==========\nO | X | O\n==========\n6 | 7 | 8\n"
+      printed_board = "\n0 | X | 2\n==========\nO | X | O\n==========\n6 | 7 | 8\n\n"
       expect{ Messages.print_board(board) }.to output(printed_board).to_stdout
     end
   end
