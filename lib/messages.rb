@@ -16,8 +16,12 @@ class Messages
     puts "=========="
   end
 
-  def self.choose_symbol_prompt
-    puts "Choose your symbol!"
+  def self.choose_player1_symbol
+    puts "Choose a symbol for player 1!"
+  end
+
+  def self.choose_player2_symbol
+    puts "What symbol will player 2 use?"
   end
 
   def self.prompt_game_type

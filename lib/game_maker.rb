@@ -36,19 +36,24 @@ class GameMaker
   private
 
   def human_vs_human
-    @game = Game.new(Human.new(get_symbol), Human.new(get_symbol))
+    @game = Game.new(Human.new(get_player1_symbol), Human.new(get_player2_symbol))
   end
 
   def human_vs_computer
-    @game = Game.new(Human.new(get_symbol), Computer.new(get_symbol))
+    @game = Game.new(Human.new(get_player1_symbol), Computer.new(get_player2_symbol))
   end
 
   def computer_vs_computer
-    @game = Game.new(Computer.new(get_symbol), Computer.new(get_symbol))
+    @game = Game.new(Computer.new(get_player1_symbol), Computer.new(get_player2_symbol))
   end
 
-  def get_symbol
-    Messages.choose_symbol_prompt
+  def get_player1_symbol
+    Messages.choose_player1_symbol
+    gets.chomp
+  end
+
+  def get_player2_symbol
+    Messages.choose_player2_symbol
     gets.chomp
   end
 
