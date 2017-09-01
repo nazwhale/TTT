@@ -10,15 +10,29 @@ class Messages
     puts "#{board.state[3]} | #{board.state[4]} | #{board.state[5]}"
     print_line
     puts "#{board.state[6]} | #{board.state[7]} | #{board.state[8]}"
-    prompt_move
   end
 
   def self.print_line
     puts "=========="
   end
 
-  def self.choose_symbol_prompt(player)
-    puts "Player " + player + ", Choose your symbol!"
+  def self.choose_symbol_prompt
+    puts "Choose your symbol!"
+  end
+
+  def self.prompt_game_type
+    puts "What kind of game would you like to play?"
+    puts "Select 1 for Human vs. Human"
+    puts "Select 2 for Human vs. Computer"
+    puts "Select 3 for Computer vs. Computer"
+  end
+
+  def self.game_type_confirmation(player1, player2)
+    puts "You chose to play " + player1.class.to_s + " vs. " + player2.class.to_s
+  end
+
+  def self.try_again
+    puts "Invalid input! Please try again..."
   end
 
   def self.prompt_move

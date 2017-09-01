@@ -4,12 +4,11 @@ class Computer
 
   MIDDLE_SQUARE = "4"
 
-  def initialize(symbol, opponent)
+  def initialize(symbol)
     @symbol = symbol
-    @opponent = opponent
   end
 
-  def get_square(board)
+  def get_move(board)
     board.state[4] == MIDDLE_SQUARE ? 4 : get_best_move(board)
   end
 
@@ -22,7 +21,7 @@ class Computer
       board.state[square_index] = @symbol
       return square_index if board.game_won?
 
-      board.state[square.to_i] = @opponent
+      board.state[square.to_i] = "O"
       return square_index if board.game_won?
 
       reset_square(board, square)

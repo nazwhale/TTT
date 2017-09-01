@@ -1,4 +1,3 @@
-
 class Board
 
   EMPTY_BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
@@ -10,7 +9,7 @@ class Board
   end
 
   def occupied?(square)
-    state[square.to_i] == "X" || state[square.to_i] == "O"
+    !EMPTY_BOARD.include?(state[square.to_i])
   end
 
   def game_over?

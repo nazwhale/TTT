@@ -5,19 +5,20 @@ require_relative 'board'
 
 class Game
 
-  attr_reader :board, :computer, :human
+  attr_reader :player1, :player2, :board
 
-  def initialize
-    @board = Board.new
-    @human = create_human
-    @computer = create_computer
+  def initialize(player1, player2, board = Board.new)
+    @player1 = player1
+    @player2 = player2
+    @board = board
   end
 
   def play
     until @board.game_over?
       show_current_board
-      make_human_move
-      make_computer_move
+      make_move(@player1)
+      show_current_board
+      make_move(@player2)
     end
     show_current_board
     show_game_over
@@ -25,34 +26,32 @@ class Game
 
   private
 
-  def create_human
-    choose_symbol_prompt("1")
-    Human.new(gets.chomp)
+  def human_player?(player)
+    player.class == Human
   end
 
-  def create_computer
-    choose_symbol_prompt("2")
-    Computer.new(gets.chomp, @human.symbol)
+  def make_move(player)
+    human_player?(player) ? make_human_move(player) : make_computer_move(player)
   end
 
-  def make_human_move
-      choice = nil
-      until choice
-        choice = @human.get_move
-        choice = nil if @board.occupied?(choice)
-      end
-      place_symbol(@human, choice)
+  def make_human_move(player)
+    choice = nil
+    until choice
+      choice = player.get_move
+      choice = nil if @board.occupied?(choice)
+    end
+    place_symbol(player, choice)
   end
 
-  def make_computer_move
+  def make_computer_move(player)
     unless @board.game_over?
-      choice = @computer.get_square(@board)
-      place_symbol(@computer, choice)
+      choice = player.get_move(@board)
+      place_symbol(player, choice)
     end
   end
 
-  def place_symbol(player, square)
-    @board.state[square] = player.symbol
+  def place_symbol(player, choice)
+    @board.state[choice] = player.symbol
   end
 
   def choose_symbol_prompt(player)
@@ -61,6 +60,7 @@ class Game
 
   def show_current_board
     Messages.print_board(board)
+    Messages.prompt_move
   end
 
   def show_game_over

@@ -12,7 +12,7 @@ describe Board do
 
   describe '#occupied?' do
     before do
-      board.state = ["X", "X", "O", "X", "4", "O", "X", "O", "X"]
+      board.state = ["X", "🐢", "O", "X", "4", "O", "X", "O", "X"]
     end
 
     context 'true' do
@@ -20,8 +20,8 @@ describe Board do
         expect(board.occupied?(3)).to be true
       end
 
-      it 'is occupied by an O' do
-        expect(board.occupied?(2)).to be true
+      it 'is occupied by an emoji' do
+        expect(board.occupied?(1)).to be true
       end
     end
 

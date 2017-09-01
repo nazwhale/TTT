@@ -1,4 +1,5 @@
-require_relative './lib/game.rb'
+require_relative './lib/game'
+require_relative './lib/game_maker'
 
-game = Game.new
-game.play
+game_maker = GameMaker.new
+game_maker.new_game
