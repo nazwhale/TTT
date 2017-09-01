@@ -18,16 +18,15 @@ class Game
     until @board.game_over?
       show_current_board
       make_move(@current_player)
-      whose_move?
+      switch_player
     end
     show_current_board
-    #win message / tie messgae
     game_over_message
   end
 
   private
 
-  def whose_move?
+  def switch_player
     @current_player == @player1 ? @current_player = @player2 : @current_player = @player1
   end
 
@@ -72,6 +71,7 @@ class Game
   end
 
   def game_over_message
+    switch_player
     @board.tie? ? Messages.tie_message : Messages.win_message(@current_player)
     Messages.see_you_again
   end

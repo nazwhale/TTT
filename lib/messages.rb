@@ -36,9 +36,9 @@ class Messages
 
   def self.prompt_game_type
     puts "What kind of game would you like to play?"
-    puts "Select 1 for Human vs. Human"
-    puts "Select 2 for Human vs. Computer"
-    puts "Select 3 for Computer vs. Computer"
+    puts "Select 1 for 😌  vs. 😌 "
+    puts "Select 2 for 😌  vs. 🤖 "
+    puts "Select 3 for 🤖  vs. 🤖 "
   end
 
   def self.game_type_confirmation(player1, player2)
@@ -54,8 +54,12 @@ class Messages
   end
 
   def self.computer_thinking
-    puts "The Computer is thinking..."
-    sleep(0.5)
+    print "The Computer is thinking"
+    sleep(1)
+    print "... "
+    sleep(1)
+    print "... "
+    sleep(1)
     puts "..."
     sleep(1)
   end
@@ -66,6 +70,8 @@ class Messages
 
   def self.win_message(winner)
     puts "Congratulations " + winner.symbol + ", you won!"
+    puts "🎉  🎉  🎉  🎉  🎉"
+    puts
   end
 
   def self.see_you_again
