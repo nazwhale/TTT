@@ -57,7 +57,6 @@ describe Board do
     context 'true' do
       it 'is a tie' do
         board.state = ["X", "X", "O", "X", "O", "O", "X", "O", "X"]
-        p board.occupied?(board.state[0])
         expect(board.tie?).to be true
       end
     end
