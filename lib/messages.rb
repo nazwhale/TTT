@@ -4,6 +4,15 @@ class Messages
 
   attr_reader :game
 
+
+  def self.ready_to_play(player1, player2)
+    puts
+    puts "Player 1 will play as: " + player1.symbol
+    puts "Player 2 will play as: " + player2.symbol
+    puts
+    puts "The stage is set..."
+  end
+
   def self.print_board(board)
     puts
     puts "#{board.state[0]} | #{board.state[1]} | #{board.state[2]}"

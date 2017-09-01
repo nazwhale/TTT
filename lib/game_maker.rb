@@ -10,6 +10,7 @@ class GameMaker
 
   def new_game
     choose_game_type
+    Messages.ready_to_play(@game.player1, @game.player2)
     @game.play
   end
 

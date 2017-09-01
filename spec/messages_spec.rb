@@ -5,6 +5,13 @@ describe Messages do
   let(:player1) { Human.new("X") }
   let(:player2) { Computer.new("O") }
 
+  describe '#ready_to_play' do
+    it 'outputs both players symbols' do
+      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nThe stage is set...\n"
+      expect{ Messages.ready_to_play(player1, player2) }.to output(message).to_stdout
+    end
+  end
+
   describe '#print_board' do
     it 'outputs the current board state' do
       board = double("board", :state => ["0", "X", "2", "O", "X", "O", "6", "7", "8"] )
