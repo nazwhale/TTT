@@ -8,8 +8,8 @@ class Board
     @state = EMPTY_BOARD
   end
 
-  def occupied?(square)
-    !EMPTY_BOARD.include?(state[square.to_i])
+  def occupied?(index)
+    index.to_s != @state[index.to_i]
   end
 
   def game_over?
@@ -17,7 +17,7 @@ class Board
   end
 
   def tie?
-    @state.all? { |square| occupied?(square) }
+    @state.all? { |square| occupied?(@state.index(square)) }
   end
 
   def game_won?

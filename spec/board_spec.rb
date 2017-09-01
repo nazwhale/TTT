@@ -34,7 +34,6 @@ describe Board do
 
   describe '#game_over' do
     context 'true' do
-
       it 'is a tie' do
         board.state = ["X", "X", "O", "X", "O", "O", "X", "O", "X"]
         expect(board.game_over?).to be true
@@ -47,27 +46,22 @@ describe Board do
     end
 
     context 'false' do
-
       it 'has unoccupied squares and no win' do
         board.state = ["X", "O", "X", "O", "X", "5", "O", "X", "O"]
         expect(board.tie?).to be false
       end
-
     end
   end
 
   describe '#tie' do
     context 'true' do
-
       it 'is a tie' do
         board.state = ["X", "X", "O", "X", "O", "O", "X", "O", "X"]
         expect(board.tie?).to be true
       end
-
     end
 
     context 'false' do
-
       it 'is an empty board' do
         expect(board.tie?).to be false
       end
@@ -81,7 +75,6 @@ describe Board do
         board.state = ["X", "O", "X", "O", "X", "5", "O", "X", "O"]
         expect(board.tie?).to be false
       end
-
     end
   end
 
