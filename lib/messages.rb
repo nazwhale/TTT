@@ -10,7 +10,6 @@ class Messages
     puts "#{board.state[3]} | #{board.state[4]} | #{board.state[5]}"
     print_line
     puts "#{board.state[6]} | #{board.state[7]} | #{board.state[8]}"
-    prompt_move
   end
 
   def self.print_line
@@ -29,11 +28,11 @@ class Messages
   end
 
   def self.game_type_confirmation(player1, player2)
-    puts "You chose to play " + player1 + " vs. " + player2
+    puts "You chose to play " + player1.class.to_s + " vs. " + player2.class.to_s
   end
 
   def self.try_again
-    puts "Invalid input! Please choose 1, 2, or 3"
+    puts "Invalid input! Please try again..."
   end
 
   def self.prompt_move

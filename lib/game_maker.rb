@@ -14,17 +14,22 @@ class GameMaker
   end
 
   def choose_game_type
+    loop do
     Messages.prompt_game_type
     game_type = gets.chomp.to_i
-    case game_type
-    when 1
-      human_vs_human
-    when 2
-      human_vs_computer
-    when 3
-      computer_vs_computer
-    else
-      Messages.try_again
+      case game_type
+      when 1
+        human_vs_human
+        break
+      when 2
+        human_vs_computer
+        break
+      when 3
+        computer_vs_computer
+        break
+      else
+        Messages.try_again
+      end
     end
   end
 
@@ -48,7 +53,7 @@ class GameMaker
   end
 
   def show_game_type_confirmation
-    Messages.game_type_confirmation(@game.player1.class.to_s, @game.player2.class.to_s)
+    Messages.game_type_confirmation(@game.player1, @game.player2)
   end
 
 end

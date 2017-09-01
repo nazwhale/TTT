@@ -60,6 +60,7 @@ class Game
 
   def show_current_board
     Messages.print_board(board)
+    Messages.prompt_move
   end
 
   def show_game_over
