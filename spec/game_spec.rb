@@ -7,6 +7,14 @@ describe Game do
   subject(:game) { described_class.new(player1, player2) }
 
   describe '#initialize' do
+    it 'has a first player' do
+      expect([Human, Computer]).to include game.player1.class
+    end
+
+    it 'has a second player' do
+      expect([Human, Computer]).to include game.player2.class
+    end
+
     it 'has a board' do
       expect(game.board).to be_a Board
     end
