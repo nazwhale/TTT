@@ -8,7 +8,7 @@ class GameMaker
     @game = nil
   end
 
-  def play
+  def new_game
     choose_game_type
     @game.play
   end

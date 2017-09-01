@@ -13,12 +13,12 @@ describe GameMaker do
     end
   end
 
-  describe '#play' do
+  describe '#new_game' do
     it 'calls choose_game_type' do
       allow(game_maker).to receive(:choose_game_type)
       game_maker.instance_variable_set(:@game, game)
       allow(game_maker.game).to receive(:play)
-      game_maker.play
+      game_maker.new_game
       expect(game_maker).to have_received(:choose_game_type)
     end
   end
@@ -27,6 +27,7 @@ describe GameMaker do
     it 'chooses two human players' do
       allow(game_maker).to receive(:gets).and_return('1')
       allow(game_maker).to receive(:human_vs_human)
+      allow(Messages).to receive(:prompt_game_type)
       game_maker.choose_game_type
       expect(game_maker).to have_received(:human_vs_human)
     end
@@ -34,6 +35,7 @@ describe GameMaker do
     it 'chooses human vs computer' do
       allow(game_maker).to receive(:gets).and_return('2')
       allow(game_maker).to receive(:human_vs_computer)
+      allow(Messages).to receive(:prompt_game_type)
       game_maker.choose_game_type
       expect(game_maker).to have_received(:human_vs_computer)
     end
@@ -41,6 +43,7 @@ describe GameMaker do
     it 'chooses two computer players' do
       allow(game_maker).to receive(:gets).and_return('3')
       allow(game_maker).to receive(:computer_vs_computer)
+      allow(Messages).to receive(:prompt_game_type)
       game_maker.choose_game_type
       expect(game_maker).to have_received(:computer_vs_computer)
     end
