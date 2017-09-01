@@ -39,11 +39,7 @@ class Board
   end
 
   def column_wins
-    [
-      [@state[0], @state[3], @state[6]],
-      [@state[1], @state[4], @state[7]],
-      [@state[2], @state[5], @state[8]]
-    ]
+    row_wins.transpose
   end
 
   def diagonal_wins
