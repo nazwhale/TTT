@@ -26,16 +26,36 @@ describe Game do
         allow(game.board).to receive(:game_over?).and_return(false, true)
         allow(game).to receive(:show_current_board)
         allow(game).to receive(:make_move)
+        allow(game).to receive(:show_game_over)
+        game.play
+        expect(game).to have_received(:make_move)
+      end
+
+      it 'calls make_move for each player' do
+        allow(game.board).to receive(:game_over?).and_return(false, false, true)
+        allow(game).to receive(:show_current_board)
+        allow(game).to receive(:make_move)
+        allow(game).to receive(:show_game_over)
         game.play
         expect(game).to have_received(:make_move).twice
       end
 
-      it 'calls make_move for each player' do
+      it 'switches player after a move' do
         allow(game.board).to receive(:game_over?).and_return(false, true)
         allow(game).to receive(:show_current_board)
         allow(game).to receive(:make_move)
+        allow(game).to receive(:show_game_over)
         game.play
-        expect(game).to have_received(:make_move).twice
+        expect(game.current_player).to eq player2
+      end
+
+      it 'switches back to the first player after 2 moves' do
+        allow(game.board).to receive(:game_over?).and_return(false, false, true)
+        allow(game).to receive(:show_current_board)
+        allow(game).to receive(:make_move)
+        allow(game).to receive(:show_game_over)
+        game.play
+        expect(game.current_player).to eq player1
       end
     end
 

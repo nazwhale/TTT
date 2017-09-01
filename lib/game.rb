@@ -5,26 +5,30 @@ require_relative 'board'
 
 class Game
 
-  attr_reader :player1, :player2, :board
+  attr_reader :player1, :player2, :board, :current_player
 
   def initialize(player1, player2, board = Board.new)
     @player1 = player1
     @player2 = player2
     @board = board
+    @current_player = @player1
   end
 
   def play
     until @board.game_over?
       show_current_board
-      make_move(@player1)
-      show_current_board
-      make_move(@player2)
+      make_move(@current_player)
+      whose_move?
     end
     show_current_board
     show_game_over
   end
 
   private
+
+  def whose_move?
+    @current_player == @player1 ? @current_player = @player2 : @current_player = @player1
+  end
 
   def human_player?(player)
     player.class == Human
