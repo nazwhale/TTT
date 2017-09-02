@@ -43,8 +43,8 @@ So that the game is a fun level of difficulty,
 I would like the computer player to sometimes be beatable.
 
 As a project manager,
-So that the game is a fun level of difficulty,
-I would like to have a choice of game types (e.g. human vs. human, human vs. computer, computer vs. computer)
+So that that I can play alone, with a friend, or watch two computers play,
+I would like to have a choice of game types.
 
 As a project manager,
 So that the player can have more control over the game,
