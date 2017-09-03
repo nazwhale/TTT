@@ -61,4 +61,33 @@ describe Messages do
       expect{ Messages.prompt_move }.to output(message).to_stdout
     end
   end
+
+  describe '#computer_thinking' do
+    it 'displays appropriate message' do
+      allow(Messages).to receive(:sleep)
+      message = "The Computer is thinking... ... ...\n"
+      expect{ Messages.computer_thinking }.to output(message).to_stdout
+    end
+  end
+
+  describe '#tie_message' do
+    it 'displays appropriate message' do
+      message = "Even stevens!\n"
+      expect{ Messages.tie_message }.to output(message).to_stdout
+    end
+  end
+
+  describe '#win_message' do
+    it 'displays message with winners symbol' do
+      message = "Congratulations X, you won!\n🎉  🎉  🎉  🎉  🎉\n\n"
+      expect{ Messages.win_message(player1) }.to output(message).to_stdout
+    end
+  end
+
+  describe '#see_you_again' do
+    it 'displays appropriate message' do
+      message = "See you next time 👋 \n"
+      expect{ Messages.see_you_again }.to output(message).to_stdout
+    end
+  end
 end
