@@ -39,14 +39,18 @@ class Messages
     puts "Select 1 for 😌  vs. 😌 "
     puts "Select 2 for 😌  vs. 🤖 "
     puts "Select 3 for 🤖  vs. 🤖 "
+    print "Your choice: "
   end
 
-  def self.game_type_confirmation(player1, player2)
-    puts "You chose to play " + player1.class.to_s + " vs. " + player2.class.to_s
+  def self.game_type_confirmation(player1_type, player2_type)
+    puts
+    puts "You chose to play " + player1_type + " vs. " + player2_type
+    puts
   end
 
   def self.try_again
     puts "Invalid input! Please try again..."
+    puts
   end
 
   def self.prompt_move

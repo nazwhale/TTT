@@ -23,7 +23,7 @@ describe Messages do
   describe '#game_type_confirmation' do
     it 'outputs the type of game' do
       confirmation = "You chose to play Human vs. Computer\n"
-      expect{ Messages.game_type_confirmation(player1, player2) }.to output(confirmation).to_stdout
+      expect{ Messages.game_type_confirmation("Human", "Computer") }.to output(confirmation).to_stdout
     end
   end
 end

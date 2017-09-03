@@ -45,14 +45,17 @@ class GameMaker
   end
 
   def human_vs_human
+    show_game_type_confirmation("Human", "Human")
     @game = Game.new(Human.new(get_player1_symbol), Human.new(get_player2_symbol))
   end
 
   def human_vs_computer
+    show_game_type_confirmation("Human", "Computer")
     @game = Game.new(Human.new(get_player1_symbol), Computer.new(get_player2_symbol))
   end
 
   def computer_vs_computer
+    show_game_type_confirmation("Computer", "Computer")
     @game = Game.new(Computer.new(get_player1_symbol), Computer.new(get_player2_symbol))
   end
 
@@ -66,8 +69,8 @@ class GameMaker
     gets.chomp
   end
 
-  def show_game_type_confirmation
-    Messages.game_type_confirmation(@game.player1, @game.player2)
+  def show_game_type_confirmation(player1_type, player2_type)
+    Messages.game_type_confirmation(player1_type, player2_type)
   end
 
 end
