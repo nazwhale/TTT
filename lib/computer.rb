@@ -6,26 +6,34 @@ class Computer
 
   def initialize(symbol)
     @symbol = symbol
+    @opponent = nil
   end
 
-  def get_move(board)
-    board.state[4] == MIDDLE_SQUARE ? 4 : get_best_move(board)
+  def get_move(board, opponent)
+    board.state[4] == MIDDLE_SQUARE ? 4 : get_best_move(board, opponent)
   end
 
-  def get_best_move(board)
+  def get_best_move(board, opponent)
     empty_squares = get_empty_squares(board)
 
     empty_squares.each do |square|
-      square_index = square.to_i
+      index = square.to_i
 
-      board.state[square_index] = @symbol
-      return square_index if board.game_won?
-
-      board.state[square.to_i] = "O"
-      return square_index if board.game_won?
+      board.state[index] = @symbol
+      return index if board.game_won?
 
       reset_square(board, square)
     end
+
+    empty_squares.each do |square|
+      index = square.to_i
+
+      board.state[index] = opponent.symbol
+      return index if board.game_won?
+
+      reset_square(board, square)
+    end
+
     make_random_move(empty_squares)
   end
 
