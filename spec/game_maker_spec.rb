@@ -16,6 +16,7 @@ describe GameMaker do
   describe '#new_game' do
     it 'calls choose_game_type' do
       allow(game_maker).to receive(:choose_game_type)
+      allow(Messages).to receive(:ready_to_play)
       game_maker.instance_variable_set(:@game, game)
       allow(game_maker.game).to receive(:play)
       game_maker.new_game

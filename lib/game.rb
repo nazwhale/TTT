@@ -5,26 +5,30 @@ require_relative 'board'
 
 class Game
 
-  attr_reader :player1, :player2, :board
+  attr_reader :player1, :player2, :board, :current_player
 
   def initialize(player1, player2, board = Board.new)
     @player1 = player1
     @player2 = player2
     @board = board
+    @current_player = @player1
   end
 
   def play
     until @board.game_over?
       show_current_board
-      make_move(@player1)
-      show_current_board
-      make_move(@player2)
+      make_move(@current_player)
+      switch_player
     end
     show_current_board
-    show_game_over
+    game_over_message
   end
 
   private
+
+  def switch_player
+    @current_player == @player1 ? @current_player = @player2 : @current_player = @player1
+  end
 
   def human_player?(player)
     player.class == Human
@@ -35,19 +39,23 @@ class Game
   end
 
   def make_human_move(player)
+    Messages.prompt_move
     choice = nil
     until choice
       choice = player.get_move
       choice = nil if @board.occupied?(choice)
     end
     place_symbol(player, choice)
+    puts "You chose: " + choice.to_s
   end
 
   def make_computer_move(player)
+    Messages.computer_thinking
     unless @board.game_over?
       choice = player.get_move(@board)
       place_symbol(player, choice)
     end
+    puts "The Computer chose: " + choice.to_s
   end
 
   def place_symbol(player, choice)
@@ -60,11 +68,12 @@ class Game
 
   def show_current_board
     Messages.print_board(board)
-    Messages.prompt_move
   end
 
-  def show_game_over
-    Messages.game_over_message
+  def game_over_message
+    switch_player
+    @board.tie? ? Messages.tie_message : Messages.win_message(@current_player)
+    Messages.see_you_again
   end
 
 end
