@@ -52,10 +52,17 @@ class Game
   def make_computer_move(player)
     Messages.computer_thinking
     unless @board.game_over?
-      choice = player.get_move(@board)
+      choice = player.get_move(@board, get_opponent)
       place_symbol(player, choice)
     end
     puts "The Computer chose: " + choice.to_s
+  end
+
+  def get_opponent
+    switch_player
+    opponent = @current_player
+    switch_player
+    opponent
   end
 
   def place_symbol(player, choice)

@@ -6,27 +6,32 @@ class Computer
 
   def initialize(symbol)
     @symbol = symbol
+    @opponent = nil
   end
 
-  def get_move(board)
-    board.state[4] == MIDDLE_SQUARE ? 4 : get_best_move(board)
+  def get_move(board, opponent)
+    board.state[4] == MIDDLE_SQUARE ? 4 : get_best_move(board, opponent)
   end
 
-  def get_best_move(board)
+  def get_best_move(board, opponent)
     empty_squares = get_empty_squares(board)
+    best_move = game_ending_move(board, empty_squares, @symbol)
+    best_move = game_ending_move(board, empty_squares, opponent.symbol) unless best_move
+    best_move = make_random_move(empty_squares) unless best_move
+    best_move
+  end
 
+  def game_ending_move(board, empty_squares, symbol)
+    best_move = nil
     empty_squares.each do |square|
-      square_index = square.to_i
+      index = square.to_i
 
-      board.state[square_index] = @symbol
-      return square_index if board.game_won?
-
-      board.state[square.to_i] = "O"
-      return square_index if board.game_won?
+      board.state[index] = symbol
+      best_move = index if board.game_won?
 
       reset_square(board, square)
     end
-    make_random_move(empty_squares)
+    best_move
   end
 
   private
