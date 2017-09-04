@@ -21,11 +21,12 @@ class Computer
     best_move
   end
 
+  private
+
   def game_ending_move(board, empty_squares, symbol)
     best_move = nil
     empty_squares.each do |square|
       index = square.to_i
-
       board.state[index] = symbol
       best_move = index if board.game_won?
 
@@ -33,8 +34,6 @@ class Computer
     end
     best_move
   end
-
-  private
 
   def reset_square(board, square)
     board.state[square.to_i] = square
@@ -47,11 +46,9 @@ class Computer
 
   def get_empty_squares(board)
     empty_squares = []
-
     board.state.each_with_index do |square, index|
       empty_squares << square unless board.occupied?(index)
     end
-
     empty_squares
   end
 

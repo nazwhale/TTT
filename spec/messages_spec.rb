@@ -6,9 +6,23 @@ describe Messages do
   let(:player2) { Computer.new("O") }
 
   describe '#ready_to_play' do
+    it 'outputs both players symbols and player to go first' do
+      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nX to go first!\n\nThe stage is set...\n\n"
+      expect{ Messages.ready_to_play(player1, player2, player1) }.to output(message).to_stdout
+    end
+  end
+
+  describe '#human_move_confirmation' do
     it 'outputs both players symbols' do
-      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nThe stage is set...\n"
-      expect{ Messages.ready_to_play(player1, player2) }.to output(message).to_stdout
+      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nX to go first!\n\nThe stage is set...\n\n"
+      expect{ Messages.ready_to_play(player1, player2, player1) }.to output(message).to_stdout
+    end
+  end
+
+  describe '#computer_move_confirmation' do
+    it 'outputs both players symbols' do
+      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nX to go first!\n\nThe stage is set...\n\n"
+      expect{ Messages.ready_to_play(player1, player2, player1) }.to output(message).to_stdout
     end
   end
 
