@@ -4,12 +4,23 @@ class Messages
 
   attr_reader :game
 
-  def self.ready_to_play(player1, player2)
+  def self.ready_to_play(player1, player2, current_player)
     puts
     puts "Player 1 will play as: " + player1.symbol
     puts "Player 2 will play as: " + player2.symbol
     puts
+    puts current_player.symbol + " to go first!"
+    puts
     puts "The stage is set..."
+    puts
+  end
+
+  def self.human_move_confirmation(choice)
+    puts "You chose: " + choice.to_s
+  end
+
+  def self.computer_move_confirmation(choice)
+    puts "The computer chose: " + choice.to_s
   end
 
   def self.print_board(board)
@@ -45,6 +56,14 @@ class Messages
   def self.game_type_confirmation(player1_type, player2_type)
     puts
     puts "You chose to play " + player1_type + " vs. " + player2_type
+    puts
+  end
+
+  def self.who_goes_first(player1, player2)
+    puts
+    puts "Who will play the first move?"
+    puts "Select 1 for: " + player1.symbol
+    puts "Select 2 for: " + player2.symbol
     puts
   end
 

@@ -24,7 +24,22 @@ class Game
     game_over_message
   end
 
+  def who_goes_first
+    who_goes_first_message
+    choice = gets.chomp
+    case choice
+    when "1"
+      @current_player = @player1
+    when "2"
+      @current_player = @player2
+    end
+  end
+
   private
+
+  def who_goes_first_message
+    Messages.who_goes_first(@player1, @player2)
+  end
 
   def switch_player
     @current_player == @player1 ? @current_player = @player2 : @current_player = @player1
@@ -46,7 +61,7 @@ class Game
       choice = nil if @board.occupied?(choice)
     end
     place_symbol(player, choice)
-    puts "You chose: " + choice.to_s
+    Messages.human_move_confirmation(choice)
   end
 
   def make_computer_move(player)
@@ -55,7 +70,7 @@ class Game
       choice = player.get_move(@board, get_opponent)
       place_symbol(player, choice)
     end
-    puts "The Computer chose: " + choice.to_s
+    Messages.computer_move_confirmation(choice)
   end
 
   def get_opponent

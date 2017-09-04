@@ -78,4 +78,21 @@ describe Game do
     end
   end
 
+  describe '#who_goes_first' do
+    it 'sets current player to 1 if chosen' do
+      allow(game).to receive(:who_goes_first_message)
+      allow(game).to receive(:gets).and_return("1")
+      game.who_goes_first
+      expect(game.current_player).to eq player1
+    end
+
+    it 'sets current player to 2 if chosen' do
+      allow(game).to receive(:who_goes_first_message)
+      allow(game).to receive(:gets).and_return("2")
+      game.who_goes_first
+      expect(game.current_player).to eq player2
+    end
+
+  end
+
 end

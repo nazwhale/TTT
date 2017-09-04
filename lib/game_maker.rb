@@ -10,6 +10,7 @@ class GameMaker
 
   def new_game
     choose_game_type
+    @game.who_goes_first
     ready_to_play_message
     @game.play
   end
@@ -37,7 +38,7 @@ class GameMaker
   private
 
   def ready_to_play_message
-    Messages.ready_to_play(@game.player1, @game.player2)
+    Messages.ready_to_play(@game.player1, @game.player2, @game.current_player)
   end
 
   def prompt_game_type
