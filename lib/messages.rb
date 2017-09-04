@@ -56,7 +56,6 @@ class Messages
   def self.game_type_confirmation(player1_type, player2_type)
     puts
     puts "You chose to play " + player1_type + " vs. " + player2_type
-    puts
   end
 
   def self.who_goes_first(player1, player2)
