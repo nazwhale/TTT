@@ -30,7 +30,7 @@ class GameMaker
         computer_vs_computer
         break
       else
-        Messages.try_again
+        try_again_message
       end
     end
   end
@@ -72,6 +72,10 @@ class GameMaker
 
   def show_game_type_confirmation(player1_type, player2_type)
     Messages.game_type_confirmation(player1_type, player2_type)
+  end
+
+  def try_again_message
+    Messages.try_again
   end
 
 end

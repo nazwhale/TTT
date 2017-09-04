@@ -13,16 +13,16 @@ describe Messages do
   end
 
   describe '#human_move_confirmation' do
-    it 'outputs both players symbols' do
-      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nX to go first!\n\nThe stage is set...\n\n"
-      expect{ Messages.ready_to_play(player1, player2, player1) }.to output(message).to_stdout
+    it 'displays appropriate message' do
+      message = "You chose: 3\n"
+      expect{ Messages.human_move_confirmation(3) }.to output(message).to_stdout
     end
   end
 
   describe '#computer_move_confirmation' do
-    it 'outputs both players symbols' do
-      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nX to go first!\n\nThe stage is set...\n\n"
-      expect{ Messages.ready_to_play(player1, player2, player1) }.to output(message).to_stdout
+    it 'displays appropriate message' do
+      message = "The Computer chose: 6\n"
+      expect{ Messages.computer_move_confirmation(6) }.to output(message).to_stdout
     end
   end
 

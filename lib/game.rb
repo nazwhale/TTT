@@ -11,7 +11,7 @@ class Game
     @player1 = player1
     @player2 = player2
     @board = board
-    @current_player = @player1
+    @current_player = nil
   end
 
   def play

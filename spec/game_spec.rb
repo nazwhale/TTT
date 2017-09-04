@@ -21,6 +21,13 @@ describe Game do
   end
 
   describe '#play' do
+
+    before do
+      allow(game).to receive(:who_goes_first_message)
+      allow(game).to receive(:gets).and_return("1")
+      game.who_goes_first
+    end
+
     context 'game not over' do
       it 'shows the board state before each move' do
         allow(game.board).to receive(:game_over?).and_return(false, true)

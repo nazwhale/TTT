@@ -20,7 +20,7 @@ class Messages
   end
 
   def self.computer_move_confirmation(choice)
-    puts "The computer chose: " + choice.to_s
+    puts "The Computer chose: " + choice.to_s
   end
 
   def self.print_board(board)
