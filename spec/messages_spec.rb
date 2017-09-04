@@ -62,6 +62,13 @@ describe Messages do
     end
   end
 
+  describe '#who_goes_first' do
+    it 'prompts user to choose the player that will start the game' do
+      confirmation = "\nWho will play the first move?\nSelect 1 for: X\nSelect 2 for: O\n\n"
+      expect{ Messages.who_goes_first(player1, player2) }.to output(confirmation).to_stdout
+    end
+  end
+
   describe '#try_again' do
     it 'displays appropriate message' do
       message = "Invalid input! Please try again...\n\n"
