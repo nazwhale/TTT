@@ -51,5 +51,35 @@ describe GameMaker do
     end
   end
 
+  describe '#get_symbol' do
+    context 'valid' do
+      it 'accepts a unique 1 character symbol' do
+        allow(game_maker).to receive(:gets).and_return('X')
+        message = "You chose: X\n"
+        expect{ game_maker.get_symbol('O') }.to output(message).to_stdout
+      end
+    end
+
+    context 'invalid' do
+      it 'outputs an error if symbol is more than 1 character' do
+        allow(game_maker).to receive(:gets).and_return('LONG SYMBOL', 'X')
+        message = "Symbol must be 1 character long! Please try again.\nYou chose: X\n"
+        expect{ game_maker.get_symbol(nil) }.to output(message).to_stdout
+      end
+
+      it 'outputs an error if symbol ' do
+        allow(game_maker).to receive(:gets).and_return('', 'X')
+        message = "Symbol must be 1 character long! Please try again.\nYou chose: X\n"
+        expect{ game_maker.get_symbol(nil) }.to output(message).to_stdout
+      end
+
+      it 'outputs an error if symbol is the same as the opponent' do
+        allow(game_maker).to receive(:gets).and_return('O', 'X')
+        message = "Choose a different symbol to player 1!\nYou chose: X\n"
+        expect{ game_maker.get_symbol('O') }.to output(message).to_stdout
+      end
+    end
+  end
+
 end
 

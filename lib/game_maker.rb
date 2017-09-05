@@ -68,7 +68,7 @@ class GameMaker
     loop do
     choice = gets.chomp
       if choice.length != 1
-        puts "Symbol must be 1 long! Please try again."
+        puts "Symbol must be 1 character long! Please try again."
       elsif choice == opponent_symbol
         puts "Choose a different symbol to player 1!"
       else
