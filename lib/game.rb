@@ -6,6 +6,7 @@ require_relative 'board'
 class Game
 
   attr_reader :player1, :player2, :board, :current_player
+  attr_writer :current_player
 
   def initialize(player1, player2, board = Board.new)
     @player1 = player1
@@ -24,85 +25,102 @@ class Game
     game_over_message
   end
 
-  def choose_first_player
-    loop do
-    choose_first_player_message
-    choice = gets.chomp
-      case choice
-      when "1"
-        @current_player = @player1
-        break
-      when "2"
-        @current_player = @player2
-        break
-      else
-        puts "Invalid input!"
-      end
-    end
+  def make_move(player)
+    human_player?(player) ? make_human_move(player) : make_computer_move(player)
   end
 
-  def choose_first_player_message
-    Messages.choose_first_player(@player1, @player2)
+  def make_human_move(player)
+    prompt_move
+    choice = nil
+    until choice
+      choice = gets.chomp
+      if choice_valid?(choice)
+        invalid_choice_message
+        choice = nil
+      end
+    end
+    place_symbol(player, choice.to_i)
+    human_move_confirmation(choice)
+  end
+
+  def make_computer_move(player)
+    computer_thinking
+    unless game_over?
+      choice = player.get_move(@board, get_opponent(player))
+      place_symbol(player, choice)
+    end
+    computer_move_confirmation(choice)
+  end
+
+  def get_opponent(player)
+    @player1 == player ? @player2 : @player1
+  end
+
+  def game_over_message
+    switch_player
+    tie? ? tie_message : win_message(@current_player)
+    see_you_again
+  end
+
+  private
+
+  def choice_valid?(choice)
+    @board.occupied?(choice) || choice == ""
   end
 
   def switch_player
     @current_player == @player1 ? @current_player = @player2 : @current_player = @player1
   end
 
+  def game_over?
+    @board.game_over?
+  end
+
+  def tie?
+    @board.tie?
+  end
+
   def human_player?(player)
     player.class == Human
-  end
-
-  def make_move(player)
-    human_player?(player) ? make_human_move(player) : make_computer_move(player)
-  end
-
-  def make_human_move(player)
-    Messages.prompt_move
-    choice = nil
-    until choice
-      choice = gets.chomp
-      if @board.occupied?(choice) || choice == ""
-        puts "Please choose one of the available squares!"
-        choice = nil
-      end
-    end
-    place_symbol(player, choice.to_i)
-    Messages.human_move_confirmation(choice)
-  end
-
-  def make_computer_move(player)
-    Messages.computer_thinking
-    unless @board.game_over?
-      choice = player.get_move(@board, get_opponent)
-      place_symbol(player, choice)
-    end
-    Messages.computer_move_confirmation(choice)
-  end
-
-  def get_opponent
-    switch_player
-    opponent = @current_player
-    switch_player
-    opponent
   end
 
   def place_symbol(player, choice)
     @board.state[choice] = player.symbol
   end
 
-  def choose_symbol_prompt(player)
-    Messages.choose_symbol_prompt(player)
+  def prompt_move
+    Messages.prompt_move
+  end
+
+  def human_move_confirmation(move)
+    Messages.human_move_confirmation(move)
+  end
+
+  def computer_move_confirmation(move)
+    Messages.computer_move_confirmation(move)
+  end
+
+  def computer_thinking
+    Messages.computer_thinking
   end
 
   def show_current_board
     Messages.print_board(board)
   end
 
-  def game_over_message
-    switch_player
-    @board.tie? ? Messages.tie_message : Messages.win_message(@current_player)
+  def tie_message
+    Messages.tie_message
+  end
+
+  def win_message(winner)
+    Messages.win_message(winner)
+  end
+
+  def see_you_again
     Messages.see_you_again
   end
 
+  def invalid_choice_message
+    Messages.invalid_choice_message
+  end
 end

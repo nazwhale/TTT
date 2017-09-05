@@ -58,7 +58,7 @@ class Messages
     puts "You chose to play " + player1_type + " vs. " + player2_type
   end
 
-  def self.choose_first_player(player1, player2)
+  def self.choose_starting_player(player1, player2)
     puts
     puts "Who will play the first move?"
     puts "Select 1 for: " + player1.symbol
@@ -98,6 +98,10 @@ class Messages
 
   def self.see_you_again
     puts "See you next time 👋 "
+  end
+
+  def self.invalid_choice_message
+    puts "Please choose one of the available squares!"
   end
 
 end
