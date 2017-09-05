@@ -83,6 +83,30 @@ describe Game do
     end
   end
 
+  describe '#make_move' do
+    it 'calls make_human_move for a human player' do
+      allow(game).to receive(:make_human_move)
+      game.make_move(player1)
+      expect(game).to have_received(:make_human_move)
+    end
+
+    it 'calls make_computer_move for a computer player' do
+      allow(game).to receive(:make_computer_move)
+      game.make_move(player2)
+      expect(game).to have_received(:make_computer_move)
+    end
+  end
+
+  describe '#human_player?' do
+    it 'returns true for a human' do
+      expect(game.human_player?(player1)).to eq true
+    end
+
+    it 'returns false for a computer' do
+      expect(game.human_player?(player2)).to eq false
+    end
+  end
+
   describe '#make_human_move' do
     context 'valid input' do
       it 'places a symbol for the chosen move' do
@@ -116,6 +140,12 @@ describe Game do
         message = "Please choose one of the available squares!\n"
         expect{ game.make_human_move(player1) }.to output(message).to_stdout
       end
+    end
+  end
+
+  describe '#get_opponent' do
+    it 'returns opponent' do
+      expect(game.get_opponent(player1)).to eq player2
     end
   end
 

@@ -25,17 +25,16 @@ class Game
     game_over_message
   end
 
-
   def switch_player
     @current_player == @player1 ? @current_player = @player2 : @current_player = @player1
   end
 
-  def human_player?(player)
-    player.class == Human
-  end
-
   def make_move(player)
     human_player?(player) ? make_human_move(player) : make_computer_move(player)
+  end
+
+  def human_player?(player)
+    player.class == Human
   end
 
   def make_human_move(player)
@@ -55,17 +54,14 @@ class Game
   def make_computer_move(player)
     Messages.computer_thinking
     unless @board.game_over?
-      choice = player.get_move(@board, get_opponent)
+      choice = player.get_move(@board, get_opponent(player))
       place_symbol(player, choice)
     end
     Messages.computer_move_confirmation(choice)
   end
 
-  def get_opponent
-    switch_player
-    opponent = @current_player
-    switch_player
-    opponent
+  def get_opponent(player)
+    @player1 == player ? @player2 : @player1
   end
 
   def place_symbol(player, choice)
