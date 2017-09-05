@@ -1,7 +1,7 @@
 
 # Tic-Tac-Toe
 [![Build Status](https://travis-ci.org/nazwhale/TTT.svg?branch=master)](https://travis-ci.org/nazwhale/Tic-Tac-Toe)
-[![Coverage Status](https://coveralls.io/repos/github/nazwhale/TTT/badge.svg?branch=master)](https://coveralls.io/github/nazwhale/Tic-Tac-Toe?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/nazwhale/Tic-Tac-Toe/badge.svg?branch=master)](https://coveralls.io/github/nazwhale/Tic-Tac-Toe?branch=master)
 
 A command-line game of Noughts and Crosses (or, for the non-British, [Tic-Tac-Toe](https://en.wikipedia.org/wiki/Tic-tac-toe)).
 
