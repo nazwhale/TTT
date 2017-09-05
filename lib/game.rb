@@ -41,8 +41,6 @@ class Game
     end
   end
 
-  private
-
   def choose_first_player_message
     Messages.choose_first_player(@player1, @player2)
   end
@@ -63,10 +61,13 @@ class Game
     Messages.prompt_move
     choice = nil
     until choice
-      choice = player.get_move
-      choice = nil if @board.occupied?(choice)
+      choice = gets.chomp
+      if @board.occupied?(choice) || choice == ""
+        puts "Please choose one of the available squares!"
+        choice = nil
+      end
     end
-    place_symbol(player, choice)
+    place_symbol(player, choice.to_i)
     Messages.human_move_confirmation(choice)
   end
 
