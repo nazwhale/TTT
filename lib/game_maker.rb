@@ -66,7 +66,7 @@ class GameMaker
       elsif choice == opponent_symbol
         puts "Choose a different symbol to player 1!"
       elsif is_an_integer?(choice)
-        puts "Symbol cannot be an integer! Please try again.\nYou chose: X\n\n"
+        puts "Symbol cannot be an integer! Please try again."
       else
         puts "You chose: " + choice
         puts
