@@ -36,38 +36,44 @@ class GameMaker
     end
   end
 
-  private
-
   def human_vs_human
-
     choose_player1_symbol_message
-    player1_symbol = get_symbol
+    player1_symbol = get_symbol(nil)
 
     choose_player2_symbol_message
-    player2_symbol = get_symbol
+    player2_symbol = get_symbol(player1_symbol)
 
     @game = Game.new(Human.new(player1_symbol), Human.new(player2_symbol))
   end
 
   def human_vs_computer
-    @game = Game.new(Human.new(get_player1_symbol), Computer.new(get_player2_symbol))
+    choose_player1_symbol_message
+    player1_symbol = get_symbol(nil)
+
+    choose_player2_symbol_message
+    player2_symbol = get_symbol(player1_symbol)
+    @game = Game.new(Human.new(player1_symbol), Computer.new(player2_symbol))
   end
 
   def computer_vs_computer
-    @game = Game.new(Computer.new(get_player1_symbol), Computer.new(get_player2_symbol))
+    choose_player1_symbol_message
+    player1_symbol = get_symbol(nil)
+
+    choose_player2_symbol_message
+    player2_symbol = get_symbol(player1_symbol)
+    @game = Game.new(Computer.new(player1_symbol), Computer.new(player2_symbol))
   end
 
-  def get_symbol
+  def get_symbol(opponent_symbol)
     loop do
     choice = gets.chomp
-      case choice
-      when choice.length != 1
-        #wrong length message
-      when taken?(choice)
-        #choice taken message
+      if choice.length != 1
+        puts "Symbol must be 1 long! Please try again."
+      elsif choice == opponent_symbol
+        puts "Choose a different symbol to player 1!"
       else
-        #confirmation message
-        break
+        puts "You chose: " + choice
+        return choice
       end
     end
   end
