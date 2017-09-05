@@ -74,10 +74,6 @@ class Game
     see_you_again
   end
 
-  def choose_symbol_prompt(player)
-    Messages.choose_symbol_prompt(player)
-  end
-
   def show_current_board
     Messages.print_board(board)
   end
