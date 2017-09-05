@@ -68,6 +68,12 @@ class Game
     @board.state[choice] = player.symbol
   end
 
+  def game_over_message
+    switch_player
+    @board.tie? ? tie_message : win_message(@current_player)
+    see_you_again
+  end
+
   def choose_symbol_prompt(player)
     Messages.choose_symbol_prompt(player)
   end
@@ -76,10 +82,15 @@ class Game
     Messages.print_board(board)
   end
 
-  def game_over_message
-    switch_player
-    @board.tie? ? Messages.tie_message : Messages.win_message(@current_player)
-    Messages.see_you_again
+  def tie_message
+    Messages.tie_message
   end
 
+  def win_message(winner)
+    Messages.win_message(winner)
+  end
+
+  def see_you_again
+    Messages.see_you_again
+  end
 end

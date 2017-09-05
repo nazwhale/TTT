@@ -169,4 +169,25 @@ describe Game do
     end
   end
 
+  describe '#game_over_message' do
+
+    before do
+      allow(Messages).to receive(:see_you_again)
+    end
+
+    it 'returns tie message if tied' do
+      allow(Messages).to receive(:tie_message)
+      game.board.state = ["X", "X", "O", "O", "X", "X", "X", "O", "O"]
+      game.game_over_message
+      expect(Messages).to have_received(:tie_message)
+    end
+
+    it 'returns win message for correct player' do
+      allow(Messages).to receive(:win_message)
+      game.board.state = ["X", "X", "X", "3", "4", "O", "O", "7", "8"]
+      game.game_over_message
+      expect(Messages).to have_received(:win_message).with(player1)
+    end
+  end
+
 end
