@@ -108,10 +108,10 @@ describe Game do
   end
 
   describe '#make_human_move' do
-
     before do
       allow(Messages).to receive(:prompt_move)
       allow(Messages).to receive(:human_move_confirmation)
+      game.board.state = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
     end
 
     context 'valid input' do
@@ -140,6 +140,26 @@ describe Game do
         message = "Please choose one of the available squares!\n"
         expect{ game.make_human_move(player1) }.to output(message).to_stdout
       end
+    end
+  end
+
+  describe '#make_computer_move' do
+    before do
+      allow(Messages).to receive(:computer_thinking)
+      allow(Messages).to receive(:computer_move_confirmation)
+    end
+
+    it 'places a symbol for the chosen move' do
+      game.board.state = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+      allow(player2).to receive(:get_move).and_return(2)
+      game.make_computer_move(player2)
+      expect(game.board.state).to eq ["0", "1", "O", "3", "4", "5", "6", "7", "8"]
+    end
+
+    it 'doesnt get a move if the game is over' do
+      game.board.state = ["X", "X", "X", "3", "4", "O", "O", "7", "8"]
+      expect(player2).not_to receive(:get_move)
+      game.make_computer_move(player2)
     end
   end
 
