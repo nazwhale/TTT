@@ -58,7 +58,7 @@ class Messages
     puts "You chose to play " + player1_type + " vs. " + player2_type
   end
 
-  def self.who_goes_first(player1, player2)
+  def self.choose_first_player(player1, player2)
     puts
     puts "Who will play the first move?"
     puts "Select 1 for: " + player1.symbol

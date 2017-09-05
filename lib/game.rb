@@ -24,21 +24,27 @@ class Game
     game_over_message
   end
 
-  def who_goes_first
-    who_goes_first_message
+  def choose_first_player
+    loop do
+    choose_first_player_message
     choice = gets.chomp
-    case choice
-    when "1"
-      @current_player = @player1
-    when "2"
-      @current_player = @player2
+      case choice
+      when "1"
+        @current_player = @player1
+        break
+      when "2"
+        @current_player = @player2
+        break
+      else
+        puts "Invalid input!"
+      end
     end
   end
 
   private
 
-  def who_goes_first_message
-    Messages.who_goes_first(@player1, @player2)
+  def choose_first_player_message
+    Messages.choose_first_player(@player1, @player2)
   end
 
   def switch_player

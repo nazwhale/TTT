@@ -30,8 +30,7 @@ describe Messages do
     it 'outputs the current board state' do
       board = double("board", :state => ["0", "X", "2", "O", "X", "O", "6", "7", "8"] )
       printed_board = "\n0 | X | 2\n==========\nO | X | O\n==========\n6 | 7 | 8\n\n"
-      expect{ Messages.print_board(board) }.to output(printed_board).to_stdout
-    end
+      expect{ Messages.print_board(board) }.to output(printed_board).to_stdout end
   end
 
   describe '#choose_player1_symbol' do
@@ -62,10 +61,10 @@ describe Messages do
     end
   end
 
-  describe '#who_goes_first' do
+  describe '#choose_first_player' do
     it 'prompts user to choose the player that will start the game' do
       confirmation = "\nWho will play the first move?\nSelect 1 for: X\nSelect 2 for: O\n\n"
-      expect{ Messages.who_goes_first(player1, player2) }.to output(confirmation).to_stdout
+      expect{ Messages.choose_first_player(player1, player2) }.to output(confirmation).to_stdout
     end
   end
 

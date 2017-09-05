@@ -11,7 +11,7 @@ class GameMaker
   def new_game
     choose_game_type
     show_game_type_confirmation(@game.player1.class.to_s, @game.player2.class.to_s)
-    @game.who_goes_first
+    @game.choose_first_player
     ready_to_play_message
     @game.play
   end
