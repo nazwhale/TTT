@@ -92,16 +92,6 @@ describe Game do
     end
   end
 
-  describe '#human_player?' do
-    it 'returns true for a human' do
-      expect(game.human_player?(player1)).to eq true
-    end
-
-    it 'returns false for a computer' do
-      expect(game.human_player?(player2)).to eq false
-    end
-  end
-
   describe '#make_human_move' do
     before do
       allow(Messages).to receive(:prompt_move)

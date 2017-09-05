@@ -110,4 +110,12 @@ describe Messages do
       expect{ Messages.see_you_again }.to output(message).to_stdout
     end
   end
+
+  describe '#invalid_choice_message' do
+    it 'displays appropriate message' do
+      message = "Please choose one of the available squares!\n"
+      expect{ Messages.invalid_choice_message }.to output(message).to_stdout
+    end
+  end
+
 end

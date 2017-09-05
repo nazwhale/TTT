@@ -100,4 +100,8 @@ class Messages
     puts "See you next time 👋 "
   end
 
+  def self.invalid_choice_message
+    puts "Please choose one of the available squares!"
+  end
+
 end
