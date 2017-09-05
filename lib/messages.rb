@@ -4,6 +4,11 @@ class Messages
 
   attr_reader :game
 
+  def self.welcome
+    puts "Welcome to Tic-Tac-Toe!"
+    puts
+  end
+
   def self.ready_to_play(player1, player2, current_player)
     puts
     puts "Player 1 will play as: " + player1.symbol

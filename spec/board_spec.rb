@@ -20,7 +20,7 @@ describe Board do
         expect(board.occupied?(3)).to be true
       end
 
-      it 'is occupied by a N' do
+      it 'is occupied by a symbol other than X or O' do
         expect(board.occupied?(1)).to be true
       end
     end

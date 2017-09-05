@@ -5,6 +5,11 @@ describe Messages do
   let(:player1) { Human.new("X") }
   let(:player2) { Computer.new("O") }
 
+  it 'welcomes the players to the game' do
+    message = "Welcome to Tic-Tac-Toe!\n\n"
+    expect{ Messages.welcome }.to output(message).to_stdout
+  end
+
   it 'ready to play message' do
     message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nThe stage is set...\nX to go first!\n\n"
     expect{ Messages.ready_to_play(player1, player2, player1) }.to output(message).to_stdout
