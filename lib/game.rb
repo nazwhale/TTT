@@ -43,7 +43,6 @@ class Game
     human_move_confirmation(choice)
   end
 
-
   def make_computer_move(player)
     computer_thinking
     unless game_over?

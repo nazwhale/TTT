@@ -12,7 +12,7 @@ class GameMaker
   def new_game
     choose_game_type
     show_game_type_confirmation(@game.player1.class.to_s, @game.player2.class.to_s)
-    choose_first_player
+    choose_starting_player
     ready_to_play_message
     @game.play
   end
@@ -79,9 +79,9 @@ class GameMaker
     end
   end
 
-  def choose_first_player
+  def choose_starting_player
     loop do
-    choose_first_player_message
+    choose_starting_player_message
     choice = gets.chomp
       case choice
       when "1"
@@ -96,8 +96,8 @@ class GameMaker
     end
   end
 
-  def choose_first_player_message
-    Messages.choose_first_player(@game.player1, @game.player2)
+  def choose_starting_player_message
+    Messages.choose_starting_player(@game.player1, @game.player2)
   end
 
   def ready_to_play_message
