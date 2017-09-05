@@ -9,5 +9,4 @@ describe Human do
       expect(human.symbol).to eq "O"
     end
   end
-
 end
