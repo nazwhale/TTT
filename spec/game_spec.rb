@@ -23,9 +23,7 @@ describe Game do
   describe '#play' do
 
     before do
-      allow(game).to receive(:choose_first_player_message)
-      allow(game).to receive(:gets).and_return("1")
-      game.choose_first_player
+      game.current_player = player1
     end
 
     context 'game not over' do
@@ -81,40 +79,6 @@ describe Game do
         allow(game).to receive(:game_over_message)
         game.play
         expect(game).to have_received(:game_over_message)
-      end
-    end
-  end
-
-  describe '#choose_first_player' do
-    context 'valid input' do
-      it 'sets current player to 1 if chosen' do
-        allow(game).to receive(:choose_first_player_message)
-        allow(game).to receive(:gets).and_return("1")
-        game.choose_first_player
-        expect(game.current_player).to eq player1
-      end
-
-      it 'sets current player to 2 if chosen' do
-        allow(game).to receive(:choose_first_player_message)
-        allow(game).to receive(:gets).and_return("2")
-        game.choose_first_player
-        expect(game.current_player).to eq player2
-      end
-    end
-
-    context 'invalid input' do
-      it 'outputs an error message if input does not relate to a player' do
-        allow(game).to receive(:choose_first_player_message)
-        allow(game).to receive(:gets).and_return("3", "1")
-        message = "Invalid input!\n"
-        expect{ game.choose_first_player }.to output(message).to_stdout
-      end
-
-      it 'outputs an error message if input is empty' do
-        allow(game).to receive(:choose_first_player_message)
-        allow(game).to receive(:gets).and_return("", "1")
-        message = "Invalid input!\n"
-        expect{ game.choose_first_player }.to output(message).to_stdout
       end
     end
   end

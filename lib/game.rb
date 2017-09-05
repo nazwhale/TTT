@@ -6,6 +6,7 @@ require_relative 'board'
 class Game
 
   attr_reader :player1, :player2, :board, :current_player
+  attr_writer :current_player
 
   def initialize(player1, player2, board = Board.new)
     @player1 = player1
@@ -24,26 +25,6 @@ class Game
     game_over_message
   end
 
-  def choose_first_player
-    loop do
-    choose_first_player_message
-    choice = gets.chomp
-      case choice
-      when "1"
-        @current_player = @player1
-        break
-      when "2"
-        @current_player = @player2
-        break
-      else
-        puts "Invalid input!"
-      end
-    end
-  end
-
-  def choose_first_player_message
-    Messages.choose_first_player(@player1, @player2)
-  end
 
   def switch_player
     @current_player == @player1 ? @current_player = @player2 : @current_player = @player1

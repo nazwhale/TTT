@@ -3,6 +3,7 @@ require_relative 'game'
 class GameMaker
 
   attr_reader :game
+  attr_writer :game
 
   def initialize
     @game = nil
@@ -11,7 +12,7 @@ class GameMaker
   def new_game
     choose_game_type
     show_game_type_confirmation(@game.player1.class.to_s, @game.player2.class.to_s)
-    @game.choose_first_player
+    choose_first_player
     ready_to_play_message
     @game.play
   end
@@ -76,6 +77,27 @@ class GameMaker
         return choice
       end
     end
+  end
+
+  def choose_first_player
+    loop do
+    choose_first_player_message
+    choice = gets.chomp
+      case choice
+      when "1"
+        @game.current_player = @game.player1
+        break
+      when "2"
+        @game.current_player = @game.player2
+        break
+      else
+        puts "Invalid input!"
+      end
+    end
+  end
+
+  def choose_first_player_message
+    Messages.choose_first_player(@game.player1, @game.player2)
   end
 
   def ready_to_play_message
