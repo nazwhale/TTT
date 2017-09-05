@@ -87,7 +87,7 @@ describe GameMaker do
 
       it 'outputs an error if symbol is an integer' do
         allow(game_maker).to receive(:gets).and_return("6", 'X')
-        message = "Symbol cannot be an integer! Please try again.\nYou chose: X\n\nYou chose: X\n\n"
+        message = "Symbol cannot be an integer! Please try again.\nYou chose: X\n\n"
         expect{ game_maker.get_symbol(nil) }.to output(message).to_stdout
       end
 
