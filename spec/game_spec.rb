@@ -21,6 +21,13 @@ describe Game do
   end
 
   describe '#play' do
+
+    before do
+      allow(game).to receive(:choose_first_player_message)
+      allow(game).to receive(:gets).and_return("1")
+      game.choose_first_player
+    end
+
     context 'game not over' do
       it 'shows the board state before each move' do
         allow(game.board).to receive(:game_over?).and_return(false, true)
@@ -78,21 +85,74 @@ describe Game do
     end
   end
 
-  describe '#who_goes_first' do
-    it 'sets current player to 1 if chosen' do
-      allow(game).to receive(:who_goes_first_message)
-      allow(game).to receive(:gets).and_return("1")
-      game.who_goes_first
-      expect(game.current_player).to eq player1
+  describe '#choose_first_player' do
+    context 'valid input' do
+      it 'sets current player to 1 if chosen' do
+        allow(game).to receive(:choose_first_player_message)
+        allow(game).to receive(:gets).and_return("1")
+        game.choose_first_player
+        expect(game.current_player).to eq player1
+      end
+
+      it 'sets current player to 2 if chosen' do
+        allow(game).to receive(:choose_first_player_message)
+        allow(game).to receive(:gets).and_return("2")
+        game.choose_first_player
+        expect(game.current_player).to eq player2
+      end
     end
 
-    it 'sets current player to 2 if chosen' do
-      allow(game).to receive(:who_goes_first_message)
-      allow(game).to receive(:gets).and_return("2")
-      game.who_goes_first
-      expect(game.current_player).to eq player2
+    context 'invalid input' do
+      it 'outputs an error message if input does not relate to a player' do
+        allow(game).to receive(:choose_first_player_message)
+        allow(game).to receive(:gets).and_return("3", "1")
+        message = "Invalid input!\n"
+        expect{ game.choose_first_player }.to output(message).to_stdout
+      end
+
+      it 'outputs an error message if input is empty' do
+        allow(game).to receive(:choose_first_player_message)
+        allow(game).to receive(:gets).and_return("", "1")
+        message = "Invalid input!\n"
+        expect{ game.choose_first_player }.to output(message).to_stdout
+      end
+    end
+  end
+
+  describe '#make_human_move' do
+    context 'valid input' do
+      it 'places a symbol for the chosen move' do
+        allow(game).to receive(:gets).and_return("2")
+        game.make_human_move(player1)
+        expect(game.board.state).to eq ["0", "1", "X", "3", "4", "5", "6", "7", "8"]
+      end
     end
 
+    context 'invalid input' do
+      it 'outputs error if move is an integer above the maximum board index' do
+        allow(Messages).to receive(:prompt_move)
+        allow(Messages).to receive(:human_move_confirmation)
+        allow(game).to receive(:gets).and_return("9", "3")
+        message = "Please choose one of the available squares!\n"
+        expect{ game.make_human_move(player1) }.to output(message).to_stdout
+      end
+
+      it 'outputs error if input is empty' do
+        allow(Messages).to receive(:prompt_move)
+        allow(Messages).to receive(:human_move_confirmation)
+        allow(game).to receive(:gets).and_return("", "4")
+        message = "Please choose one of the available squares!\n"
+        expect{ game.make_human_move(player1) }.to output(message).to_stdout
+      end
+
+      it 'outputs error if input is not an integer' do
+        allow(Messages).to receive(:prompt_move)
+        allow(Messages).to receive(:human_move_confirmation)
+        allow(game).to receive(:gets).and_return("Not An Integer", "5")
+        message = "Please choose one of the available squares!\n"
+        expect{ game.make_human_move(player1) }.to output(message).to_stdout
+      end
+    end
   end
 
 end

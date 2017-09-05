@@ -17,7 +17,7 @@ describe GameMaker do
     it 'calls choose_game_type' do
       allow(game_maker).to receive(:choose_game_type)
       allow(Messages).to receive(:ready_to_play)
-      allow(game).to receive(:who_goes_first)
+      allow(game).to receive(:choose_first_player)
       game_maker.instance_variable_set(:@game, game)
       allow(game_maker.game).to receive(:play)
       game_maker.new_game
@@ -48,6 +48,36 @@ describe GameMaker do
       allow(Messages).to receive(:prompt_game_type)
       game_maker.choose_game_type
       expect(game_maker).to have_received(:computer_vs_computer)
+    end
+  end
+
+  describe '#get_symbol' do
+    context 'valid' do
+      it 'accepts a unique 1 character symbol' do
+        allow(game_maker).to receive(:gets).and_return('X')
+        message = "You chose: X\n"
+        expect{ game_maker.get_symbol('O') }.to output(message).to_stdout
+      end
+    end
+
+    context 'invalid' do
+      it 'outputs an error if symbol is more than 1 character' do
+        allow(game_maker).to receive(:gets).and_return('LONG SYMBOL', 'X')
+        message = "Symbol must be 1 character long! Please try again.\nYou chose: X\n"
+        expect{ game_maker.get_symbol(nil) }.to output(message).to_stdout
+      end
+
+      it 'outputs an error if symbol ' do
+        allow(game_maker).to receive(:gets).and_return('', 'X')
+        message = "Symbol must be 1 character long! Please try again.\nYou chose: X\n"
+        expect{ game_maker.get_symbol(nil) }.to output(message).to_stdout
+      end
+
+      it 'outputs an error if symbol is the same as the opponent' do
+        allow(game_maker).to receive(:gets).and_return('O', 'X')
+        message = "Choose a different symbol to player 1!\nYou chose: X\n"
+        expect{ game_maker.get_symbol('O') }.to output(message).to_stdout
+      end
     end
   end
 

@@ -7,31 +7,30 @@ describe Messages do
 
   describe '#ready_to_play' do
     it 'outputs both players symbols and player to go first' do
-      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nX to go first!\n\nThe stage is set...\n\n"
+      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nThe stage is set...\nX to go first!\n\n"
       expect{ Messages.ready_to_play(player1, player2, player1) }.to output(message).to_stdout
     end
   end
 
   describe '#human_move_confirmation' do
-    it 'outputs both players symbols' do
-      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nX to go first!\n\nThe stage is set...\n\n"
-      expect{ Messages.ready_to_play(player1, player2, player1) }.to output(message).to_stdout
+    it 'displays appropriate message' do
+      message = "You chose: 3\n\n"
+      expect{ Messages.human_move_confirmation(3) }.to output(message).to_stdout
     end
   end
 
   describe '#computer_move_confirmation' do
-    it 'outputs both players symbols' do
-      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nX to go first!\n\nThe stage is set...\n\n"
-      expect{ Messages.ready_to_play(player1, player2, player1) }.to output(message).to_stdout
+    it 'displays appropriate message' do
+      message = "The Computer chose: 6\n\n"
+      expect{ Messages.computer_move_confirmation(6) }.to output(message).to_stdout
     end
   end
 
   describe '#print_board' do
     it 'outputs the current board state' do
       board = double("board", :state => ["0", "X", "2", "O", "X", "O", "6", "7", "8"] )
-      printed_board = "\n0 | X | 2\n==========\nO | X | O\n==========\n6 | 7 | 8\n\n"
-      expect{ Messages.print_board(board) }.to output(printed_board).to_stdout
-    end
+      printed_board = "0 | X | 2\n==========\nO | X | O\n==========\n6 | 7 | 8\n\n"
+      expect{ Messages.print_board(board) }.to output(printed_board).to_stdout end
   end
 
   describe '#choose_player1_symbol' do
@@ -57,15 +56,15 @@ describe Messages do
 
   describe '#game_type_confirmation' do
     it 'outputs the type of game' do
-      confirmation = "\nYou chose to play Human vs. Computer\n\n"
+      confirmation = "\nYou chose to play Human vs. Computer\n"
       expect{ Messages.game_type_confirmation("Human", "Computer") }.to output(confirmation).to_stdout
     end
   end
 
-  describe '#who_goes_first' do
+  describe '#choose_first_player' do
     it 'prompts user to choose the player that will start the game' do
       confirmation = "\nWho will play the first move?\nSelect 1 for: X\nSelect 2 for: O\n\n"
-      expect{ Messages.who_goes_first(player1, player2) }.to output(confirmation).to_stdout
+      expect{ Messages.choose_first_player(player1, player2) }.to output(confirmation).to_stdout
     end
   end
 

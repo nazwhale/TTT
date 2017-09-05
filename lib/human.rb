@@ -6,8 +6,4 @@ class Human
     @symbol = symbol
   end
 
-  def get_move
-    gets.chomp.to_i
-  end
-
 end

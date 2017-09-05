@@ -11,7 +11,7 @@ class Game
     @player1 = player1
     @player2 = player2
     @board = board
-    @current_player = @player1
+    @current_player = nil
   end
 
   def play
@@ -24,21 +24,25 @@ class Game
     game_over_message
   end
 
-  def who_goes_first
-    who_goes_first_message
+  def choose_first_player
+    loop do
+    choose_first_player_message
     choice = gets.chomp
-    case choice
-    when "1"
-      @current_player = @player1
-    when "2"
-      @current_player = @player2
+      case choice
+      when "1"
+        @current_player = @player1
+        break
+      when "2"
+        @current_player = @player2
+        break
+      else
+        puts "Invalid input!"
+      end
     end
   end
 
-  private
-
-  def who_goes_first_message
-    Messages.who_goes_first(@player1, @player2)
+  def choose_first_player_message
+    Messages.choose_first_player(@player1, @player2)
   end
 
   def switch_player
@@ -57,10 +61,13 @@ class Game
     Messages.prompt_move
     choice = nil
     until choice
-      choice = player.get_move
-      choice = nil if @board.occupied?(choice)
+      choice = gets.chomp
+      if @board.occupied?(choice) || choice == ""
+        puts "Please choose one of the available squares!"
+        choice = nil
+      end
     end
-    place_symbol(player, choice)
+    place_symbol(player, choice.to_i)
     Messages.human_move_confirmation(choice)
   end
 
