@@ -108,6 +108,12 @@ describe Game do
   end
 
   describe '#make_human_move' do
+
+    before do
+      allow(Messages).to receive(:prompt_move)
+      allow(Messages).to receive(:human_move_confirmation)
+    end
+
     context 'valid input' do
       it 'places a symbol for the chosen move' do
         allow(game).to receive(:gets).and_return("2")
@@ -118,24 +124,18 @@ describe Game do
 
     context 'invalid input' do
       it 'outputs error if move is an integer above the maximum board index' do
-        allow(Messages).to receive(:prompt_move)
-        allow(Messages).to receive(:human_move_confirmation)
         allow(game).to receive(:gets).and_return("9", "3")
         message = "Please choose one of the available squares!\n"
         expect{ game.make_human_move(player1) }.to output(message).to_stdout
       end
 
       it 'outputs error if input is empty' do
-        allow(Messages).to receive(:prompt_move)
-        allow(Messages).to receive(:human_move_confirmation)
         allow(game).to receive(:gets).and_return("", "4")
         message = "Please choose one of the available squares!\n"
         expect{ game.make_human_move(player1) }.to output(message).to_stdout
       end
 
       it 'outputs error if input is not an integer' do
-        allow(Messages).to receive(:prompt_move)
-        allow(Messages).to receive(:human_move_confirmation)
         allow(game).to receive(:gets).and_return("Not An Integer", "5")
         message = "Please choose one of the available squares!\n"
         expect{ game.make_human_move(player1) }.to output(message).to_stdout
