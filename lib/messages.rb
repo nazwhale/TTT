@@ -9,22 +9,22 @@ class Messages
     puts "Player 1 will play as: " + player1.symbol
     puts "Player 2 will play as: " + player2.symbol
     puts
-    puts current_player.symbol + " to go first!"
-    puts
     puts "The stage is set..."
+    puts current_player.symbol + " to go first!"
     puts
   end
 
   def self.human_move_confirmation(choice)
     puts "You chose: " + choice.to_s
+    puts
   end
 
   def self.computer_move_confirmation(choice)
     puts "The Computer chose: " + choice.to_s
+    puts
   end
 
   def self.print_board(board)
-    puts
     puts "#{board.state[0]} | #{board.state[1]} | #{board.state[2]}"
     print_line
     puts "#{board.state[3]} | #{board.state[4]} | #{board.state[5]}"

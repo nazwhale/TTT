@@ -7,21 +7,21 @@ describe Messages do
 
   describe '#ready_to_play' do
     it 'outputs both players symbols and player to go first' do
-      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nX to go first!\n\nThe stage is set...\n\n"
+      message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nThe stage is set...\nX to go first!\n\n"
       expect{ Messages.ready_to_play(player1, player2, player1) }.to output(message).to_stdout
     end
   end
 
   describe '#human_move_confirmation' do
     it 'displays appropriate message' do
-      message = "You chose: 3\n"
+      message = "You chose: 3\n\n"
       expect{ Messages.human_move_confirmation(3) }.to output(message).to_stdout
     end
   end
 
   describe '#computer_move_confirmation' do
     it 'displays appropriate message' do
-      message = "The Computer chose: 6\n"
+      message = "The Computer chose: 6\n\n"
       expect{ Messages.computer_move_confirmation(6) }.to output(message).to_stdout
     end
   end
@@ -29,7 +29,7 @@ describe Messages do
   describe '#print_board' do
     it 'outputs the current board state' do
       board = double("board", :state => ["0", "X", "2", "O", "X", "O", "6", "7", "8"] )
-      printed_board = "\n0 | X | 2\n==========\nO | X | O\n==========\n6 | 7 | 8\n\n"
+      printed_board = "0 | X | 2\n==========\nO | X | O\n==========\n6 | 7 | 8\n\n"
       expect{ Messages.print_board(board) }.to output(printed_board).to_stdout end
   end
 
