@@ -93,7 +93,7 @@ class Game
   end
 
   def human_move_confirmation(move)
-    Messages.human_move_confirmation(move)
+    Messages.choice_confirmation(move)
   end
 
   def computer_move_confirmation(move)

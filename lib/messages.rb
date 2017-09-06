@@ -19,7 +19,7 @@ class Messages
     puts
   end
 
-  def self.human_move_confirmation(choice)
+  def self.choice_confirmation(choice)
     puts "You chose: " + choice.to_s
     puts
   end
@@ -48,6 +48,18 @@ class Messages
 
   def self.choose_player2_symbol
     puts "What symbol will player 2 use?"
+  end
+
+  def self.wrong_symbol_length
+    puts "Symbol must be 1 character long! Please try again."
+  end
+
+  def self.symbol_must_be_original
+    puts "Choose a different symbol to player 1!"
+  end
+
+  def self.symbol_cant_be_integer
+    puts "Symbol cannot be an integer! Please try again."
   end
 
   def self.prompt_game_type

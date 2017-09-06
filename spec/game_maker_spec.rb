@@ -7,25 +7,20 @@ describe GameMaker do
   let(:player2) { Computer.new("O") }
   let(:game) { Game.new(player1, player2) }
 
-  describe '#initialize' do
-    it 'has a board' do
-      expect(game_maker.game).to be nil
-    end
-  end
-
   describe '#new_game' do
     it 'calls choose_game_type' do
-      allow(game_maker).to receive(:welcome_message)
-      allow(game_maker).to receive(:choose_player1_symbol_message)
+      allow(Messages).to receive(:welcome)
+      allow(Messages).to receive(:choose_player1_symbol)
+      allow(Messages).to receive(:choose_player2_symbol)
       allow(game_maker).to receive(:get_symbol)
-      allow(game_maker).to receive(:choose_player2_symbol_message)
       allow(game_maker).to receive(:choose_game_type)
       allow(Messages).to receive(:ready_to_play)
       allow(game_maker).to receive(:choose_starting_player)
+      allow(Messages).to receive(:game_type_confirmation)
       game_maker.instance_variable_set(:@game, game)
       allow(game_maker.game).to receive(:play)
       game_maker.new_game
-      expect(game_maker).to have_received(:choose_game_type)
+      expect(game_maker).to have_received(:choose_game_type).once
     end
   end
 
@@ -123,13 +118,13 @@ describe GameMaker do
     context 'invalid input' do
       it 'outputs an error message if input does not relate to a player' do
         allow(game_maker).to receive(:gets).and_return("3", "1")
-        message = "Invalid input!\n"
+        message = "Invalid input! Please try again...\n\n"
         expect{ game_maker.choose_starting_player }.to output(message).to_stdout
       end
 
       it 'outputs an error message if input is empty' do
         allow(game_maker).to receive(:gets).and_return("", "1")
-        message = "Invalid input!\n"
+        message = "Invalid input! Please try again...\n\n"
         expect{ game_maker.choose_starting_player }.to output(message).to_stdout
       end
     end

@@ -62,21 +62,16 @@ class GameMaker
     loop do
     choice = gets.chomp
       if choice.length != 1
-        puts "Symbol must be 1 character long! Please try again."
+        wrong_symbol_length_message
       elsif choice == opponent_symbol
-        puts "Choose a different symbol to player 1!"
+        symbol_must_be_original_message
       elsif is_an_integer?(choice)
-        puts "Symbol cannot be an integer! Please try again."
+        symbol_cant_be_integer_message
       else
-        puts "You chose: " + choice
-        puts
+        choice_confirmation(choice)
         return choice
       end
     end
-  end
-
-  def is_an_integer?(choice)
-    /\A[-+]?\d+\z/.match(choice)
   end
 
   def choose_starting_player
@@ -91,14 +86,12 @@ class GameMaker
         @game.current_player = @game.player2
         break
       else
-        puts "Invalid input!"
+        try_again_message
       end
     end
   end
 
-  def choose_starting_player_message
-    Messages.choose_starting_player(@game.player1, @game.player2)
-  end
+  private
 
   def choose_player1_symbol_message
     Messages.choose_player1_symbol
@@ -108,7 +101,25 @@ class GameMaker
     Messages.choose_player2_symbol
   end
 
-  private
+  def wrong_symbol_length_message
+    Messages.wrong_symbol_length
+  end
+
+  def symbol_must_be_original_message
+    Messages.symbol_must_be_original
+  end
+
+  def symbol_cant_be_integer_message
+    Messages.symbol_cant_be_integer
+  end
+
+  def choose_starting_player_message
+    Messages.choose_starting_player(@game.player1, @game.player2)
+  end
+
+  def is_an_integer?(choice)
+    /\A[-+]?\d+\z/.match(choice)
+  end
 
   def welcome_message
     Messages.welcome
@@ -128,6 +139,10 @@ class GameMaker
 
   def show_game_type_confirmation(player1_type, player2_type)
     Messages.game_type_confirmation(player1_type, player2_type)
+  end
+
+  def choice_confirmation(choice)
+    Messages.choice_confirmation(choice)
   end
 
 end
