@@ -10,26 +10,35 @@ class GameMaker
   end
 
   def new_game
-    choose_game_type
+    welcome_message
+
+    choose_player1_symbol_message
+    player1_symbol = get_symbol(nil)
+
+    choose_player2_symbol_message
+    player2_symbol = get_symbol(player1_symbol)
+
+    choose_game_type(player1_symbol, player2_symbol)
     show_game_type_confirmation(@game.player1.class.to_s, @game.player2.class.to_s)
+
     choose_starting_player
     ready_to_play_message
     @game.play
   end
 
-  def choose_game_type
+  def choose_game_type(player1_symbol, player2_symbol)
     loop do
     prompt_game_type
     game_type = gets.chomp.to_i
       case game_type
       when 1
-        human_vs_human
+        human_vs_human(player1_symbol, player2_symbol)
         break
       when 2
-        human_vs_computer
+        human_vs_computer(player1_symbol, player2_symbol)
         break
       when 3
-        computer_vs_computer
+        computer_vs_computer(player1_symbol, player2_symbol)
         break
       else
         try_again_message
@@ -37,31 +46,15 @@ class GameMaker
     end
   end
 
-  def human_vs_human
-    choose_player1_symbol_message
-    player1_symbol = get_symbol(nil)
-
-    choose_player2_symbol_message
-    player2_symbol = get_symbol(player1_symbol)
-
+  def human_vs_human(player1_symbol, player2_symbol)
     @game = Game.new(Human.new(player1_symbol), Human.new(player2_symbol))
   end
 
-  def human_vs_computer
-    choose_player1_symbol_message
-    player1_symbol = get_symbol(nil)
-
-    choose_player2_symbol_message
-    player2_symbol = get_symbol(player1_symbol)
+  def human_vs_computer(player1_symbol, player2_symbol)
     @game = Game.new(Human.new(player1_symbol), Computer.new(player2_symbol))
   end
 
-  def computer_vs_computer
-    choose_player1_symbol_message
-    player1_symbol = get_symbol(nil)
-
-    choose_player2_symbol_message
-    player2_symbol = get_symbol(player1_symbol)
+  def computer_vs_computer(player1_symbol, player2_symbol)
     @game = Game.new(Computer.new(player1_symbol), Computer.new(player2_symbol))
   end
 
@@ -69,11 +62,13 @@ class GameMaker
     loop do
     choice = gets.chomp
       if choice.length != 1
-        puts "Symbol must be 1 character long! Please try again."
+        wrong_symbol_length_message
       elsif choice == opponent_symbol
-        puts "Choose a different symbol to player 1!"
+        symbol_must_be_original_message
+      elsif is_an_integer?(choice)
+        symbol_cant_be_integer_message
       else
-        puts "You chose: " + choice
+        choice_confirmation(choice)
         return choice
       end
     end
@@ -91,13 +86,47 @@ class GameMaker
         @game.current_player = @game.player2
         break
       else
-        puts "Invalid input!"
+        try_again_message
       end
     end
   end
 
+  private
+
+  def choose_player1_symbol_message
+    Messages.choose_player1_symbol
+  end
+
+  def choose_player2_symbol_message
+    Messages.choose_player2_symbol
+  end
+
+  def wrong_symbol_length_message
+    Messages.wrong_symbol_length
+  end
+
+  def symbol_must_be_original_message
+    Messages.symbol_must_be_original
+  end
+
+  def symbol_cant_be_integer_message
+    Messages.symbol_cant_be_integer
+  end
+
   def choose_starting_player_message
     Messages.choose_starting_player(@game.player1, @game.player2)
+  end
+
+  def is_an_integer?(choice)
+    /\A[-+]?\d+\z/.match(choice)
+  end
+
+  def welcome_message
+    Messages.welcome
+  end
+
+  def try_again_message
+    Messages.try_again
   end
 
   def ready_to_play_message
@@ -108,19 +137,12 @@ class GameMaker
     Messages.prompt_game_type
   end
 
-  def choose_player1_symbol_message
-    Messages.choose_player1_symbol
-  end
-
-  def choose_player2_symbol_message
-    Messages.choose_player2_symbol
-  end
-
   def show_game_type_confirmation(player1_type, player2_type)
     Messages.game_type_confirmation(player1_type, player2_type)
   end
 
-  def try_again_message
-    Messages.try_again
+  def choice_confirmation(choice)
+    Messages.choice_confirmation(choice)
   end
+
 end

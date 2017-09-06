@@ -95,7 +95,7 @@ describe Game do
   describe '#make_human_move' do
     before do
       allow(Messages).to receive(:prompt_move)
-      allow(Messages).to receive(:human_move_confirmation)
+      allow(Messages).to receive(:choice_confirmation)
       game.board.state = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
     end
 

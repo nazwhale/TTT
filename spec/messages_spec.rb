@@ -5,14 +5,19 @@ describe Messages do
   let(:player1) { Human.new("X") }
   let(:player2) { Computer.new("O") }
 
+  it 'welcomes the players to the game' do
+    message = "Welcome to Tic-Tac-Toe!\n\n"
+    expect{ Messages.welcome }.to output(message).to_stdout
+  end
+
   it 'ready to play message' do
     message = "\nPlayer 1 will play as: X\nPlayer 2 will play as: O\n\nThe stage is set...\nX to go first!\n\n"
     expect{ Messages.ready_to_play(player1, player2, player1) }.to output(message).to_stdout
   end
 
-  it 'human move confirmation' do
+  it 'choice confirmation' do
     message = "You chose: 3\n\n"
-    expect{ Messages.human_move_confirmation(3) }.to output(message).to_stdout
+    expect{ Messages.choice_confirmation(3) }.to output(message).to_stdout
   end
 
   it 'computer move confirmation' do
@@ -34,6 +39,21 @@ describe Messages do
   it 'prompts choice of player2 symbol' do
     message = "What symbol will player 2 use?\n"
     expect{ Messages.choose_player2_symbol }.to output(message).to_stdout
+  end
+
+  it 'wrong symbol length message' do
+    message = "Symbol must be 1 character long! Please try again.\n"
+    expect{ Messages.wrong_symbol_length }.to output(message).to_stdout
+  end
+
+  it 'symbol must be original message' do
+    message = "Choose a different symbol to player 1!\n"
+    expect{ Messages.symbol_must_be_original }.to output(message).to_stdout
+  end
+
+  it 'symbol_cant_be_integer' do
+    message = "Symbol cannot be an integer! Please try again.\n"
+    expect{ Messages.symbol_cant_be_integer }.to output(message).to_stdout
   end
 
   it 'prompts choice of game type' do
