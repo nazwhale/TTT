@@ -33,7 +33,7 @@ class Game
     choice = nil
     until choice
       choice = gets.chomp
-      if choice_valid?(choice)
+      if choice_invalid?(choice)
         invalid_choice_message
         choice = nil
       end
@@ -63,7 +63,7 @@ class Game
 
   private
 
-  def choice_valid?(choice)
+  def choice_invalid?(choice)
     @board.occupied?(choice) || choice == ""
   end
 
