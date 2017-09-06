@@ -33,6 +33,8 @@ After that, I spent some time diagramming, planning out the architecture of my g
 
 Once I was happy with each of my objects, I began implementing the features I had identified in my user stories. While doing this, it became apparent that a 'Game Maker' object would be beneficial to handle the initial setup of the Game and instantiate the players, leaving the Game object to only be responsible for the gameplay. I also extracted all of my output messages to a class of their own ('Messages'), in order to remove view information from my back-end logic.
 
+Before submitting my solution, I re-read through the brief and realised that I had misread the desired difficulty of the Computer player (implementing medium, instead of unbeatable). I then did some research on creating an unbeatable Tic-Tac-Toe AI. I found the Minimax solution, which I subsequently implemented.
+
 ### User Stories
 
 ```
@@ -53,8 +55,8 @@ Incase the children playing the game press the wrong buttons,
 I would like the game to gracefully handle bad user input.
 
 As a project manager,
-So that the game is a fun level of difficulty,
-I would like the computer player to sometimes be beatable.
+So that I can the difficulty of the game is set at hard,
+I would like the computer player to be unbeatable.
 
 As a project manager,
 So that that I can play alone, with a friend, or watch two computers play,
