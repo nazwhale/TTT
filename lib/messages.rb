@@ -1,8 +1,4 @@
-require_relative 'game'
-
 class Messages
-
-  attr_reader :game
 
   def self.welcome
     puts "Welcome to Tic-Tac-Toe!"
