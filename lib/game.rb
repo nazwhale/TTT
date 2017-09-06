@@ -16,13 +16,12 @@ class Game
   end
 
   def play
+    show_current_board
     until @board.game_over?
-      show_current_board
       make_move(@current_player)
+      show_current_board
       switch_player
     end
-    show_current_board
-    game_over_message
   end
 
   def make_move(player)
@@ -34,7 +33,7 @@ class Game
     choice = nil
     until choice
       choice = gets.chomp
-      if choice_valid?(choice)
+      if choice_invalid?(choice)
         invalid_choice_message
         choice = nil
       end
@@ -64,7 +63,7 @@ class Game
 
   private
 
-  def choice_valid?(choice)
+  def choice_invalid?(choice)
     @board.occupied?(choice) || choice == ""
   end
 
