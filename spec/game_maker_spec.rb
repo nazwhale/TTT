@@ -25,36 +25,64 @@ describe GameMaker do
   end
 
   describe '#choose_game_type' do
-    it 'chooses two human players' do
-      allow(game_maker).to receive(:gets).and_return('1')
-      allow(game_maker).to receive(:human_vs_human)
+
+    before do
       allow(Messages).to receive(:prompt_game_type)
-      game_maker.choose_game_type("X", "O")
-      expect(game_maker).to have_received(:human_vs_human)
     end
 
-    it 'chooses human vs computer' do
-      allow(game_maker).to receive(:gets).and_return('2')
-      allow(game_maker).to receive(:human_vs_computer)
-      allow(Messages).to receive(:prompt_game_type)
-      game_maker.choose_game_type("X", "O")
-      expect(game_maker).to have_received(:human_vs_computer)
+    context '#human_vs_human' do
+      it 'chooses two human players' do
+        allow(game_maker).to receive(:gets).and_return('1')
+        allow(game_maker).to receive(:human_vs_human)
+        game_maker.choose_game_type("X", "O")
+        expect(game_maker).to have_received(:human_vs_human)
+      end
+
+      it 'makes a game with two instances of Human' do
+        game_maker.human_vs_human("X", "O")
+        expect(game_maker.game.player1).to be_a Human
+        expect(game_maker.game.player2).to be_a Human
+      end
     end
 
-    it 'chooses two computer players' do
-      allow(game_maker).to receive(:gets).and_return('3')
-      allow(game_maker).to receive(:computer_vs_computer)
-      allow(Messages).to receive(:prompt_game_type)
-      game_maker.choose_game_type("X", "O")
-      expect(game_maker).to have_received(:computer_vs_computer)
+    context '#human_vs_computer' do
+      it 'chooses human vs computer' do
+        allow(game_maker).to receive(:gets).and_return('2')
+        allow(game_maker).to receive(:human_vs_computer)
+        game_maker.choose_game_type("X", "O")
+        expect(game_maker).to have_received(:human_vs_computer)
+      end
+
+      it 'makes a game with one human and one computer' do
+        game_maker.human_vs_computer("X", "O")
+        expect(game_maker.game.player1).to be_a Human
+        expect(game_maker.game.player2).to be_a Computer
+      end
     end
 
-    it 'calls try again message if invalid input' do
-      allow(game_maker).to receive(:gets).and_return('4', '1')
-      allow(Messages).to receive(:try_again)
-      allow(game_maker).to receive(:human_vs_human)
-      game_maker.choose_game_type("X", "O")
-      expect(Messages).to have_received(:try_again).once
+    context '#computer_vs_computer' do
+      it 'chooses two computer players' do
+        allow(game_maker).to receive(:gets).and_return('3')
+        allow(game_maker).to receive(:computer_vs_computer)
+        game_maker.choose_game_type("X", "O")
+        expect(game_maker).to have_received(:computer_vs_computer)
+      end
+
+      it 'makes a game with two instances of computer' do
+        game_maker.computer_vs_computer("X", "O")
+        expect(game_maker.game.player1).to be_a Computer
+        expect(game_maker.game.player2).to be_a Computer
+      end
+    end
+
+    context 'invalid input' do
+      it 'calls try again message if invalid input' do
+        allow(game_maker).to receive(:gets).and_return('4', '1')
+        allow(game_maker).to receive(:human_vs_human)
+        allow(Messages).to receive(:try_again)
+        game_maker.choose_game_type("X", "O")
+        expect(Messages).to have_received(:try_again).once
+      end
     end
   end
 
