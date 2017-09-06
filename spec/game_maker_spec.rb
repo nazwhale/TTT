@@ -8,24 +8,34 @@ describe GameMaker do
   let(:game) { Game.new(player1, player2) }
 
   describe '#new_game' do
-    it 'calls choose_game_type' do
+    before do
       allow(Messages).to receive(:welcome)
       allow(Messages).to receive(:choose_player1_symbol)
       allow(Messages).to receive(:choose_player2_symbol)
+      allow(Messages).to receive(:ready_to_play)
+      allow(Messages).to receive(:game_type_confirmation)
       allow(game_maker).to receive(:get_symbol)
       allow(game_maker).to receive(:choose_game_type)
-      allow(Messages).to receive(:ready_to_play)
       allow(game_maker).to receive(:choose_starting_player)
-      allow(Messages).to receive(:game_type_confirmation)
       game_maker.instance_variable_set(:@game, game)
       allow(game_maker.game).to receive(:play)
       game_maker.new_game
+    end
+
+    it 'calls get_symbol twice' do
+      expect(game_maker).to have_received(:get_symbol).twice
+    end
+
+    it 'calls choose_game_type' do
       expect(game_maker).to have_received(:choose_game_type).once
+    end
+
+    it 'calls choose_starting_player' do
+      expect(game_maker).to have_received(:choose_starting_player).once
     end
   end
 
   describe '#choose_game_type' do
-
     before do
       allow(Messages).to receive(:prompt_game_type)
     end
@@ -87,11 +97,16 @@ describe GameMaker do
   end
 
   describe '#get_symbol' do
+    before do
+      allow(Messages).to receive(:choose_player1_symbol)
+      allow(Messages).to receive(:choose_player2_symbol)
+    end
+
     context 'valid' do
       it 'accepts a unique 1 character symbol' do
         allow(game_maker).to receive(:gets).and_return('X')
         message = "You chose: X\n\n"
-        expect{ game_maker.get_symbol('O') }.to output(message).to_stdout
+        expect{ game_maker.get_symbol(2, 'O') }.to output(message).to_stdout
       end
     end
 
@@ -99,31 +114,30 @@ describe GameMaker do
       it 'outputs an error if symbol is more than 1 character' do
         allow(game_maker).to receive(:gets).and_return('LONG SYMBOL', 'X')
         message = "Symbol must be 1 character long! Please try again.\nYou chose: X\n\n"
-        expect{ game_maker.get_symbol(nil) }.to output(message).to_stdout
+        expect{ game_maker.get_symbol(1, nil) }.to output(message).to_stdout
       end
 
       it 'outputs an error if symbol is blank' do
         allow(game_maker).to receive(:gets).and_return('', 'X')
         message = "Symbol must be 1 character long! Please try again.\nYou chose: X\n\n"
-        expect{ game_maker.get_symbol(nil) }.to output(message).to_stdout
+        expect{ game_maker.get_symbol(1, nil) }.to output(message).to_stdout
       end
 
       it 'outputs an error if symbol is an integer' do
         allow(game_maker).to receive(:gets).and_return("6", 'X')
         message = "Symbol cannot be an integer! Please try again.\nYou chose: X\n\n"
-        expect{ game_maker.get_symbol(nil) }.to output(message).to_stdout
+        expect{ game_maker.get_symbol(1, nil) }.to output(message).to_stdout
       end
 
       it 'outputs an error if symbol is the same as the opponent' do
         allow(game_maker).to receive(:gets).and_return('O', 'X')
         message = "Choose a different symbol to player 1!\nYou chose: X\n\n"
-        expect{ game_maker.get_symbol('O') }.to output(message).to_stdout
+        expect{ game_maker.get_symbol(2, 'O') }.to output(message).to_stdout
       end
     end
   end
 
   describe '#choose_starting_player' do
-
     before do
       game_maker.game = game
       allow(Messages).to receive(:choose_starting_player)
@@ -157,7 +171,4 @@ describe GameMaker do
       end
     end
   end
-
-
 end
-

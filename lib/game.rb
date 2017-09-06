@@ -16,13 +16,12 @@ class Game
   end
 
   def play
+    show_current_board
     until @board.game_over?
-      show_current_board
       make_move(@current_player)
+      show_current_board
       switch_player
     end
-    show_current_board
-    game_over_message
   end
 
   def make_move(player)

@@ -12,11 +12,8 @@ class GameMaker
   def new_game
     welcome_message
 
-    choose_player1_symbol_message
-    player1_symbol = get_symbol(nil)
-
-    choose_player2_symbol_message
-    player2_symbol = get_symbol(player1_symbol)
+    player1_symbol = get_symbol(1, nil)
+    player2_symbol = get_symbol(2, player1_symbol)
 
     choose_game_type(player1_symbol, player2_symbol)
     show_game_type_confirmation(@game.player1.class.to_s, @game.player2.class.to_s)
@@ -24,6 +21,25 @@ class GameMaker
     choose_starting_player
     ready_to_play_message
     @game.play
+
+    @game.game_over_message
+  end
+
+  def get_symbol(player, opponent_symbol)
+    player == 1 ? choose_player1_symbol_message : choose_player2_symbol_message
+    loop do
+    choice = gets.chomp
+      if choice.length != 1
+        wrong_symbol_length_message
+      elsif choice == opponent_symbol
+        symbol_must_be_original_message
+      elsif is_an_integer?(choice)
+        symbol_cant_be_integer_message
+      else
+        choice_confirmation(choice)
+        return choice
+      end
+    end
   end
 
   def choose_game_type(player1_symbol, player2_symbol)
@@ -56,22 +72,6 @@ class GameMaker
 
   def computer_vs_computer(player1_symbol, player2_symbol)
     @game = Game.new(Computer.new(player1_symbol), Computer.new(player2_symbol))
-  end
-
-  def get_symbol(opponent_symbol)
-    loop do
-    choice = gets.chomp
-      if choice.length != 1
-        wrong_symbol_length_message
-      elsif choice == opponent_symbol
-        symbol_must_be_original_message
-      elsif is_an_integer?(choice)
-        symbol_cant_be_integer_message
-      else
-        choice_confirmation(choice)
-        return choice
-      end
-    end
   end
 
   def choose_starting_player
