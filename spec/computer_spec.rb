@@ -13,7 +13,6 @@ describe Computer do
   end
 
   describe '#get_move' do
-
     it 'gets the middle square when it is available' do
       board.state = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
       expect(computer.get_move(board, opponent)).to eq 4
@@ -24,11 +23,9 @@ describe Computer do
       expect(computer).to receive(:get_best_move).and_return 1
       computer.get_move(board, opponent)
     end
-
   end
 
   describe '#get_best_move' do
-
     it 'seizes the win' do
       board.state = ["0", "X", "2", "O", "X", "O", "6", "7", "8"]
       expect(computer.get_best_move(board, opponent)).to eq 7
@@ -48,7 +45,6 @@ describe Computer do
       board.state = ["X", "O", "O", "O", "X", "X", "6", "7", "O"]
       expect(computer.get_best_move(board, opponent)).to eq(6).or(eq(7))
     end
-
   end
 
 end
