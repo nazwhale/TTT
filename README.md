@@ -27,11 +27,11 @@ My brief was from a fictional product manager, who had previously hired a consul
 
 I first read though the brief a number of times, picking out the changes highlighted by my fictional product manager and turning them into user stories (see below).
 
-As I had been given a game of Tic-Tac-Toe which essentially worked, my plan was to implement as many tests as possible before writing any new code. That way I could ensure I wasn't breaking the mechanics of the game whilst refactoring it.
+As I had been given a game of Tic-Tac-Toe which essentially worked, my plan was to implement as many tests as possible before writing any new code. That way I could ensure I wasn't breaking the mechanics of the game whilst refactoring it. Once this was completed, I set upon renaming variables and refactoring the code into smaller methods with single responsibilities.
 
-After that, I spent some time diagramming, planning out the architecture of my game. I decided on a Game object to handle the start of the game, cycles of play, and end of the game. My Board object would handle the rules of Tic-Tac-Toe, while the Human player would store a symbol. Finally, my Computer player also stored a symbol, while also being aware of it's opponent's symbol and having the functionality of choosing a move by itself.
+After that, I spent some time diagramming, planning out the architecture of my game. I decided on a 'Game' object to handle the start of the game, cycles of play, and end of the game. My 'Board' object would handle the rules of Tic-Tac-Toe, while the 'Human' player would store a symbol. Finally, my 'Computer' player also stored a symbol, while also being aware of it's opponent's symbol and having the functionality of choosing a move by itself. One-by-one, I extracted each object from my Game class, test-driving the development of each.
 
-Later, while implementing features, I decided to also introduce a Game Maker object, which would handle the initial setup of the Game and instantiate the players, leaving the Game object to only be responsible for the gameplay. I also extracted all of my output messages to a class of their own (Messages), in order to remove view information from my back-end logic.
+Only once that was complete, I began implementing the features I had identified in my user stories. While doing this, it became apparent that a 'Game Maker' object would be beneficial to handle the initial setup of the Game and instantiate the players, leaving the Game object to only be responsible for the gameplay. I also extracted all of my output messages to a class of their own ('Messages'), in order to remove view information from my back-end logic.
 
 ### User Stories
 
