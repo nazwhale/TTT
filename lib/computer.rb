@@ -10,7 +10,7 @@ class Computer
   end
 
   def get_move(board, opponent)
-    board.state[4] == MIDDLE_SQUARE ? 4 : get_best_move(board, opponent)
+    middle_square_taken?(board) ? MIDDLE_SQUARE.to_i : get_best_move(board, opponent)
   end
 
   def get_best_move(board, opponent)
@@ -23,13 +23,16 @@ class Computer
 
   private
 
+  def middle_square_taken?(board)
+    board.state[4] == MIDDLE_SQUARE
+  end
+
   def game_ending_move(board, empty_squares, symbol)
     best_move = nil
     empty_squares.each do |square|
       index = square.to_i
       board.state[index] = symbol
       best_move = index if board.game_won?
-
       reset_square(board, square)
     end
     best_move
