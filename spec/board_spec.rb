@@ -81,7 +81,6 @@ describe Board do
   describe '#game_won?' do
     context 'true' do
       context 'horizontal win' do
-
         it 'top row' do
           board.state = ["X", "X", "X", "O", "4", "O", "6", "7", "O"]
           expect(board.game_won?).to be true
@@ -96,7 +95,6 @@ describe Board do
           board.state = ["1", "2", "3", "O", "O", "6", "X", "X", "X"]
           expect(board.game_won?).to be true
         end
-
       end
 
       context 'vertical win' do
