@@ -32,7 +32,7 @@ class Computer
     empty_squares.each do |square|
       index = square.to_i
       board.state[index] = player.symbol
-      best_move = index if board.game_won?(player)
+      best_move = index if board.win?(player)
       reset_square(board, square)
     end
     best_move

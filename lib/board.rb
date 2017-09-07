@@ -20,7 +20,7 @@ class Board
     anyone_won?(player1, player2) ? false : board_full?
   end
 
-  def game_won?(player)
+  def win?(player)
     all_wins.any? { |line| line.count(player.symbol) == 3 }
   end
 
@@ -50,7 +50,7 @@ class Board
   end
 
   def anyone_won?(player1, player2)
-    game_won?(player1) || game_won?(player2)
+    win?(player1) || win?(player2)
   end
 
   def board_full?
