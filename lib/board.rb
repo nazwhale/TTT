@@ -12,16 +12,16 @@ class Board
     index.to_s != @state[index.to_i]
   end
 
-  def game_over?
-    game_won? || tie?
+  def game_over?(player1, player2)
+    anyone_won?(player1, player2) || tie?(player1, player2)
   end
 
-  def tie?
-    game_won? ? false : @state.all? { |square| occupied?(@state.index(square)) }
+  def tie?(player1, player2)
+    anyone_won?(player1, player2) ? false : board_full?
   end
 
-  def game_won?
-    all_wins.any? { |line| line.uniq.length == 1 }
+  def game_won?(player)
+    all_wins.any? { |line| line.count(player.symbol) == 3 }
   end
 
   private
@@ -47,5 +47,13 @@ class Board
       [@state[0], @state[4], @state[8]],
       [@state[2], @state[4], @state[6]]
     ]
+  end
+
+  def anyone_won?(player1, player2)
+    game_won?(player1) || game_won?(player2)
+  end
+
+  def board_full?
+    @state.all? { |square| occupied?(@state.index(square)) }
   end
 end

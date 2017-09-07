@@ -15,8 +15,8 @@ class Computer
 
   def get_best_move(board, opponent)
     empty_squares = get_empty_squares(board)
-    best_move = game_ending_move(board, empty_squares, @symbol)
-    best_move = game_ending_move(board, empty_squares, opponent.symbol) unless best_move
+    best_move = game_ending_move(board, empty_squares, self)
+    best_move = game_ending_move(board, empty_squares, opponent) unless best_move
     best_move = make_random_move(empty_squares) unless best_move
     best_move
   end
@@ -27,12 +27,12 @@ class Computer
     board.state[4] == MIDDLE_SQUARE
   end
 
-  def game_ending_move(board, empty_squares, symbol)
+  def game_ending_move(board, empty_squares, player)
     best_move = nil
     empty_squares.each do |square|
       index = square.to_i
-      board.state[index] = symbol
-      best_move = index if board.game_won?
+      board.state[index] = player.symbol
+      best_move = index if board.game_won?(player)
       reset_square(board, square)
     end
     best_move

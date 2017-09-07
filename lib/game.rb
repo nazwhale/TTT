@@ -17,7 +17,7 @@ class Game
 
   def play
     show_current_board
-    until @board.game_over?
+    until game_over?
       make_move(@current_player)
       show_current_board
       switch_player
@@ -72,11 +72,11 @@ class Game
   end
 
   def game_over?
-    @board.game_over?
+    @board.game_over?(@player1, @player2)
   end
 
   def tie?
-    @board.tie?
+    @board.tie?(@player1, @player2)
   end
 
   def human_player?(player)
