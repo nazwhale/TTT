@@ -17,7 +17,7 @@ class Board
   end
 
   def tie?
-    @state.all? { |square| occupied?(@state.index(square)) }
+    game_won? ? false : @state.all? { |square| occupied?(@state.index(square)) }
   end
 
   def game_won?

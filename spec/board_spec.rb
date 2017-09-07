@@ -55,8 +55,8 @@ describe Board do
 
   describe '#tie' do
     context 'true' do
-      it 'is a tie' do
-        board.state = ["X", "X", "O", "X", "O", "O", "X", "O", "X"]
+      it 'is a tie', :focus => true do
+        board.state = ["O", "X", "O", "X", "O", "O", "X", "O", "X"]
         expect(board.tie?).to be true
       end
     end
@@ -73,6 +73,11 @@ describe Board do
 
       it 'has unoccupied squares with no win' do
         board.state = ["X", "O", "X", "O", "X", "5", "O", "X", "O"]
+        expect(board.tie?).to be false
+      end
+
+      it 'is fully occupied with a win' do
+        board.state = ["X", "X", "X", "O", "O", "X", "O", "X", "O"]
         expect(board.tie?).to be false
       end
     end
