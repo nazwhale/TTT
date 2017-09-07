@@ -45,7 +45,7 @@ class Game
   def make_computer_move(player)
     computer_thinking
     unless game_over?
-      choice = player.get_move(@board, get_opponent(player))
+      choice = player.get_move(self)
       place_symbol(player, choice)
     end
     computer_move_confirmation(choice)
@@ -61,14 +61,14 @@ class Game
     see_you_again
   end
 
+  def switch_player
+    @current_player == @player1 ? @current_player = @player2 : @current_player = @player1
+  end
+
   private
 
   def choice_invalid?(choice)
     @board.occupied?(choice) || choice == ""
-  end
-
-  def switch_player
-    @current_player == @player1 ? @current_player = @player2 : @current_player = @player1
   end
 
   def game_over?

@@ -9,16 +9,35 @@ class Computer
     @opponent = nil
   end
 
-  def get_move(board, opponent)
-    middle_square_taken?(board) ? MIDDLE_SQUARE.to_i : get_best_move(board, opponent)
+  def get_move(game)
+    move = get_best_move(game)
+    game.current_player = self
+    move
   end
 
-  def get_best_move(board, opponent)
-    empty_squares = get_empty_squares(board)
-    best_move = game_ending_move(board, empty_squares, self)
-    best_move = game_ending_move(board, empty_squares, opponent) unless best_move
-    best_move = make_random_move(empty_squares) unless best_move
-    best_move
+  def get_best_move(game, depth=0, best_score={})
+    return -1 if game.board.win?(game.get_opponent(self))
+    return 1 if game.board.win?(self)
+    return 0 if game.board.tie?(game.player1, game.player2)
+
+    get_empty_squares(game.board).each do |space|
+
+      game.switch_player
+      game.board.state[space.to_i] = game.get_opponent(game.current_player).symbol
+
+      p best_score
+      best_score[space] = -1 * get_best_move(game, depth + 1, {})
+      reset_square(game.board, space)
+    end
+
+    best_move = best_score.max_by { |key, value| value }[0]
+    highest_minimax_score = best_score.max_by { |key, value| value }[1]
+
+    if depth == 0
+      best_move.to_i
+    elsif depth > 0
+      highest_minimax_score.to_i
+    end
   end
 
   private
