@@ -16,31 +16,48 @@ class Computer
   end
 
   def get_best_move(game, depth=0, best_score={})
-    return -1 if game.board.win?(game.get_opponent(self))
-    return 1 if game.board.win?(self)
-    return 0 if game.board.tie?(game.player1, game.player2)
+
+    return score(game) if game.board.game_over?(game.player1, game.player2)
 
     get_empty_squares(game.board).each do |space|
+      space_index = space.to_i
 
       game.switch_player
-      game.board.state[space.to_i] = game.get_opponent(game.current_player).symbol
+
+      opponent = game.get_opponent(game.current_player)
+      game.board.state[space_index] = opponent.symbol
 
       p best_score
-      best_score[space] = -1 * get_best_move(game, depth + 1, {})
+      best_score[space_index] = -1 * get_best_move(game, depth + 1, {})
       reset_square(game.board, space)
     end
 
-    best_move = best_score.max_by { |key, value| value }[0]
-    highest_minimax_score = best_score.max_by { |key, value| value }[1]
-
     if depth == 0
-      best_move.to_i
+      best_minimax_score(best_score)
     elsif depth > 0
-      highest_minimax_score.to_i
+      highest_minimax_score(best_score)
     end
   end
 
   private
+
+  def score(game)
+    if game.board.win?(self)
+      1
+    elsif game.board.win?(game.get_opponent(self))
+      -1
+    elsif game.board.tie?(game.player1, game.player2)
+      0
+    end
+  end
+
+  def best_minimax_score(best_score)
+    best_score.max_by { |key, value| value }[0]
+  end
+
+  def highest_minimax_score(best_score)
+    best_score.max_by { |key, value| value }[1]
+  end
 
   def middle_square_taken?(board)
     board.state[4] == MIDDLE_SQUARE
