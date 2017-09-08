@@ -17,46 +17,54 @@ class Computer
 
   def get_best_move(game, depth=0, best_score={})
 
-    return score(game) if game.board.game_over?(game.player1, game.player2)
+    return score(game, depth) if game.board.game_over?(game.player1, game.player2)
 
     get_empty_squares(game.board).each do |space|
       space_index = space.to_i
 
+      game.place_symbol(game.current_player, space_index)
+      puts "Board: " + game.board.state.to_s + "   " + depth.to_s + "   " + space
+
+      best_score[space_index] = get_best_move(game, depth + 1, {})
+
+      reset_square(game.board, space)
       game.switch_player
 
-      opponent = game.get_opponent(game.current_player)
-      game.board.state[space_index] = opponent.symbol
-
-      p best_score
-      best_score[space_index] = -1 * get_best_move(game, depth + 1, {})
-      reset_square(game.board, space)
     end
 
     if depth == 0
+      puts 'THIS ONE   ' + best_score.to_s + "   <<<<<<<<<<<<<<<<<<<<<<<<<< "
       best_minimax_score(best_score)
     elsif depth > 0
-      highest_minimax_score(best_score)
+      game.current_player.symbol == @symbol ? highest_minimax_score(best_score) : alternatave_score(best_score)
     end
   end
 
   private
 
-  def score(game)
+  def score(game, depth)
     if game.board.win?(self)
-      1
+      puts "WIN BOARD: " + game.board.state.to_s
+      10 - depth + 0.5
     elsif game.board.win?(game.get_opponent(self))
-      -1
+      puts "LOSE BOARD: " + game.board.state.to_s
+      depth - 10
     elsif game.board.tie?(game.player1, game.player2)
+      puts "TIE BOARD: " + game.board.state.to_s
       0
     end
   end
 
   def best_minimax_score(best_score)
-    best_score.max_by { |key, value| value }[0]
+    best_score.max_by { |key, value| value.abs }[0]
   end
 
   def highest_minimax_score(best_score)
     best_score.max_by { |key, value| value }[1]
+  end
+
+  def alternatave_score(best_score)
+    best_score.min_by { |key, value| value }[1]
   end
 
   def middle_square_taken?(board)

@@ -65,6 +65,10 @@ class Game
     @current_player == @player1 ? @current_player = @player2 : @current_player = @player1
   end
 
+  def place_symbol(player, choice)
+    @board.state[choice] = player.symbol
+  end
+
   private
 
   def choice_invalid?(choice)
@@ -81,10 +85,6 @@ class Game
 
   def human_player?(player)
     player.class == Human
-  end
-
-  def place_symbol(player, choice)
-    @board.state[choice] = player.symbol
   end
 
   def prompt_move

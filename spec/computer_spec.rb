@@ -16,12 +16,17 @@ describe Computer do
   end
 
   describe '#get_best_move' do
+
+    before do
+      game.current_player = computer
+    end
+
     it 'seizes the win' do
       game.board.state = ["0", "X", "2", "O", "X", "O", "6", "7", "8"]
       expect(computer.get_best_move(game)).to eq 7
     end
 
-    it 'prevents a loss' do
+    it 'prevents a loss', :focus => true do
       game.board.state = ["X", "1", "2", "O", "O", "5", "6", "7", "X"]
       expect(computer.get_best_move(game)).to eq 5
     end
@@ -34,6 +39,10 @@ describe Computer do
     it 'makes a random move if no win or loss is in sight' do
       game.board.state = ["X", "O", "O", "O", "X", "X", "6", "7", "O"]
       expect(computer.get_best_move(game)).to eq(6).or(eq(7))
+    end
+
+    it 'asdf' do
+      game.board.state = ["X", "1", "X", "X", "O", "O", "O", "7", "X"]
     end
   end
 
