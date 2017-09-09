@@ -14,7 +14,6 @@ class Computer
   end
 
   def get_best_move(game, depth = 0, move_scores = {})
-
     return score(game, depth) if game.board.game_over?(game.player1, game.player2)
 
     get_empty_squares(game.board).each do |square|
