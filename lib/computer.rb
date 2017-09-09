@@ -66,17 +66,6 @@ class Computer
     move_scores.min_by { |key, value| value }[1]
   end
 
-  def game_ending_move(board, empty_squares, player)
-    best_move = nil
-    empty_squares.each do |square|
-      index = square.to_i
-      board.state[index] = player.symbol
-      best_move = index if board.win?(player)
-      reset_square(board, square)
-    end
-    best_move
-  end
-
   def reset_square(board, square)
     board.state[square.to_i] = square
   end
