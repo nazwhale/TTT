@@ -55,18 +55,18 @@ class Game
     @player1 == player ? @player2 : @player1
   end
 
-  def game_over_message
-    switch_player
-    tie? ? tie_message : win_message(@current_player)
-    see_you_again
-  end
-
   def switch_player
     @current_player == @player1 ? @current_player = @player2 : @current_player = @player1
   end
 
   def place_symbol(player, choice)
     @board.state[choice] = player.symbol
+  end
+
+  def game_over_message
+    switch_player
+    tie? ? tie_message : win_message(@current_player)
+    see_you_again
   end
 
   private
