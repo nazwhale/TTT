@@ -40,7 +40,7 @@ describe Board do
     end
 
     it 'is not empty' do
-      board.state = ["X", "N", "O", "X", "4", "O", "X", "O", "X"]
+      board.state = ["X", "1", "2", "3", "4", "5", "6", "7", "8"]
       expect(board.empty?).to be false
     end
   end
