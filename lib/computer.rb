@@ -22,8 +22,10 @@ class Computer
     get_empty_squares(game.board).each do |space|
       space_index = space.to_i
 
+      depth.even? ? game.current_player = self : game.current_player = game.get_opponent(self)
+
       game.place_symbol(game.current_player, space_index)
-      puts "Board: " + game.board.state.to_s + "   " + depth.to_s + "   " + space
+      puts "Board: " + game.board.state.to_s + " D:  " + depth.to_s + " S:  " + space
 
       best_score[space_index] = get_best_move(game, depth + 1, {})
 
@@ -36,34 +38,41 @@ class Computer
       puts 'THIS ONE   ' + best_score.to_s + "   <<<<<<<<<<<<<<<<<<<<<<<<<< "
       best_minimax_score(best_score)
     elsif depth > 0
-      game.current_player.symbol == @symbol ? highest_minimax_score(best_score) : alternatave_score(best_score)
+      puts "minmaxing:   #{best_score} <<<<<<<<<<<<<<<<<<<<<<<<<< "
+      game.current_player.symbol != @symbol ? highest_minimax_score(best_score) : alternative_score(best_score)
     end
   end
 
   private
 
   def score(game, depth)
+    puts "Current player: " + game.current_player.symbol
+    puts "Self: " + self.symbol
+
     if game.board.win?(self)
-      puts "WIN BOARD: " + game.board.state.to_s
-      10 - depth + 0.5
+      puts "WIN BOARD: " + game.board.state.to_s + " in #{depth} moves"
+      puts "-----------------"
+      100 / depth
     elsif game.board.win?(game.get_opponent(self))
-      puts "LOSE BOARD: " + game.board.state.to_s
-      depth - 10
+      puts "LOSE BOARD: " + game.board.state.to_s + " in #{depth} moves"
+      puts "-----------------"
+      -100 / depth
     elsif game.board.tie?(game.player1, game.player2)
-      puts "TIE BOARD: " + game.board.state.to_s
+      puts "TIE BOARD: " + game.board.state.to_s + " in #{depth} moves"
+      puts "-----------------"
       0
     end
   end
 
   def best_minimax_score(best_score)
-    best_score.max_by { |key, value| value.abs }[0]
+    best_score.max_by { |key, value| value }[0]
   end
 
   def highest_minimax_score(best_score)
     best_score.max_by { |key, value| value }[1]
   end
 
-  def alternatave_score(best_score)
+  def alternative_score(best_score)
     best_score.min_by { |key, value| value }[1]
   end
 
