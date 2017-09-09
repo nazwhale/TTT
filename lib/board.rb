@@ -14,7 +14,7 @@ class Board
   end
 
   def empty?
-    @state == EMPTY_BOARD
+    @state.none? { |square| occupied?(square) }
   end
 
   def game_over?(player1, player2)

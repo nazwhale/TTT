@@ -21,9 +21,7 @@ class Computer
       square_index = square.to_i
 
       depth.even? ? game.current_player = self : game.current_player = game.get_opponent(self)
-
       game.place_symbol(game.current_player, square_index)
-
       move_scores[square_index] = get_best_move(game, depth + 1, {})
 
       reset_square(game.board, square)
