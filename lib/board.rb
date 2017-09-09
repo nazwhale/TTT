@@ -1,6 +1,7 @@
 class Board
 
   EMPTY_BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+  CORNERS = [0, 2, 6, 8]
   attr_reader :state
   attr_writer :state
 
@@ -26,6 +27,10 @@ class Board
 
   def win?(player)
     all_wins.any? { |line| line.count(player.symbol) == 3 }
+  end
+
+  def get_corners
+    CORNERS
   end
 
   private

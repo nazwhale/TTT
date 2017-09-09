@@ -164,4 +164,10 @@ describe Board do
       end
     end
   end
+
+  describe '#get_corners' do
+    it 'returns an array of corner indexes' do
+      expect(board.get_corners).to eq Board::CORNERS
+    end
+  end
 end

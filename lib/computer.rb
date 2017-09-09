@@ -2,15 +2,13 @@ class Computer
 
   attr_reader :symbol
 
-  MIDDLE_SQUARE = "4"
-
   def initialize(symbol)
     @symbol = symbol
     @opponent = nil
   end
 
   def get_move(game)
-    game.board.empty? ? move = choose_corner : move = get_best_move(game)
+    game.board.empty? ? move = choose_corner(game) : move = get_best_move(game)
     game.current_player = self
     move
   end
@@ -35,14 +33,14 @@ class Computer
     if depth == 0
       pick_best_move(move_scores)
     elsif depth > 0
-      game.current_player != self ? maximise_score(move_scores) : minimise_score(move_scores)
+      game.current_player == self ? minimise_score(move_scores) : maximise_score(move_scores)
     end
   end
 
   private
 
-  def choose_corner
-    corners = [0, 2, 6, 8]
+  def choose_corner(game)
+    corners = game.board.get_corners
     make_random_move(corners)
   end
 
