@@ -33,6 +33,16 @@ After that, I spent some time diagramming, planning out the architecture of my g
 
 Once I was happy with each of my objects, I began implementing the features I had identified in my user stories. While doing this, it became apparent that a 'Game Maker' object would be beneficial to handle the initial setup of the Game and instantiate the players, leaving the Game object to only be responsible for the gameplay. I also extracted all of my output messages to a class of their own ('Messages'), in order to remove view information from my back-end logic.
 
+Before submitting my solution, I re-read through the brief and realised that I had misread the desired difficulty of the Computer player (implementing medium, instead of unbeatable). I then did some research on creating an unbeatable Tic-Tac-Toe AI, and decided that the Minimax algorithm was the right tool for the job.
+
+I found some great blog posts ([this](http://neverstopbuilding.com/minimax) and [this](http://malcolmnewsome.com/post/74172036027/unbeatable-tic-tac-toe-with-minimax)) explaining implementations of Minimax in Ruby, and tried to adapt these to my implementation of Tic-Tac-Toe. However, I couldn't seem to get anything working. My Computer player was behaving in confusing ways and debugging a recursive algorithm proved difficult.
+
+After a **lot** of struggling, I eventually had something that worked. The breakthroughs came when I took a step back, wrote more tests, and logged everything I could think of to the console (see below). Outputting all my data in the correct order really deepened my understanding of the algorithm.
+
+![Screenshot](https://i.imgur.com/LhxdJ0L.png)
+
+Following that, I noticed that my algorithm was taking a very long time to calculate the first move on an empty board, but was arriving at the same conclusion every time. I did a bit of research and found a [delicious xkcd drawing](https://xkcd.com/832/), showing that the corners give the first player the best winning possibilities. After test-driving this, I had an unbeatable (and slightly more efficient) AI for Tic-Tac-Toe!
+
 ### User Stories
 
 ```
@@ -53,8 +63,8 @@ Incase the children playing the game press the wrong buttons,
 I would like the game to gracefully handle bad user input.
 
 As a project manager,
-So that the game is a fun level of difficulty,
-I would like the computer player to sometimes be beatable.
+So that I can the difficulty of the game is set at hard,
+I would like the computer player to be unbeatable.
 
 As a project manager,
 So that that I can play alone, with a friend, or watch two computers play,

@@ -1,50 +1,88 @@
 require 'computer'
+require 'human'
+require 'game'
 
 describe Computer do
-
-  subject(:computer) { described_class.new("X") }
-  let(:opponent) { Human.new("O") }
-  let(:board) { Board.new }
+  subject(:computer_x) { described_class.new("X") }
+  let(:opponent_o) { Human.new("O") }
+  let(:player_1_game) { Game.new(computer_x, opponent_o) }
+  let(:computer_o) { described_class.new("O") }
+  let(:opponent_x) { Human.new("X") }
+  let(:player_2_game) { Game.new(opponent_x, computer_o) }
 
   describe '#initialize' do
     it 'has a symbol' do
-      expect(computer.symbol).to eq "X"
+      expect(computer_x.symbol).to eq "X"
     end
   end
 
   describe '#get_move' do
-    it 'gets the middle square when it is available' do
-      board.state = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
-      expect(computer.get_move(board, opponent)).to eq 4
+    it 'chooses a corner if the board is empty' do
+      player_1_game.board.state = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+      move = computer_x.get_move(player_1_game)
+      corners = [0, 2, 6, 8]
+      expect(corners).to include move
     end
 
-    it 'calls get_best_move if middle square is taken' do
-      board.state = ["0", "1", "2", "3", "O", "5", "6", "7", "8"]
-      expect(computer).to receive(:get_best_move).and_return 1
-      computer.get_move(board, opponent)
+    it 'calls get_best_move if the board is not empty' do
+      player_1_game.board.state = ["0", "X", "2", "3", "4", "5", "6", "7", "8"]
+      allow(computer_x).to receive(:get_best_move)
+      computer_x.get_move(player_1_game)
+      expect(computer_x).to have_received(:get_best_move).once
     end
   end
 
   describe '#get_best_move' do
-    it 'seizes the win' do
-      board.state = ["0", "X", "2", "O", "X", "O", "6", "7", "8"]
-      expect(computer.get_best_move(board, opponent)).to eq 7
+    context 'playing as X' do
+      before do
+        player_1_game.current_player = computer_x
+      end
+
+      it 'seizes the win' do
+        player_1_game.board.state = ["0", "X", "2", "O", "X", "O", "6", "7", "8"]
+        expect(computer_x.get_best_move(player_1_game)).to eq 7
+      end
+
+      it 'prevents a loss', :focus => true do
+        player_1_game.board.state = ["X", "1", "2", "O", "O", "5", "6", "7", "X"]
+        expect(computer_x.get_best_move(player_1_game)).to eq 5
+      end
+
+      it 'seizes the win, even when within one move of losing' do
+        player_1_game.board.state = ["X", "X", "2", "3", "O", "O", "6", "7", "8"]
+        expect(computer_x.get_best_move(player_1_game)).to eq 2
+      end
+
+      it 'makes a random move if no win or loss is in sight' do
+        player_1_game.board.state = ["X", "O", "O", "O", "X", "X", "6", "7", "O"]
+        expect(computer_x.get_best_move(player_1_game)).to eq(6).or(eq(7))
+      end
+
+      it 'chooses to win rather than block - player 1' do
+        player_1_game.board.state = ["X","1","X","3","4","5","O","7","O"]
+        expect(computer_x.get_best_move(player_1_game)).to eq 1
+      end
     end
 
-    it 'prevents a loss' do
-      board.state = ["X", "1", "2", "O", "O", "5", "6", "7", "X"]
-      expect(computer.get_best_move(board, opponent)).to eq 5
-    end
+    context 'playing as O' do
+      before do
+        player_2_game.current_player = computer_o
+      end
 
-    it 'seizes the win, even when within one move of losing' do
-      board.state = ["X", "X", "2", "3", "O", "O", "6", "7", "8"]
-      expect(computer.get_best_move(board, opponent)).to eq 2
-    end
+      it 'chooses to win rather than block - player 2'do
+        player_2_game.board.state = ["X","1","X","X","4","5","O","7","O"]
+        expect(computer_o.get_best_move(player_2_game)).to eq 7
+      end
 
-    it 'makes a random move if no win or loss is in sight' do
-      board.state = ["X", "O", "O", "O", "X", "X", "6", "7", "O"]
-      expect(computer.get_best_move(board, opponent)).to eq(6).or(eq(7))
+      it 'siezes the win - player 2' do
+        player_2_game.board.state = ["X","1","2","X","O","5","O","7","8"]
+        expect(computer_o.get_best_move(player_2_game)).to eq 2
+      end
+
+      it "blocks a win - player 2" do
+        player_2_game.board.state = ["0","1","2","O","4","5","X","X","8"]
+        expect(computer_o.get_best_move(player_2_game)).to eq 8
+      end
     end
   end
-
 end

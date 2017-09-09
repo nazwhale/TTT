@@ -19,6 +19,7 @@ describe GameMaker do
       allow(game_maker).to receive(:choose_starting_player)
       game_maker.instance_variable_set(:@game, game)
       allow(game_maker.game).to receive(:play)
+      allow(game_maker.game).to receive(:game_over_message)
       game_maker.new_game
     end
 
