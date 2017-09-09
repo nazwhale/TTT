@@ -34,6 +34,17 @@ describe Board do
     end
   end
 
+  describe '#empty?' do
+    it 'is empty' do
+      expect(board.empty?).to be true
+    end
+
+    it 'is not empty' do
+      board.state = ["X", "N", "O", "X", "4", "O", "X", "O", "X"]
+      expect(board.empty?).to be false
+    end
+  end
+
   describe '#game_over' do
     context 'true' do
       it 'is a tie' do

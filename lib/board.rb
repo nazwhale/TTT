@@ -12,6 +12,10 @@ class Board
     index.to_s != @state[index.to_i]
   end
 
+  def empty?
+    @state == EMPTY_BOARD
+  end
+
   def game_over?(player1, player2)
     anyone_won?(player1, player2) || tie?(player1, player2)
   end

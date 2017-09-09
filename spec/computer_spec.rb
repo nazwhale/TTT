@@ -16,6 +16,22 @@ describe Computer do
     end
   end
 
+  describe '#get_move' do
+    it 'chooses a corner if the board is empty' do
+      game.board.state = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+      move = computer.get_move(game)
+      corners = [0, 2, 6, 8]
+      expect(corners).to include move
+    end
+
+    it 'calls get_best_move if the board is not empty' do
+      game.board.state = ["0", "X", "2", "3", "4", "5", "6", "7", "8"]
+      allow(computer).to receive(:get_best_move)
+      computer.get_move(game)
+      expect(computer).to have_received(:get_best_move).once
+    end
+  end
+
   describe '#get_best_move' do
     context 'playing as X' do
       before do
