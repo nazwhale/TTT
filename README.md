@@ -9,8 +9,8 @@ A command-line game of Noughts and Crosses (or, for the non-British, [Tic-Tac-To
 Clone repository:
 
 ```
-$ git clone git@github.com:nazwhale/TTT.git
-$ cd TTT
+$ git clone git@github.com:nazwhale/Tic-Tac-Toe.git
+$ cd Tic-Tac-Toe
 ```
 Install dependencies with [Bundler](http://bundler.io/):
 ```
