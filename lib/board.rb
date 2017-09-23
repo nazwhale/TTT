@@ -26,7 +26,7 @@ class Board
   end
 
   def win?(player)
-    all_wins.any? { |line| line.count(player.symbol) == 3 }
+    win_scenarios.any? { |line| line.count(player.symbol) == 3 }
   end
 
   def get_corners
@@ -35,11 +35,11 @@ class Board
 
   private
 
-  def all_wins
-    row_wins + column_wins + diagonal_wins
+  def win_scenarios
+    rows + columns + diagonals
   end
 
-  def row_wins
+  def rows
     [
       [@state[0], @state[1], @state[2]],
       [@state[3], @state[4], @state[5]],
@@ -47,11 +47,11 @@ class Board
     ]
   end
 
-  def column_wins
-    row_wins.transpose
+  def columns
+    rows.transpose
   end
 
-  def diagonal_wins
+  def diagonals
     [
       [@state[0], @state[4], @state[8]],
       [@state[2], @state[4], @state[6]]
