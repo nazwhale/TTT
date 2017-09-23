@@ -5,8 +5,7 @@ class Messages
   end
 
   def self.ready_to_play(player1, player2, current_player)
-    puts
-    puts "Player 1 will play as: " + player1.symbol + "\n" +
+    puts "\nPlayer 1 will play as: " + player1.symbol + "\n" +
          "Player 2 will play as: " + player2.symbol + "\n\n" +
          "The stage is set...\n" +
           current_player.symbol + " to go first!\n\n"
@@ -56,7 +55,7 @@ class Messages
     puts "What kind of game would you like to play?\n" +
          "Select 1 for 😌  vs. 😌 \n" +
          "Select 2 for 😌  vs. 🤖 \n" +
-         "Select 3 for 🤖  vs. 🤖 \n"
+         "Select 3 for 🤖  vs. 🤖 \n" 
     print "Your choice: "
   end
 
@@ -87,9 +86,8 @@ class Messages
   end
 
   def self.win_message(winner)
-    puts "Congratulations " + winner.symbol + ", you won!"
-    puts "🎉  🎉  🎉  🎉  🎉"
-    puts
+    puts "Congratulations " + winner.symbol + ", you won!\n" +
+         "🎉  🎉  🎉  🎉  🎉\n\n"
   end
 
   def self.see_you_again
