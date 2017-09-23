@@ -83,7 +83,7 @@ describe Messages do
 
   it 'displays computer thinking message' do
     allow(Messages).to receive(:sleep)
-    message = "The Computer is thinking... ... ...\n"
+    message = "The Computer is thinking...\n"
     expect{ Messages.computer_thinking }.to output(message).to_stdout
   end
 

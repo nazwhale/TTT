@@ -1,28 +1,23 @@
 class Messages
 
   def self.welcome
-    puts "Welcome to Tic-Tac-Toe!"
-    puts
+    puts "Welcome to Tic-Tac-Toe!\n\n"
   end
 
   def self.ready_to_play(player1, player2, current_player)
     puts
-    puts "Player 1 will play as: " + player1.symbol
-    puts "Player 2 will play as: " + player2.symbol
-    puts
-    puts "The stage is set..."
-    puts current_player.symbol + " to go first!"
-    puts
+    puts "Player 1 will play as: " + player1.symbol + "\n" +
+         "Player 2 will play as: " + player2.symbol + "\n\n" +
+         "The stage is set...\n" +
+          current_player.symbol + " to go first!\n\n"
   end
 
   def self.choice_confirmation(choice)
-    puts "You chose: " + choice.to_s
-    puts
+    puts "You chose: " + choice.to_s + "\n\n"
   end
 
   def self.computer_move_confirmation(choice)
-    puts "The Computer chose: " + choice.to_s
-    puts
+    puts "The Computer chose: " + choice.to_s + "\n\n"
   end
 
   def self.print_board(board)
@@ -30,8 +25,7 @@ class Messages
     print_line
     puts "#{board.state[3]} | #{board.state[4]} | #{board.state[5]}"
     print_line
-    puts "#{board.state[6]} | #{board.state[7]} | #{board.state[8]}"
-    puts
+    puts "#{board.state[6]} | #{board.state[7]} | #{board.state[8]}\n\n"
   end
 
   def self.print_line
@@ -59,29 +53,25 @@ class Messages
   end
 
   def self.prompt_game_type
-    puts "What kind of game would you like to play?"
-    puts "Select 1 for 😌  vs. 😌 "
-    puts "Select 2 for 😌  vs. 🤖 "
-    puts "Select 3 for 🤖  vs. 🤖 "
+    puts "What kind of game would you like to play?\n" +
+         "Select 1 for 😌  vs. 😌 \n" +
+         "Select 2 for 😌  vs. 🤖 \n" +
+         "Select 3 for 🤖  vs. 🤖 \n"
     print "Your choice: "
   end
 
   def self.game_type_confirmation(player1_type, player2_type)
-    puts
-    puts "You chose to play " + player1_type + " vs. " + player2_type
+    puts "\nYou chose to play " + player1_type + " vs. " + player2_type
   end
 
   def self.choose_starting_player(player1, player2)
-    puts
-    puts "Who will play the first move?"
-    puts "Select 1 for: " + player1.symbol
-    puts "Select 2 for: " + player2.symbol
-    puts
+    puts "\nWho will play the first move?\n" +
+         "Select 1 for: " + player1.symbol + "\n" +
+         "Select 2 for: " + player2.symbol + "\n\n"
   end
 
   def self.try_again
-    puts "Invalid input! Please try again..."
-    puts
+    puts "Invalid input! Please try again...\n\n"
   end
 
   def self.prompt_move
@@ -89,14 +79,7 @@ class Messages
   end
 
   def self.computer_thinking
-    print "The Computer is thinking"
-    sleep(1)
-    print "... "
-    sleep(1)
-    print "... "
-    sleep(1)
-    puts "..."
-    sleep(1)
+    print "The Computer is thinking...\n"
   end
 
   def self.tie_message
