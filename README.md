@@ -63,7 +63,7 @@ Incase the children playing the game press the wrong buttons,
 I would like the game to gracefully handle bad user input.
 
 As a project manager,
-So that I can the difficulty of the game is set at hard,
+To make the game difficult,
 I would like the computer player to be unbeatable.
 
 As a project manager,
