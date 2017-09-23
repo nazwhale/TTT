@@ -93,6 +93,10 @@ class GameMaker
 
   private
 
+  def is_an_integer?(choice)
+    choice == "0" || choice.to_i != 0
+  end
+
   def choose_player1_symbol_message
     Messages.choose_player1_symbol
   end
@@ -115,10 +119,6 @@ class GameMaker
 
   def choose_starting_player_message
     Messages.choose_starting_player(@game.player1, @game.player2)
-  end
-
-  def is_an_integer?(choice)
-    /\A[-+]?\d+\z/.match(choice)
   end
 
   def welcome_message
