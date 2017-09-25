@@ -125,12 +125,6 @@ describe Game do
       game.make_computer_move(player2)
       expect(game.board.state).to eq ["0", "1", "O", "3", "4", "5", "6", "7", "8"]
     end
-
-    it 'doesnt get a move if the game is over' do
-      game.board.state = ["X", "X", "X", "3", "4", "O", "O", "7", "8"]
-      expect(player2).not_to receive(:get_move)
-      game.make_computer_move(player2)
-    end
   end
 
   describe '#get_opponent' do

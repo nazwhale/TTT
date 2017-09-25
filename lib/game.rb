@@ -16,10 +16,10 @@ class Game
   end
 
   def play
-    show_current_board
+    show_current_board   # MESSAGES
     until game_over?
       make_move(@current_player)
-      show_current_board
+      show_current_board   # MESSAGES
       switch_player
     end
   end
@@ -29,26 +29,17 @@ class Game
   end
 
   def make_human_move(player)
-    prompt_move
-    choice = nil
-    until choice
-      choice = gets.chomp
-      if choice_invalid?(choice)
-        invalid_choice_message
-        choice = nil
-      end
-    end
-    place_symbol(player, choice.to_i)
-    human_move_confirmation(choice)
+    prompt_move   # MESSAGES
+    choice = get_human_input
+    place_symbol(player, choice)
+    human_move_confirmation(choice)  # MESSAGES
   end
 
   def make_computer_move(player)
-    computer_thinking
-    unless game_over?
-      choice = player.get_move(self)
-      place_symbol(player, choice)
-    end
-    computer_move_confirmation(choice)
+    computer_thinking   # MESSAGES
+    choice = player.get_move(self)
+    place_symbol(player, choice)
+    computer_move_confirmation(choice)   # MESSAGES
   end
 
   def get_opponent(player)
@@ -65,11 +56,23 @@ class Game
 
   def game_over_message
     switch_player
-    tie? ? tie_message : win_message(@current_player)
-    see_you_again
+    tie? ? tie_message : win_message(@current_player)   # MESSAGES
+    see_you_again   # MESSAGES
   end
 
   private
+
+  def get_human_input
+    choice = nil
+    until choice
+      choice = gets.chomp
+      if choice_invalid?(choice)
+        invalid_choice_message   # MESSAGES
+        choice = nil
+      end
+    end
+    choice.to_i
+  end
 
   def choice_invalid?(choice)
     @board.occupied?(choice) || choice == ""
