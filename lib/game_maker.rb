@@ -20,9 +20,16 @@ class GameMaker
 
     choose_starting_player
     ready_to_play_message
-    @game.play
-
+    game_cycle
     @game.game_over_message
+  end
+
+  def game_cycle
+    until @game.game_over?
+      @game.make_move(@game.current_player)
+      show_current_board   # MESSAGES
+      @game.switch_player
+    end
   end
 
   def get_symbol(player, opponent_symbol)
@@ -97,6 +104,10 @@ class GameMaker
     choice == "0" || choice.to_i != 0
   end
 
+  def show_current_board
+    Messages.print_board(@game.board)
+  end
+
   def choose_player1_symbol_message
     Messages.choose_player1_symbol
   end
@@ -131,6 +142,7 @@ class GameMaker
 
   def ready_to_play_message
     Messages.ready_to_play(@game.player1, @game.player2, @game.current_player)
+    show_current_board   # MESSAGES
   end
 
   def prompt_game_type

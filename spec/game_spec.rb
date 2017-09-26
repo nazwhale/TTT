@@ -20,49 +20,6 @@ describe Game do
     end
   end
 
-  describe '#play' do
-
-    before do
-      game.current_player = player1
-      allow(Messages).to receive(:print_board)
-        allow(game).to receive(:make_move)
-    end
-
-    context 'game not over' do
-      it 'shows the board state before each move' do
-        allow(game.board).to receive(:game_over?).and_return(false, true)
-        game.play
-        expect(game).to have_received(:make_move)
-      end
-
-      it 'calls make_move for each player' do
-        allow(game.board).to receive(:game_over?).and_return(false, false, true)
-        game.play
-        expect(game).to have_received(:make_move).twice
-      end
-
-      it 'switches player after a move' do
-        allow(game.board).to receive(:game_over?).and_return(false, true)
-        game.play
-        expect(game.current_player).to eq player2
-      end
-
-      it 'switches back to the first player after 2 moves' do
-        allow(game.board).to receive(:game_over?).and_return(false, false, true)
-        game.play
-        expect(game.current_player).to eq player1
-      end
-    end
-
-    context 'game over' do
-      it 'does not make another move' do
-        allow(game.board).to receive(:game_over?).and_return(true)
-        game.play
-        expect(game).not_to have_received(:make_move)
-      end
-    end
-  end
-
   describe '#make_move' do
     it 'calls make_human_move for a human player' do
       allow(game).to receive(:make_human_move)

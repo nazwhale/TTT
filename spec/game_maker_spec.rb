@@ -14,11 +14,12 @@ describe GameMaker do
       allow(Messages).to receive(:choose_player2_symbol)
       allow(Messages).to receive(:ready_to_play)
       allow(Messages).to receive(:game_type_confirmation)
+      allow(Messages).to receive(:print_board)
       allow(game_maker).to receive(:get_symbol)
       allow(game_maker).to receive(:choose_game_type)
       allow(game_maker).to receive(:choose_starting_player)
+      allow(game_maker).to receive(:game_cycle)
       game_maker.instance_variable_set(:@game, game)
-      allow(game_maker.game).to receive(:play)
       allow(game_maker.game).to receive(:game_over_message)
       game_maker.new_game
     end
@@ -33,6 +34,49 @@ describe GameMaker do
 
     it 'calls choose_starting_player' do
       expect(game_maker).to have_received(:choose_starting_player).once
+    end
+  end
+
+  describe '#game_cycle' do
+    before do
+      game.current_player = player1
+      allow(Messages).to receive(:print_board)
+      game_maker.instance_variable_set(:@game, game)
+      allow(game).to receive(:make_move)
+    end
+
+    context 'game not over' do
+      it 'shows the board state before each move' do
+        allow(game).to receive(:game_over?).and_return(false, true)
+        game_maker.game_cycle
+        expect(game_maker.game).to have_received(:make_move)
+      end
+
+      it 'calls make_move for each player' do
+        allow(game).to receive(:game_over?).and_return(false, false, true)
+        game_maker.game_cycle
+        expect(game).to have_received(:make_move).twice
+      end
+
+      it 'switches player after a move' do
+        allow(game).to receive(:game_over?).and_return(false, true)
+        game_maker.game_cycle
+        expect(game.current_player).to eq player2
+      end
+
+      it 'switches back to the first player after 2 moves' do
+        allow(game).to receive(:game_over?).and_return(false, false, true)
+        game_maker.game_cycle
+        expect(game.current_player).to eq player1
+      end
+    end
+
+    context 'game over' do
+      it 'does not make another move' do
+        allow(game).to receive(:game_over?).and_return(true)
+        game_maker.game_cycle
+        expect(game).not_to have_received(:make_move)
+      end
     end
   end
 

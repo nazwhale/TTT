@@ -15,15 +15,6 @@ class Game
     @current_player = nil
   end
 
-  def play
-    show_current_board   # MESSAGES
-    until game_over?
-      make_move(@current_player)
-      show_current_board   # MESSAGES
-      switch_player
-    end
-  end
-
   def make_move(player)
     human_player?(player) ? make_human_move(player) : make_computer_move(player)
   end
@@ -60,6 +51,10 @@ class Game
     see_you_again   # MESSAGES
   end
 
+  def game_over?
+    @board.game_over?(@player1, @player2)
+  end
+
   private
 
   def get_human_input
@@ -78,9 +73,6 @@ class Game
     @board.occupied?(choice) || choice == ""
   end
 
-  def game_over?
-    @board.game_over?(@player1, @player2)
-  end
 
   def tie?
     @board.tie?(@player1, @player2)
@@ -104,10 +96,6 @@ class Game
 
   def computer_thinking
     Messages.computer_thinking
-  end
-
-  def show_current_board
-    Messages.print_board(board)
   end
 
   def tie_message
