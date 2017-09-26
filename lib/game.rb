@@ -15,14 +15,6 @@ class Game
   end
 
   def make_move(player)
-    human_player?(player) ? make_human_move(player) : make_computer_move(player)
-  end
-
-  def make_human_move(player)
-    get_human_input
-  end
-
-  def make_computer_move(player)
     player.get_move(self)
   end
 
@@ -44,28 +36,6 @@ class Game
 
   def tie?
     @board.tie?(@player1, @player2)
-  end
-
-  private
-
-  def get_human_input
-    choice = nil
-    until choice
-      choice = gets.chomp
-      if choice_invalid?(choice)
-        choice = nil
-      end
-    end
-    choice.to_i
-  end
-
-  def choice_invalid?(choice)
-    @board.occupied?(choice) || choice == ""
-  end
-
-
-  def human_player?(player)
-    player.class == Human
   end
 
 end

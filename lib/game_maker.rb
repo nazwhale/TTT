@@ -20,10 +20,10 @@ class GameMaker
     game_type_confirmation
 
     choose_starting_player
-    ready_to_play_message
+    ready_to_play_confirmation
     game_cycle
 
-    game_over_message
+    game_over_confirmation
     @ui.see_you_again   
   end
 
@@ -118,11 +118,11 @@ class GameMaker
     @ui.game_type_confirmation(@game.player1.class.to_s, @game.player2.class.to_s)
   end
 
-  def game_over_message
+  def game_over_confirmation
     @game.tie? ? @ui.tie_message : @ui.win_message(@game.get_opponent(@game.current_player))
   end
 
-  def ready_to_play_message
+  def ready_to_play_confirmation
     @ui.ready_to_play(@game.player1, @game.player2, @game.current_player)
     show_current_board
   end

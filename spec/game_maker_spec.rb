@@ -11,6 +11,7 @@ describe GameMaker do
   describe '#new_game' do
     before do
       game_maker.instance_variable_set(:@ui, ui)
+      game_maker.instance_variable_set(:@game, game)
       allow(ui).to receive(:welcome)
       allow(ui).to receive(:choose_player1_symbol)
       allow(ui).to receive(:choose_player2_symbol)
@@ -18,12 +19,11 @@ describe GameMaker do
       allow(ui).to receive(:game_type_confirmation)
       allow(ui).to receive(:print_board)
       allow(ui).to receive(:see_you_again)
-      allow(game_maker).to receive(:game_over_message)
+      allow(game_maker).to receive(:game_over_confirmation)
       allow(game_maker).to receive(:get_symbol)
       allow(game_maker).to receive(:choose_game_type)
       allow(game_maker).to receive(:choose_starting_player)
       allow(game_maker).to receive(:game_cycle)
-      game_maker.instance_variable_set(:@game, game)
       game_maker.new_game
     end
 
