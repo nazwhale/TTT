@@ -37,5 +37,4 @@ class Game
   def tie?
     @board.tie?(@player1, @player2)
   end
-
 end
