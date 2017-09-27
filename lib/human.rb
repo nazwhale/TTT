@@ -10,15 +10,14 @@ class Human
     choice = nil
     until choice
       choice = gets.chomp
-      if choice_invalid?(game.board, choice)
-        choice = nil
-      end
+      choice = nil if choice_invalid?(game.board, choice)
     end
     choice.to_i
   end
 
+  private
+
   def choice_invalid?(board, choice)
     board.occupied?(choice) || choice == ""
   end
-
 end
