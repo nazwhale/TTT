@@ -37,7 +37,7 @@ class Computer
   private
 
   def choose_corner(game)
-    corners = game.board.get_corners
+    corners = game.board.get_corners  # DEMETER
     make_random_move(corners)
   end
 

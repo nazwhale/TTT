@@ -2,24 +2,29 @@ require 'game_maker'
 
 describe GameMaker do
 
-  subject(:game_maker) { described_class.new }
+  let(:ui) { UI.new }
   let(:player1) { Human.new("X") }
   let(:player2) { Computer.new("O") }
   let(:game) { Game.new(player1, player2) }
+  subject(:game_maker) { described_class.new(ui)}
 
   describe '#new_game' do
     before do
-      allow(Messages).to receive(:welcome)
-      allow(Messages).to receive(:choose_player1_symbol)
-      allow(Messages).to receive(:choose_player2_symbol)
-      allow(Messages).to receive(:ready_to_play)
-      allow(Messages).to receive(:game_type_confirmation)
+      game_maker.instance_variable_set(:@ui, ui)
+      game_maker.instance_variable_set(:@game, game)
+      allow(ui).to receive(:welcome)
+      allow(ui).to receive(:choose_player1_symbol)
+      allow(ui).to receive(:choose_player2_symbol)
+      allow(ui).to receive(:ready_to_play)
+      allow(ui).to receive(:game_type_confirmation)
+      allow(ui).to receive(:print_board)
+      allow(ui).to receive(:see_you_again)
+      allow(ui).to receive(:tie_message)
+      allow(ui).to receive(:win_message)
       allow(game_maker).to receive(:get_symbol)
       allow(game_maker).to receive(:choose_game_type)
       allow(game_maker).to receive(:choose_starting_player)
-      game_maker.instance_variable_set(:@game, game)
-      allow(game_maker.game).to receive(:play)
-      allow(game_maker.game).to receive(:game_over_message)
+      allow(game_maker).to receive(:game_cycle)
       game_maker.new_game
     end
 
@@ -36,9 +41,56 @@ describe GameMaker do
     end
   end
 
+  describe '#game_cycle' do
+    before do
+      game.current_player = player1
+      allow(ui).to receive(:print_board)
+      allow(ui).to receive(:prompt_move)
+      allow(ui).to receive(:computer_thinking)
+      allow(ui).to receive(:choice_confirmation)
+      allow(ui).to receive(:computer_move_confirmation)
+      game_maker.instance_variable_set(:@game, game)
+      allow(game).to receive(:make_move).and_return(0, 1, 3)
+    end
+
+    context 'game not over' do
+      it 'shows the board state before each move' do
+        allow(game).to receive(:game_over?).and_return(false, true)
+        game_maker.game_cycle
+        expect(game_maker.game).to have_received(:make_move)
+      end
+
+      it 'calls make_move for each player' do
+        allow(game).to receive(:game_over?).and_return(false, false, true)
+        game_maker.game_cycle
+        expect(game).to have_received(:make_move).twice
+      end
+
+      it 'switches player after a move' do
+        allow(game).to receive(:game_over?).and_return(false, true)
+        game_maker.game_cycle
+        expect(game.current_player).to eq player2
+      end
+
+      it 'switches back to the first player after 2 moves' do
+        allow(game).to receive(:game_over?).and_return(false, false, true)
+        game_maker.game_cycle
+        expect(game.current_player).to eq player1
+      end
+    end
+
+    context 'game over' do
+      it 'does not make another move' do
+        allow(game).to receive(:game_over?).and_return(true)
+        game_maker.game_cycle
+        expect(game).not_to have_received(:make_move)
+      end
+    end
+  end
+
   describe '#choose_game_type' do
     before do
-      allow(Messages).to receive(:prompt_game_type)
+      allow(ui).to receive(:prompt_game_type)
     end
 
     context '#human_vs_human' do
@@ -90,17 +142,17 @@ describe GameMaker do
       it 'calls try again message if invalid input' do
         allow(game_maker).to receive(:gets).and_return('4', '1')
         allow(game_maker).to receive(:human_vs_human)
-        allow(Messages).to receive(:try_again)
+        allow(ui).to receive(:try_again)
         game_maker.choose_game_type("X", "O")
-        expect(Messages).to have_received(:try_again).once
+        expect(ui).to have_received(:try_again).once
       end
     end
   end
 
   describe '#get_symbol' do
     before do
-      allow(Messages).to receive(:choose_player1_symbol)
-      allow(Messages).to receive(:choose_player2_symbol)
+      allow(ui).to receive(:choose_player1_symbol)
+      allow(ui).to receive(:choose_player2_symbol)
     end
 
     context 'valid' do
@@ -141,7 +193,7 @@ describe GameMaker do
   describe '#choose_starting_player' do
     before do
       game_maker.game = game
-      allow(Messages).to receive(:choose_starting_player)
+      allow(ui).to receive(:choose_starting_player)
     end
 
     context 'valid input' do

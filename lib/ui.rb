@@ -1,23 +1,18 @@
-class 
-
+class UI
 
   def prompt_move(player)
-    human?(@game.current_player) ? prompt_move : computer_thinking
+    human?(player) ? prompt_human_move : computer_thinking
   end
 
   def move_confirmation(player, choice)
-    human?(@game.current_player) ? choice_confirmation(choice) : computer_move_confirmation(choice)
+    human?(player) ? choice_confirmation(choice) : computer_move_confirmation(choice)
   end
 
-  def human?(player)
-    player.class == Human
-  end
-
-  def self.welcome
+  def welcome
     puts "Welcome to Tic-Tac-Toe!\n\n"
   end
 
-  def self.ready_to_play(player1, player2, current_player)
+  def ready_to_play(player1, player2, current_player)
     puts "\nPlayer 1 will play as: " + player1.symbol + "\n" +
          "Player 2 will play as: " + player2.symbol + "\n\n" +
          "The stage is set...\n" +
@@ -32,7 +27,7 @@ class
     puts "The Computer chose: " + choice.to_s + "\n\n"
   end
 
-  def self.print_board(board)
+  def print_board(board)
     puts "#{board.state[0]} | #{board.state[1]} | #{board.state[2]}"
     print_line
     puts "#{board.state[3]} | #{board.state[4]} | #{board.state[5]}"
@@ -40,31 +35,31 @@ class
     puts "#{board.state[6]} | #{board.state[7]} | #{board.state[8]}\n\n"
   end
 
-  def self.print_line
+  def print_line
     puts "=========="
   end
 
-  def self.choose_player1_symbol
+  def choose_player1_symbol
     puts "Choose a symbol for player 1!"
   end
 
-  def self.choose_player2_symbol
+  def choose_player2_symbol
     puts "What symbol will player 2 use?"
   end
 
-  def self.wrong_symbol_length
+  def wrong_symbol_length
     puts "Symbol must be 1 character long! Please try again."
   end
 
-  def self.symbol_must_be_original
+  def symbol_must_be_original
     puts "Choose a different symbol to player 1!"
   end
 
-  def self.symbol_cant_be_integer
+  def symbol_cant_be_integer
     puts "Symbol cannot be an integer! Please try again."
   end
 
-  def self.prompt_game_type
+  def prompt_game_type
     puts "What kind of game would you like to play?\n" +
          "Select 1 for 😌  vs. 😌 \n" +
          "Select 2 for 😌  vs. 🤖 \n" +
@@ -72,43 +67,49 @@ class
     print "Your choice: "
   end
 
-  def self.game_type_confirmation(player1_type, player2_type)
+  def game_type_confirmation(player1_type, player2_type)
     puts "\nYou chose to play " + player1_type + " vs. " + player2_type
   end
 
-  def self.choose_starting_player(player1, player2)
+  def choose_starting_player(player1, player2)
     puts "\nWho will play the first move?\n" +
          "Select 1 for: " + player1.symbol + "\n" +
          "Select 2 for: " + player2.symbol + "\n\n"
   end
 
-  def self.try_again
+  def try_again
     puts "Invalid input! Please try again...\n\n"
   end
 
-  def self.prompt_move
+  def prompt_human_move
     puts "Choose your move! Enter a number between 0 and 8..."
   end
 
-  def self.computer_thinking
+  def computer_thinking
     print "The Computer is thinking...\n"
   end
 
-  def self.tie_message
+  def tie_message
     puts "Even stevens!"
   end
 
-  def self.win_message(winner)
+  def win_message(winner)
     puts "Congratulations " + winner.symbol + ", you won!\n" +
          "🎉  🎉  🎉  🎉  🎉\n\n"
   end
 
-  def self.see_you_again
+  def see_you_again
     puts "See you next time 👋 "
   end
 
-  def self.invalid_choice_message
+  def invalid_choice_message
     puts "Please choose one of the available squares!"
+  end
+  
+  private
+
+  def human?(player)
+    player.class == Human
   end
 
 end

@@ -5,38 +5,51 @@ class GameMaker
   attr_reader :game
   attr_writer :game
 
-  def initialize
+  def initialize(ui)
     @game = nil
+    @ui = ui
   end
 
   def new_game
-    welcome_message
+    @ui.welcome
 
     player1_symbol = get_symbol(1, nil)
     player2_symbol = get_symbol(2, player1_symbol)
 
     choose_game_type(player1_symbol, player2_symbol)
-    show_game_type_confirmation(@game.player1.class.to_s, @game.player2.class.to_s)
+    game_type_confirmation
 
     choose_starting_player
-    ready_to_play_message
-    @game.play
+    ready_to_play_confirmation
+    game_cycle
 
-    @game.game_over_message
+    game_over_confirmation
+    @ui.see_you_again   
+  end
+
+  def game_cycle
+    until @game.game_over?
+      @ui.prompt_move(@game.current_player)
+      move = @game.make_move(@game.current_player)
+      game.place_symbol(@game.current_player, move)
+      @ui.move_confirmation(@game.current_player, move)
+      show_current_board
+      @game.switch_player
+    end
   end
 
   def get_symbol(player, opponent_symbol)
-    player == 1 ? choose_player1_symbol_message : choose_player2_symbol_message
+    player == 1 ? @ui.choose_player1_symbol : @ui.choose_player2_symbol
     loop do
     choice = gets.chomp
       if choice.length != 1
-        wrong_symbol_length_message
+        @ui.wrong_symbol_length
       elsif choice == opponent_symbol
-        symbol_must_be_original_message
+        @ui.symbol_must_be_original
       elsif is_an_integer?(choice)
-        symbol_cant_be_integer_message
+        @ui.symbol_cant_be_integer
       else
-        choice_confirmation(choice)
+        @ui.choice_confirmation(choice)
         return choice
       end
     end
@@ -44,7 +57,7 @@ class GameMaker
 
   def choose_game_type(player1_symbol, player2_symbol)
     loop do
-    prompt_game_type
+    @ui.prompt_game_type
     game_type = gets.chomp.to_i
       case game_type
       when 1
@@ -57,7 +70,7 @@ class GameMaker
         computer_vs_computer(player1_symbol, player2_symbol)
         break
       else
-        try_again_message
+        @ui.try_again
       end
     end
   end
@@ -76,7 +89,7 @@ class GameMaker
 
   def choose_starting_player
     loop do
-    choose_starting_player_message
+    @ui.choose_starting_player(@game.player1, @game.player2)
     choice = gets.chomp
       case choice
       when "1"
@@ -86,7 +99,7 @@ class GameMaker
         @game.current_player = @game.player2
         break
       else
-        try_again_message
+        @ui.try_again
       end
     end
   end
@@ -97,52 +110,20 @@ class GameMaker
     choice == "0" || choice.to_i != 0
   end
 
-  def choose_player1_symbol_message
-    Messages.choose_player1_symbol
+  def show_current_board
+    @ui.print_board(@game.board)
+  end
+  
+  def game_type_confirmation
+    @ui.game_type_confirmation(@game.player1.class.to_s, @game.player2.class.to_s)
   end
 
-  def choose_player2_symbol_message
-    Messages.choose_player2_symbol
+  def game_over_confirmation
+    @game.tie? ? @ui.tie_message : @ui.win_message(@game.get_opponent(@game.current_player))
   end
 
-  def wrong_symbol_length_message
-    Messages.wrong_symbol_length
+  def ready_to_play_confirmation
+    @ui.ready_to_play(@game.player1, @game.player2, @game.current_player)
+    show_current_board
   end
-
-  def symbol_must_be_original_message
-    Messages.symbol_must_be_original
-  end
-
-  def symbol_cant_be_integer_message
-    Messages.symbol_cant_be_integer
-  end
-
-  def choose_starting_player_message
-    Messages.choose_starting_player(@game.player1, @game.player2)
-  end
-
-  def welcome_message
-    Messages.welcome
-  end
-
-  def try_again_message
-    Messages.try_again
-  end
-
-  def ready_to_play_message
-    Messages.ready_to_play(@game.player1, @game.player2, @game.current_player)
-  end
-
-  def prompt_game_type
-    Messages.prompt_game_type
-  end
-
-  def show_game_type_confirmation(player1_type, player2_type)
-    Messages.game_type_confirmation(player1_type, player2_type)
-  end
-
-  def choice_confirmation(choice)
-    Messages.choice_confirmation(choice)
-  end
-
 end
