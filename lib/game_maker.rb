@@ -31,11 +31,20 @@ class GameMaker
   def game_cycle
     until @game.game_over?
       @ui.prompt_move(@game.current_player)
-      move = @game.make_move(@game.current_player)
+
+      move = get_human_move(@game.board) if human_turn?
+      move = @game.make_move(@game.current_player) if computer_turn?
       game.place_symbol(@game.current_player, move)
-      @ui.move_confirmation(@game.current_player, move)
-      show_current_board
+
+      move_confirmation(move)
       @game.switch_player
+    end
+  end
+
+  def get_human_move(board)
+    loop do
+      move = gets.chomp
+      return move.to_i unless @validator.move_invalid?(board, move)
     end
   end
 
@@ -43,22 +52,22 @@ class GameMaker
     player == 1 ? @ui.choose_player1_symbol : @ui.choose_player2_symbol
     loop do
       choice = gets.chomp
-      return choice if @validator.symbol_valid?(@ui, choice, opponent_symbol)
+      return choice unless @validator.symbol_invalid?(@ui, choice, opponent_symbol)
     end
   end
 
   def choose_game_type(player1_symbol, player2_symbol)
     loop do
     @ui.prompt_game_type
-    game_type = gets.chomp.to_i
+    game_type = gets.chomp
       case game_type
-      when 1
+      when "1"
         human_vs_human(player1_symbol, player2_symbol)
         break
-      when 2
+      when "2"
         human_vs_computer(player1_symbol, player2_symbol)
         break
-      when 3
+      when "3"
         computer_vs_computer(player1_symbol, player2_symbol)
         break
       else
@@ -97,6 +106,19 @@ class GameMaker
   end
 
   private
+
+  def human_turn?
+    @game.current_player.is_a? Human
+  end
+
+  def computer_turn?
+    @game.current_player.is_a? Computer
+  end
+
+  def move_confirmation(move)
+    @ui.move_confirmation(@game.current_player, move)
+    show_current_board
+  end
 
   def show_current_board
     @ui.print_board(@game.board)

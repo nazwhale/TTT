@@ -1,19 +1,23 @@
 class Validator
 
-  def symbol_valid?(ui, choice, opponent_symbol)
+  def symbol_invalid?(ui, choice, opponent_symbol)
     if not_single_character(choice)
       ui.wrong_symbol_length
-      false
+      true
     elsif choice == opponent_symbol
       ui.symbol_must_be_original
-      false
+      true
     elsif is_an_integer?(choice)
       ui.symbol_cant_be_integer
-      false
+      true
     else
       ui.choice_confirmation(choice)
-      true
+      false
     end
+  end
+
+  def move_invalid?(board, choice)
+    board.occupied?(choice) || choice == ""
   end
 
   private
@@ -25,4 +29,5 @@ class Validator
   def not_single_character(string)
     string.length != 1
   end
+
 end
