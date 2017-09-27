@@ -5,9 +5,10 @@ class GameMaker
   attr_reader :game
   attr_writer :game
 
-  def initialize(ui)
+  def initialize(ui, validator)
     @game = nil
     @ui = ui
+    @validator = validator
   end
 
   def new_game
@@ -41,17 +42,8 @@ class GameMaker
   def get_symbol(player, opponent_symbol)
     player == 1 ? @ui.choose_player1_symbol : @ui.choose_player2_symbol
     loop do
-    choice = gets.chomp
-      if choice.length != 1
-        @ui.wrong_symbol_length
-      elsif choice == opponent_symbol
-        @ui.symbol_must_be_original
-      elsif is_an_integer?(choice)
-        @ui.symbol_cant_be_integer
-      else
-        @ui.choice_confirmation(choice)
-        return choice
-      end
+      choice = gets.chomp
+      return choice if @validator.symbol_valid?(@ui, choice, opponent_symbol)
     end
   end
 
@@ -105,10 +97,6 @@ class GameMaker
   end
 
   private
-
-  def is_an_integer?(choice)
-    choice == "0" || choice.to_i != 0
-  end
 
   def show_current_board
     @ui.print_board(@game.board)
