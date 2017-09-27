@@ -16,8 +16,8 @@ class Validator
     end
   end
 
-  def move_invalid?(board, choice)
-    board.occupied?(choice) || choice == ""
+  def move_invalid?(board, move)
+    board.occupied?(move) || not_single_character(move)
   end
 
   private
