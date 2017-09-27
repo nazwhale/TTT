@@ -44,7 +44,7 @@ class GameMaker
   def get_human_move(board)
     loop do
       move = gets.chomp
-      return move.to_i unless @validator.move_invalid?(board, move)
+      return move.to_i unless @validator.move_invalid?(@ui, board, move)
     end
   end
 

@@ -15,7 +15,7 @@ describe Validator do
 
     context 'invalid' do
       it 'returns false if valid' do
-        expect(validator.symbol_invalid?(ui, 'X', 'O')).to eq false
+        expect(validator.symbol_invalid?(ui, 'X', 'O')).to be_falsy
       end
     end
 
@@ -39,22 +39,26 @@ describe Validator do
   end
 
   describe '#move_invalid' do
+    before do
+      allow(ui).to receive(:invalid_choice_message)
+    end
+
     it 'returns false if valid' do
       board = double('board')
       allow(board).to receive(:occupied?).and_return(false)
-      expect(validator.move_invalid?(board, "1")).to eq false
+      expect(validator.move_invalid?(ui, board, "1")).to be_falsy
     end
 
     it 'rejects an empty string' do
       board = double('board')
       allow(board).to receive(:occupied?).and_return(false)
-      expect(validator.move_invalid?(board, "")).to eq true
+      expect(validator.move_invalid?(ui, board, "")).to eq true
     end
 
     it 'rejects an occupied square' do
       board = double('board')
       allow(board).to receive(:occupied?).and_return(true)
-      expect(validator.move_invalid?(board, "0")).to eq true
+      expect(validator.move_invalid?(ui, board, "0")).to eq true
     end
   end
 end

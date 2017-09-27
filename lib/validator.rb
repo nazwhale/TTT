@@ -12,12 +12,14 @@ class Validator
       true
     else
       ui.choice_confirmation(choice)
-      false
     end
   end
 
-  def move_invalid?(board, move)
-    board.occupied?(move) || not_single_character(move)
+  def move_invalid?(ui, board, move)
+    if board.occupied?(move) || not_single_character(move)
+      ui.invalid_choice_message
+      true
+    end
   end
 
   private
