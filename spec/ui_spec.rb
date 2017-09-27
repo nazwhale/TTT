@@ -41,7 +41,7 @@ describe UI do
   end
 
   it 'prints the current board state' do
-    board = double("board", :state => ["0", "X", "2", "O", "X", "O", "6", "7", "8"] )
+    board = double("board", :state => [nil, "X", nil, "O", "X", "O", nil, nil, nil] )
     printed_board = "0 | X | 2\n==========\nO | X | O\n==========\n6 | 7 | 8\n\n"
     expect{ ui.print_board(board) }.to output(printed_board).to_stdout
   end

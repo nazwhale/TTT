@@ -1,6 +1,6 @@
 class Board
 
-  EMPTY_BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+  EMPTY_BOARD = Array.new(9)
   CORNERS = [0, 2, 6, 8]
   attr_reader :state
   attr_writer :state
@@ -10,11 +10,11 @@ class Board
   end
 
   def occupied?(index)
-    index.to_s != @state[index.to_i]
+    @state[index.to_i] != nil
   end
 
   def empty?
-    @state.none? { |square| occupied?(@state.index(square)) }
+    @state.all? { |square| square == nil } 
   end
 
   def game_over?(player1, player2)
@@ -63,6 +63,6 @@ class Board
   end
 
   def board_full?
-    @state.all? { |square| occupied?(@state.index(square)) }
+    @state.none? { |square| square == nil } 
   end
 end

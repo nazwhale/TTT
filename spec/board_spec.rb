@@ -6,15 +6,9 @@ describe Board do
   let(:player2) { Computer.new("O") }
   subject(:board) { described_class.new }
 
-  describe '#initialize' do
-    it 'has an empty board' do
-      expect(board.state).to eq Board::EMPTY_BOARD
-    end
-  end
-
   describe '#occupied?' do
     before do
-      board.state = ["X", "N", "O", "X", "4", "O", "X", "O", "X"]
+      board.state = ["X", "N", "O", "X", nil, "O", "X", "O", "X"]
     end
 
     context 'true' do
@@ -40,7 +34,7 @@ describe Board do
     end
 
     it 'is not empty' do
-      board.state = ["X", "1", "2", "3", "4", "5", "6", "7", "8"]
+      board.state = ["X", nil, nil, nil, nil, nil, nil, nil, nil]
       expect(board.empty?).to be false
     end
   end
@@ -53,14 +47,14 @@ describe Board do
       end
 
       it 'is won' do
-        board.state = ["1", "X", "X", "O", "O", "O", "6", "7", "X"]
+        board.state = [nil, "X", "X", "O", "O", "O", nil, nil, "X"]
         expect(board.game_over?(player1, player2)).to be true
       end
     end
 
     context 'false' do
       it 'has unoccupied squares and no win' do
-        board.state = ["X", "O", "X", "O", "X", "5", "O", "X", "O"]
+        board.state = ["X", "O", "X", "O", "X", nil, "O", "X", "O"]
         expect(board.game_over?(player1, player2)).to be false
       end
     end
@@ -80,12 +74,12 @@ describe Board do
       end
 
       it 'is a win' do
-        board.state = ["1", "X", "X", "O", "O", "O", "6", "7", "X"]
+        board.state = [nil, "X", "X", "O", "O", "O", nil, nil, "X"]
         expect(board.tie?(player1, player2)).to be false
       end
 
       it 'has unoccupied squares with no win' do
-        board.state = ["X", "O", "X", "O", "X", "5", "O", "X", "O"]
+        board.state = ["X", "O", "X", "O", "X", nil, "O", "X", "O"]
         expect(board.tie?(player1, player2)).to be false
       end
 
@@ -100,29 +94,29 @@ describe Board do
     context 'true' do
       context 'horizontal win' do
         it 'top row' do
-          board.state = ["X", "X", "X", "O", "4", "O", "6", "7", "O"]
+          board.state = ["X", "X", "X", "O", nil, "O", nil, nil, "O"]
           expect(board.win?(player1)).to be true
         end
 
         it 'middle row' do
-          board.state = ["1", "X", "X", "O", "O", "O", "6", "7", "X"]
+          board.state = [nil, "X", "X", "O", "O", "O", nil, nil, "X"]
           expect(board.win?(player2)).to be true
         end
 
         it 'bottom row' do
-          board.state = ["1", "2", "3", "O", "O", "6", "X", "X", "X"]
+          board.state = [nil, nil, nil, "O", "O", nil, "X", "X", "X"]
           expect(board.win?(player1)).to be true
         end
       end
 
       context 'vertical win' do
         it 'left column' do
-          board.state = ["X", "2", "3", "X", "O", "6", "X", "O", "O"]
+          board.state = ["X", nil, nil, "X", "O", nil, "X", "O", "O"]
           expect(board.win?(player1)).to be true
         end
 
         it 'middle column' do
-          board.state = ["1", "X", "3", "O", "X", "6", "7", "X", "O"]
+          board.state = [nil, "X", nil, "O", "X", nil, nil, "X", "O"]
           expect(board.win?(player1)).to be true
         end
 
@@ -134,12 +128,12 @@ describe Board do
 
       context 'diagonal win' do
         it 'bottom-left to top-right' do
-          board.state = ["1", "X", "O", "X", "O", "6", "O", "8", "X"]
+          board.state = [nil, "X", "O", "X", "O", nil, "O", nil, "X"]
           expect(board.win?(player2)).to be true
         end
 
         it 'top-right to bottom-left' do
-          board.state = ["X", "O", "O", "4", "X", "O", "X", "O", "X"]
+          board.state = ["X", "O", "O", nil, "X", "O", "X", "O", "X"]
           expect(board.win?(player1)).to be true
         end
       end
@@ -159,7 +153,7 @@ describe Board do
       end
 
       it 'one unoccupied square and no win' do
-        board.state = ["X", "O", "X", "O", "X", "6", "O", "X", "O"]
+        board.state = ["X", "O", "X", "O", "X", nil, "O", "X", "O"]
         expect(board.win?(player1)).to be false
       end
     end

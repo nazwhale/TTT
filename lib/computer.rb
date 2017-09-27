@@ -64,7 +64,7 @@ class Computer
   end
 
   def reset_square(board, square)
-    board.state[square.to_i] = square
+    board.state[square] = nil
   end
 
   def make_random_move(squares)
@@ -75,9 +75,8 @@ class Computer
   def get_empty_squares(board)
     empty_squares = []
     board.state.each_with_index do |square, index|
-      empty_squares << square unless board.occupied?(index)
+      empty_squares << index unless board.occupied?(index)
     end
     empty_squares
   end
-
 end

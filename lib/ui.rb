@@ -28,15 +28,10 @@ class UI
   end
 
   def print_board(board)
-    puts "#{board.state[0]} | #{board.state[1]} | #{board.state[2]}"
-    print_line
-    puts "#{board.state[3]} | #{board.state[4]} | #{board.state[5]}"
-    print_line
-    puts "#{board.state[6]} | #{board.state[7]} | #{board.state[8]}\n\n"
-  end
-
-  def print_line
-    puts "=========="
+    board.state.each_with_index do |square, index|
+      print_occupant(index, square)
+      print_board_part(board.state, index)
+    end
   end
 
   def choose_player1_symbol
@@ -112,4 +107,29 @@ class UI
     player.class == Human
   end
 
+  def print_occupant(index, square)
+    if square == nil
+      print index
+    else
+      print square
+    end
+  end
+
+  def print_board_part(state, index)
+    if (index + 1) == state.length
+      print "\n\n"
+    elsif (index + 1) % 3 == 0
+      print_line
+    else
+      print_divider
+    end
+  end
+
+  def print_line
+    print "\n==========\n"
+  end
+
+  def print_divider
+    print " | "
+  end
 end
