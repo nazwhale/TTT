@@ -11,7 +11,7 @@ class Board
   end
 
   def occupied?(index)
-    @state[index] != EMPTY_SQUARE
+    @state[index.to_i] != EMPTY_SQUARE
   end
 
   def empty?

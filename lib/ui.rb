@@ -30,7 +30,7 @@ class UI
   def print_board(board)
     board.state.each_with_index do |square, index|
       print_occupant(index, square)
-      print_board_part(board.state, index)
+      print_board_part(board, index)
     end
   end
 
@@ -110,23 +110,27 @@ class UI
   def print_occupant(index, square)
     if square == nil
       print index
+      if index < 10
+        print " "
+      end
     else
-      print square
+      print square + " "
     end
   end
 
-  def print_board_part(state, index)
-    if (index + 1) == state.length
+  def print_board_part(board, index)
+    if (index + 1) == board.state.length
       print "\n\n"
-    elsif (index + 1) % 3 == 0
-      print_line
+    elsif (index + 1) % board.number_of_rows == 0
+      print_line(board.number_of_rows)
     else
       print_divider
     end
   end
 
-  def print_line
-    print "\n==========\n"
+  def print_line(size)
+    number_of_dividers = (size * 5) - 2
+    print "\n" + ("=" * number_of_dividers) + "\n"
   end
 
   def print_divider
