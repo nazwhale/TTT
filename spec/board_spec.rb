@@ -4,7 +4,7 @@ describe Board do
 
   let(:player1) { Human.new("X") }
   let(:player2) { Computer.new("O") }
-  subject(:board) { described_class.new }
+  subject(:board) { described_class.new(3) }
 
   describe '#occupied?' do
     before do
@@ -148,7 +148,7 @@ describe Board do
 
     context 'false' do
       it 'empty board' do
-        board.state = Board::EMPTY_BOARD
+        board.state = [nil, nil, nil, nil, nil, nil, nil, nil, nil]
         expect(board.win?(player1)).to be false
       end
 

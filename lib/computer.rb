@@ -17,7 +17,6 @@ class Computer
     return score(game, depth) if game.board.game_over?(game.player1, game.player2)
 
     get_empty_squares(game.board).each do |square|
-
       depth.even? ? game.current_player = self : game.current_player = game.get_opponent(self)
       game.place_symbol(game.current_player, square)
       move_scores[square] = get_best_move(game, depth + 1, {})

@@ -1,13 +1,13 @@
 class Board
 
-  EMPTY_BOARD = Array.new(9)
   EMPTY_SQUARE = nil
   CORNERS = [0, 2, 6, 8]
-  attr_reader :state
+  attr_reader :state, :number_of_rows
   attr_writer :state
 
-  def initialize
-    @state = EMPTY_BOARD
+  def initialize(number_of_rows)
+    @number_of_rows = number_of_rows
+    @state = Array.new(@number_of_rows * @number_of_rows)
   end
 
   def occupied?(index)
