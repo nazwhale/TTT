@@ -22,12 +22,6 @@ describe Game do
   end
 
   describe '#make_move' do
-    it 'calls make_move for a human player' do
-      allow(player1).to receive(:get_move)
-      game.make_move(player1)
-      expect(player1).to have_received(:get_move)
-    end
-
     it 'calls make_move for a computer player' do
       allow(player2).to receive(:get_move)
       game.make_move(player2)

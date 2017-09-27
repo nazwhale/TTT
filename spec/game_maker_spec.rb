@@ -3,10 +3,11 @@ require 'game_maker'
 describe GameMaker do
 
   let(:ui) { UI.new }
+  let(:validator) { Validator.new }
   let(:player1) { Human.new("X") }
   let(:player2) { Computer.new("O") }
   let(:game) { Game.new(player1, player2) }
-  subject(:game_maker) { described_class.new(ui)}
+  subject(:game_maker) { described_class.new(ui, validator)}
 
   describe '#new_game' do
     before do
@@ -49,6 +50,7 @@ describe GameMaker do
       allow(ui).to receive(:computer_thinking)
       allow(ui).to receive(:choice_confirmation)
       allow(ui).to receive(:computer_move_confirmation)
+      allow(game_maker).to receive(:get_human_move).and_return(1)
       game_maker.instance_variable_set(:@game, game)
       allow(game).to receive(:make_move).and_return(0, 1, 3)
     end
@@ -57,13 +59,14 @@ describe GameMaker do
       it 'shows the board state before each move' do
         allow(game).to receive(:game_over?).and_return(false, true)
         game_maker.game_cycle
-        expect(game_maker.game).to have_received(:make_move)
+        expect(game_maker).to have_received(:get_human_move).once
       end
 
       it 'calls make_move for each player' do
         allow(game).to receive(:game_over?).and_return(false, false, true)
         game_maker.game_cycle
-        expect(game).to have_received(:make_move).twice
+        expect(game).to have_received(:make_move).once
+        expect(game_maker).to have_received(:get_human_move).once
       end
 
       it 'switches player after a move' do
@@ -149,44 +152,43 @@ describe GameMaker do
     end
   end
 
+  describe '#get_human_move' do
+    it 'accepts a valid move' do
+      allow(game_maker).to receive(:gets).and_return('1')
+      allow(validator).to receive(:move_invalid?).and_return(false)
+      board = double('board')
+      game_maker.get_human_move(board)
+      expect(game_maker).to have_received(:gets).once
+    end
+
+    it 'tries again if move is invalid' do
+      allow(game_maker).to receive(:gets).and_return('asfd', '1')
+      allow(validator).to receive(:move_invalid?).and_return(true, false)
+      board = double('board')
+      game_maker.get_human_move(board)
+      expect(game_maker).to have_received(:gets).twice
+    end
+  end
+
   describe '#get_symbol' do
     before do
       allow(ui).to receive(:choose_player1_symbol)
       allow(ui).to receive(:choose_player2_symbol)
+      game_maker.instance_variable_set(:@validator, validator)
     end
 
-    context 'valid' do
-      it 'accepts a unique 1 character symbol' do
-        allow(game_maker).to receive(:gets).and_return('X')
-        message = "You chose: X\n\n"
-        expect{ game_maker.get_symbol(2, 'O') }.to output(message).to_stdout
-      end
+    it 'accepts a unique 1 character symbol' do
+      allow(game_maker).to receive(:gets).and_return('X')
+      allow(validator).to receive(:symbol_invalid?).and_return(false)
+      game_maker.get_symbol(1, 'O')
+      expect(game_maker).to have_received(:gets).once
     end
 
-    context 'invalid' do
-      it 'outputs an error if symbol is more than 1 character' do
-        allow(game_maker).to receive(:gets).and_return('LONG SYMBOL', 'X')
-        message = "Symbol must be 1 character long! Please try again.\nYou chose: X\n\n"
-        expect{ game_maker.get_symbol(1, nil) }.to output(message).to_stdout
-      end
-
-      it 'outputs an error if symbol is blank' do
-        allow(game_maker).to receive(:gets).and_return('', 'X')
-        message = "Symbol must be 1 character long! Please try again.\nYou chose: X\n\n"
-        expect{ game_maker.get_symbol(1, nil) }.to output(message).to_stdout
-      end
-
-      it 'outputs an error if symbol is an integer' do
-        allow(game_maker).to receive(:gets).and_return("6", 'X')
-        message = "Symbol cannot be an integer! Please try again.\nYou chose: X\n\n"
-        expect{ game_maker.get_symbol(1, nil) }.to output(message).to_stdout
-      end
-
-      it 'outputs an error if symbol is the same as the opponent' do
-        allow(game_maker).to receive(:gets).and_return('O', 'X')
-        message = "Choose a different symbol to player 1!\nYou chose: X\n\n"
-        expect{ game_maker.get_symbol(2, 'O') }.to output(message).to_stdout
-      end
+    it 'tries again if symbol is invalid' do
+      allow(game_maker).to receive(:gets).and_return('ASDF', 'X')
+      allow(validator).to receive(:symbol_invalid?).and_return(true, false)
+      game_maker.get_symbol(1, 'O')
+      expect(game_maker).to have_received(:gets).twice
     end
   end
 
