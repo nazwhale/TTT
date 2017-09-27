@@ -8,10 +8,6 @@ class UI
     human?(player) ? choice_confirmation(choice) : computer_move_confirmation(choice)
   end
 
-  def human?(player)
-    player.class == Human
-  end
-
   def welcome
     puts "Welcome to Tic-Tac-Toe!\n\n"
   end
@@ -108,6 +104,12 @@ class UI
 
   def invalid_choice_message
     puts "Please choose one of the available squares!"
+  end
+  
+  private
+
+  def human?(player)
+    player.class == Human
   end
 
 end

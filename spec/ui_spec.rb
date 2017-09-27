@@ -6,6 +6,20 @@ describe UI do
   let(:player1) { Human.new("X") }
   let(:player2) { Computer.new("O") }
 
+  describe '#prompt_move' do
+    it 'calls prompt_human_move for a Human' do
+      allow(ui).to receive(:prompt_human_move)
+      ui.prompt_move(player1)
+      expect(ui).to have_received(:prompt_human_move).once
+    end
+
+    it 'calls computer_thinking for a Computer' do
+      allow(ui).to receive(:computer_thinking)
+      ui.prompt_move(player2)
+      expect(ui).to have_received(:computer_thinking).once
+    end
+  end
+
   it 'welcomes the players to the game' do
     message = "Welcome to Tic-Tac-Toe!\n\n"
     expect{ ui.welcome }.to output(message).to_stdout
