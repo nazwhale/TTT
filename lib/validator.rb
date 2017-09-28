@@ -16,13 +16,20 @@ class Validator
   end
 
   def move_invalid?(ui, board, move)
-    if board.occupied?(move) || not_in_range?(board, move) || empty_string?(move)
+    if invalid_move_scenario?(board, move)
       ui.invalid_choice_message
       true
     end
   end
 
   private
+
+  def invalid_move_scenario?(board, move)
+    board.occupied?(move)      || 
+    not_in_range?(board, move) || 
+    empty_string?(move)        || 
+    !is_an_integer?(move)
+  end
 
   def is_an_integer?(choice)
     choice == "0" || choice.to_i != 0

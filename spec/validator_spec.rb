@@ -63,6 +63,12 @@ describe Validator do
         allow(board).to receive(:occupied?).and_return(true)
         expect(validator.move_invalid?(ui, board, "0")).to eq true
       end
+      
+      it 'rejects a non-integer' do
+        board = double("board", :state => [nil, "X", nil, "O", "X", "O", nil, nil, nil])
+        allow(board).to receive(:occupied?).and_return(false)
+        expect(validator.move_invalid?(ui, board, "t")).to eq true
+      end
     end
   end
 end
