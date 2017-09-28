@@ -1,7 +1,6 @@
 class Board
 
   EMPTY_SQUARE = nil
-  CORNERS = [0, 2, 6, 8]
   attr_reader :state, :number_of_rows
   attr_writer :state
 
@@ -28,10 +27,6 @@ class Board
 
   def win?(player)
     win_scenarios.any? { |line| line.count(player.symbol) == root_board_size }
-  end
-
-  def get_corners
-    CORNERS
   end
 
   private

@@ -18,13 +18,6 @@ describe Computer do
   end
 
   describe '#get_move' do
-    it 'chooses a corner if the board is empty' do
-      player_1_game.board.state = [nil, nil, nil, nil, nil, nil, nil, nil, nil]
-      move = computer_x.get_move(player_1_game)
-      corners = [0, 2, 6, 8]
-      expect(corners).to include move
-    end
-
     it 'calls get_best_move if the board is not empty' do
       player_1_game.board.state = [nil, "X", nil, nil, nil, nil, nil, nil, nil]
       allow(computer_x).to receive(:get_best_move)

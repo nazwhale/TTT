@@ -1,5 +1,6 @@
 class Computer
 
+  MAX_DEPTH = 6
   attr_reader :symbol
 
   def initialize(symbol)
@@ -8,7 +9,7 @@ class Computer
   end
 
   def get_move(game)
-    game.board.empty? ? move = choose_corner(game) : move = get_best_move(game)
+    move = get_best_move(game)
     game.current_player = self
     move
   end
@@ -21,13 +22,8 @@ class Computer
 
   private
 
-  def choose_corner(game)
-    corners = game.board.get_corners  # DEMETER
-    make_random_move(corners)
-  end
-
   def negamax(game, depth = 0, alpha = -100, beta = 100, color = 1)
-    return 0 if depth > 6
+    return 0 if depth > MAX_DEPTH
     return color * score(game, depth) if game.board.game_over?(game.player1, game.player2)
 
     max = -100
