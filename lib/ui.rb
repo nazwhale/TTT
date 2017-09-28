@@ -54,6 +54,10 @@ class UI
     puts "Symbol cannot be an integer! Please try again."
   end
 
+  def choose_board_size
+    puts "Select '3' to play or a 3x3 board or '4' to play on a 4x4 board."
+  end
+
   def prompt_game_type
     puts "What kind of game would you like to play?\n" +
          "Select 1 for 😌  vs. 😌 \n" +

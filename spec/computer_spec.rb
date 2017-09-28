@@ -4,11 +4,12 @@ require 'game'
 
 describe Computer do
   subject(:computer_x) { described_class.new("X") }
+  let(:board) { Board.new(3) }
   let(:opponent_o) { Human.new("O") }
-  let(:player_1_game) { Game.new(computer_x, opponent_o) }
+  let(:player_1_game) { Game.new(computer_x, opponent_o, board) }
   let(:computer_o) { described_class.new("O") }
   let(:opponent_x) { Human.new("X") }
-  let(:player_2_game) { Game.new(opponent_x, computer_o) }
+  let(:player_2_game) { Game.new(opponent_x, computer_o, board) }
 
   describe '#initialize' do
     it 'has a symbol' do

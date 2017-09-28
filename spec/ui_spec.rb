@@ -71,6 +71,11 @@ describe UI do
     expect{ ui.symbol_cant_be_integer }.to output(message).to_stdout
   end
 
+  it 'choose_board_size' do
+    message = "Select '3' to play or a 3x3 board or '4' to play on a 4x4 board.\n"
+    expect{ ui.choose_board_size }.to output(message).to_stdout
+  end
+
   it 'prompts choice of game type' do
     message = "What kind of game would you like to play?\nSelect 1 for 😌  vs. 😌 \nSelect 2 for 😌  vs. 🤖 \nSelect 3 for 🤖  vs. 🤖 \nYour choice: "
     expect{ ui.prompt_game_type }.to output(message).to_stdout
