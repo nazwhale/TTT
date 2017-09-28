@@ -13,26 +13,38 @@ class Computer
     move
   end
 
-  def get_best_move(game, depth = 0, move_scores = {})
-    return score(game, depth) if game.board.game_over?(game.player1, game.player2)
+  def get_best_move(game)
+    @best_score = {}
+    negamax(game)
+    @best_score.max_by { |key, value| value }[0]
+  end
+
+  private
+
+  def negamax(game, depth = 0, alpha = -100, beta = 100, color = 1)
+    return -10 if depth > 6
+    return color * score(game, depth) if game.board.game_over?(game.player1, game.player2)
+
+    max = -100
 
     get_empty_squares(game.board).each do |square|
       depth.even? ? game.current_player = self : game.current_player = game.get_opponent(self)
       game.place_symbol(game.current_player, square)
-      move_scores[square] = get_best_move(game, depth + 1, {})
+      
+      negamax_value = -negamax(game, depth + 1, -beta, -alpha, -color)
 
       reset_square(game.board, square)
       game.switch_player
+      
+      max = [max, negamax_value].max
+      @best_score[square] = max if depth == 0
+      
+      alpha = [alpha, negamax_value].max
+      return alpha if alpha >= beta
     end
 
-    if depth == 0
-      pick_best_move(move_scores)
-    elsif depth > 0
-      game.current_player == self ? minimise_score(move_scores) : maximise_score(move_scores)
-    end
+    max
   end
-
-  private
 
   def choose_corner(game)
     corners = game.board.get_corners  # DEMETER
@@ -51,14 +63,6 @@ class Computer
 
   def pick_best_move(move_scores)
     move_scores.max_by { |key, value| value }[0]
-  end
-
-  def maximise_score(move_scores)
-    move_scores.max_by { |key, value| value }[1]
-  end
-
-  def minimise_score(move_scores)
-    move_scores.min_by { |key, value| value }[1]
   end
 
   def reset_square(board, square)
