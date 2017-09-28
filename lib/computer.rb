@@ -16,13 +16,18 @@ class Computer
   def get_best_move(game)
     @best_score = {}
     negamax(game)
-    @best_score.max_by { |key, value| value }[0]
+    pick_best_move(@best_score)
   end
 
   private
 
+  def choose_corner(game)
+    corners = game.board.get_corners  # DEMETER
+    make_random_move(corners)
+  end
+
   def negamax(game, depth = 0, alpha = -100, beta = 100, color = 1)
-    return -10 if depth > 6
+    return 0 if depth > 6
     return color * score(game, depth) if game.board.game_over?(game.player1, game.player2)
 
     max = -100
@@ -46,11 +51,6 @@ class Computer
     max
   end
 
-  def choose_corner(game)
-    corners = game.board.get_corners  # DEMETER
-    make_random_move(corners)
-  end
-
   def score(game, depth)
     if game.board.win?(self)
       100 / depth
@@ -61,8 +61,8 @@ class Computer
     end
   end
 
-  def pick_best_move(move_scores)
-    move_scores.max_by { |key, value| value }[0]
+  def pick_best_move(scores)
+    scores.max_by { |key, value| value }[0]
   end
 
   def reset_square(board, square)
