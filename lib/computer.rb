@@ -13,25 +13,10 @@ class Computer
     move
   end
 
-  def get_best_move(game, depth = 0, move_scores = {})
-    return score(game, depth) if game.board.game_over?(game.player1, game.player2)
-
-    get_empty_squares(game.board).each do |square|
-      square_index = square.to_i
-
-      depth.even? ? game.current_player = self : game.current_player = game.get_opponent(self)
-      game.place_symbol(game.current_player, square_index)
-      move_scores[square_index] = get_best_move(game, depth + 1, {})
-
-      reset_square(game.board, square)
-      game.switch_player
-    end
-
-    if depth == 0
-      pick_best_move(move_scores)
-    elsif depth > 0
-      game.current_player == self ? minimise_score(move_scores) : maximise_score(move_scores)
-    end
+  def get_best_move(game)
+    @best_score = {}
+    negamax(game)
+    pick_best_move(@best_score)
   end
 
   private
@@ -39,6 +24,31 @@ class Computer
   def choose_corner(game)
     corners = game.board.get_corners  # DEMETER
     make_random_move(corners)
+  end
+
+  def negamax(game, depth = 0, alpha = -100, beta = 100, color = 1)
+    return 0 if depth > 6
+    return color * score(game, depth) if game.board.game_over?(game.player1, game.player2)
+
+    max = -100
+
+    get_empty_squares(game.board).each do |square|
+      depth.even? ? game.current_player = self : game.current_player = game.get_opponent(self)
+      game.place_symbol(game.current_player, square)
+      
+      negamax_value = -negamax(game, depth + 1, -beta, -alpha, -color)
+
+      reset_square(game.board, square)
+      game.switch_player
+      
+      max = [max, negamax_value].max
+      @best_score[square] = max if depth == 0
+      
+      alpha = [alpha, negamax_value].max
+      return alpha if alpha >= beta
+    end
+
+    max
   end
 
   def score(game, depth)
@@ -51,33 +61,24 @@ class Computer
     end
   end
 
-  def pick_best_move(move_scores)
-    move_scores.max_by { |key, value| value }[0]
-  end
-
-  def maximise_score(move_scores)
-    move_scores.max_by { |key, value| value }[1]
-  end
-
-  def minimise_score(move_scores)
-    move_scores.min_by { |key, value| value }[1]
+  def pick_best_move(scores)
+    scores.max_by { |key, value| value }[0]
   end
 
   def reset_square(board, square)
-    board.state[square.to_i] = square
+    board.state[square] = nil
   end
 
   def make_random_move(squares)
     random_index = rand(squares.count - 1)
-    squares[random_index].to_i
+    squares[random_index]
   end
 
   def get_empty_squares(board)
     empty_squares = []
     board.state.each_with_index do |square, index|
-      empty_squares << square unless board.occupied?(index)
+      empty_squares << index unless board.occupied?(index)
     end
     empty_squares
   end
-
 end

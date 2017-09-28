@@ -41,8 +41,8 @@ describe UI do
   end
 
   it 'prints the current board state' do
-    board = double("board", :state => ["0", "X", "2", "O", "X", "O", "6", "7", "8"] )
-    printed_board = "0 | X | 2\n==========\nO | X | O\n==========\n6 | 7 | 8\n\n"
+    board = double("board", :state => [nil, "X", nil, "O", "X", "O", nil, nil, nil], :number_of_rows => 3 )
+    printed_board = "0  | X  | 2 \n=============\nO  | X  | O \n=============\n6  | 7  | 8 \n\n"
     expect{ ui.print_board(board) }.to output(printed_board).to_stdout
   end
 
@@ -69,6 +69,11 @@ describe UI do
   it 'symbol_cant_be_integer' do
     message = "Symbol cannot be an integer! Please try again.\n"
     expect{ ui.symbol_cant_be_integer }.to output(message).to_stdout
+  end
+
+  it 'choose_board_size' do
+    message = "Select '3' to play or a 3x3 board or '4' to play on a 4x4 board.\n"
+    expect{ ui.choose_board_size }.to output(message).to_stdout
   end
 
   it 'prompts choice of game type' do

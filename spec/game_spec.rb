@@ -4,8 +4,8 @@ describe Game do
 
   let(:player1) { Human.new("X") }
   let(:player2) { Computer.new("O") }
-  let(:board) { Board.new }
-  subject(:game) { described_class.new(player1, player2) }
+  let(:board) { Board.new(3) }
+  subject(:game) { described_class.new(player1, player2, board) }
 
   describe '#initialize' do
     it 'has a first player' do

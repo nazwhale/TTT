@@ -17,7 +17,7 @@ class GameMaker
     player1_symbol = get_symbol(1, nil)
     player2_symbol = get_symbol(2, player1_symbol)
 
-    choose_game_type(player1_symbol, player2_symbol)
+    choose_game_type(player1_symbol, player2_symbol, choose_board_size)
     game_type_confirmation
 
     choose_starting_player
@@ -56,19 +56,34 @@ class GameMaker
     end
   end
 
-  def choose_game_type(player1_symbol, player2_symbol)
+  def choose_board_size
+    loop do
+    @ui.choose_board_size
+    choice = gets.chomp
+      case choice
+      when "3"
+        return 3
+      when "4"
+        return 4
+      else
+        @ui.try_again
+      end
+    end
+  end
+
+  def choose_game_type(player1_symbol, player2_symbol, board_size)
     loop do
     @ui.prompt_game_type
     game_type = gets.chomp
       case game_type
       when "1"
-        human_vs_human(player1_symbol, player2_symbol)
+        human_vs_human(player1_symbol, player2_symbol, board_size)
         break
       when "2"
-        human_vs_computer(player1_symbol, player2_symbol)
+        human_vs_computer(player1_symbol, player2_symbol, board_size)
         break
       when "3"
-        computer_vs_computer(player1_symbol, player2_symbol)
+        computer_vs_computer(player1_symbol, player2_symbol, board_size)
         break
       else
         @ui.try_again
@@ -76,16 +91,16 @@ class GameMaker
     end
   end
 
-  def human_vs_human(player1_symbol, player2_symbol)
-    @game = Game.new(Human.new(player1_symbol), Human.new(player2_symbol))
+  def human_vs_human(player1_symbol, player2_symbol, board_size)
+    @game = Game.new(Human.new(player1_symbol), Human.new(player2_symbol), Board.new(board_size))
   end
 
-  def human_vs_computer(player1_symbol, player2_symbol)
-    @game = Game.new(Human.new(player1_symbol), Computer.new(player2_symbol))
+  def human_vs_computer(player1_symbol, player2_symbol, board_size)
+    @game = Game.new(Human.new(player1_symbol), Computer.new(player2_symbol), Board.new(board_size))
   end
 
-  def computer_vs_computer(player1_symbol, player2_symbol)
-    @game = Game.new(Computer.new(player1_symbol), Computer.new(player2_symbol))
+  def computer_vs_computer(player1_symbol, player2_symbol, board_size)
+    @game = Game.new(Computer.new(player1_symbol), Computer.new(player2_symbol), Board.new(board_size))
   end
 
   def choose_starting_player

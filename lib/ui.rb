@@ -28,15 +28,10 @@ class UI
   end
 
   def print_board(board)
-    puts "#{board.state[0]} | #{board.state[1]} | #{board.state[2]}"
-    print_line
-    puts "#{board.state[3]} | #{board.state[4]} | #{board.state[5]}"
-    print_line
-    puts "#{board.state[6]} | #{board.state[7]} | #{board.state[8]}\n\n"
-  end
-
-  def print_line
-    puts "=========="
+    board.state.each_with_index do |square, index|
+      print_occupant(index, square)
+      print_board_part(board, index)
+    end
   end
 
   def choose_player1_symbol
@@ -57,6 +52,10 @@ class UI
 
   def symbol_cant_be_integer
     puts "Symbol cannot be an integer! Please try again."
+  end
+
+  def choose_board_size
+    puts "Select '3' to play or a 3x3 board or '4' to play on a 4x4 board."
   end
 
   def prompt_game_type
@@ -112,4 +111,33 @@ class UI
     player.class == Human
   end
 
+  def print_occupant(index, square)
+    if square == nil
+      print index
+      if index < 10
+        print " "
+      end
+    else
+      print square + " "
+    end
+  end
+
+  def print_board_part(board, index)
+    if (index + 1) == board.state.length
+      print "\n\n"
+    elsif (index + 1) % board.number_of_rows == 0
+      print_line(board.number_of_rows)
+    else
+      print_divider
+    end
+  end
+
+  def print_line(size)
+    number_of_dividers = (size * 5) - 2
+    print "\n" + ("=" * number_of_dividers) + "\n"
+  end
+
+  def print_divider
+    print " | "
+  end
 end

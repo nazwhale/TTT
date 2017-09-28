@@ -1,20 +1,21 @@
 class Board
 
-  EMPTY_BOARD = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+  EMPTY_SQUARE = nil
   CORNERS = [0, 2, 6, 8]
-  attr_reader :state
+  attr_reader :state, :number_of_rows
   attr_writer :state
 
-  def initialize
-    @state = EMPTY_BOARD
+  def initialize(number_of_rows)
+    @number_of_rows = number_of_rows
+    @state = Array.new(@number_of_rows * @number_of_rows)
   end
 
   def occupied?(index)
-    index.to_s != @state[index.to_i]
+    @state[index.to_i] != EMPTY_SQUARE
   end
 
   def empty?
-    @state.none? { |square| occupied?(@state.index(square)) }
+    @state.all? { |square| square == EMPTY_SQUARE } 
   end
 
   def game_over?(player1, player2)
@@ -22,11 +23,11 @@ class Board
   end
 
   def tie?(player1, player2)
-    anyone_won?(player1, player2) ? false : board_full?
+    board_full? && !anyone_won?(player1, player2)
   end
 
   def win?(player)
-    win_scenarios.any? { |line| line.count(player.symbol) == 3 }
+    win_scenarios.any? { |line| line.count(player.symbol) == root_board_size }
   end
 
   def get_corners
@@ -35,27 +36,32 @@ class Board
 
   private
 
+  def board_size
+    @state.length
+  end
+
+  def root_board_size
+    Math.sqrt(board_size)
+  end
+
   def win_scenarios
-    rows + columns + diagonals
+    rows + columns + left_diagonal + right_diagonal
   end
 
   def rows
-    [
-      [@state[0], @state[1], @state[2]],
-      [@state[3], @state[4], @state[5]],
-      [@state[6], @state[7], @state[8]]
-    ]
+    @state.each_slice(root_board_size).to_a
   end
 
   def columns
     rows.transpose
   end
 
-  def diagonals
-    [
-      [@state[0], @state[4], @state[8]],
-      [@state[2], @state[4], @state[6]]
-    ]
+  def left_diagonal
+    [rows.collect.with_index { |row, index| row[index] }]
+  end
+
+  def right_diagonal
+    [rows.collect.with_index { |row, index| row.reverse[index] }]
   end
 
   def anyone_won?(player1, player2)
@@ -63,6 +69,6 @@ class Board
   end
 
   def board_full?
-    @state.all? { |square| occupied?(@state.index(square)) }
+    @state.none? { |square| square == EMPTY_SQUARE } 
   end
 end

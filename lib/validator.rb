@@ -1,10 +1,10 @@
 class Validator
 
   def symbol_invalid?(ui, choice, opponent_symbol)
-    if not_single_character(choice)
+    if not_single_character?(choice)
       ui.wrong_symbol_length
       true
-    elsif choice == opponent_symbol
+    elsif same_as_opponent?(choice, opponent_symbol)
       ui.symbol_must_be_original
       true
     elsif is_an_integer?(choice)
@@ -16,7 +16,7 @@ class Validator
   end
 
   def move_invalid?(ui, board, move)
-    if board.occupied?(move) || not_single_character(move)
+    if board.occupied?(move) || not_in_range?(board, move) || empty_string?(move)
       ui.invalid_choice_message
       true
     end
@@ -28,8 +28,19 @@ class Validator
     choice == "0" || choice.to_i != 0
   end
 
-  def not_single_character(string)
+  def not_single_character?(string)
     string.length != 1
   end
+  
+  def same_as_opponent?(choice, opponent_symbol)
+    choice == opponent_symbol
+  end
 
+  def not_in_range?(board, move)
+    move.to_i >= board.state.length
+  end
+
+  def empty_string?(move)
+    move == ""
+  end
 end

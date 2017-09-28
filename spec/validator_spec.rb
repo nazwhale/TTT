@@ -43,22 +43,26 @@ describe Validator do
       allow(ui).to receive(:invalid_choice_message)
     end
 
-    it 'returns false if valid' do
-      board = double('board')
-      allow(board).to receive(:occupied?).and_return(false)
-      expect(validator.move_invalid?(ui, board, "1")).to be_falsy
+    context 'valid' do
+      it 'returns false if valid' do
+        board = double("board", :state => [nil, "X", nil, "O", "X", "O", nil, nil, nil])
+        allow(board).to receive(:occupied?).and_return(false)
+        expect(validator.move_invalid?(ui, board, "1")).to be_falsy
+      end
     end
 
-    it 'rejects an empty string' do
-      board = double('board')
-      allow(board).to receive(:occupied?).and_return(false)
-      expect(validator.move_invalid?(ui, board, "")).to eq true
-    end
+    context 'invalid' do
+      it 'rejects an empty string' do
+        board = double("board", :state => [nil, "X", nil, "O", "X", "O", nil, nil, nil])
+        allow(board).to receive(:occupied?).and_return(false)
+        expect(validator.move_invalid?(ui, board, "")).to eq true
+      end
 
-    it 'rejects an occupied square' do
-      board = double('board')
-      allow(board).to receive(:occupied?).and_return(true)
-      expect(validator.move_invalid?(ui, board, "0")).to eq true
+      it 'rejects an occupied square' do
+        board = double("board", :state => [nil, "X", nil, "O", "X", "O", nil, nil, nil])
+        allow(board).to receive(:occupied?).and_return(true)
+        expect(validator.move_invalid?(ui, board, "0")).to eq true
+      end
     end
   end
 end
