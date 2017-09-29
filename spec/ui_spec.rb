@@ -56,19 +56,9 @@ describe UI do
     expect{ ui.choose_player2_symbol }.to output(message).to_stdout
   end
 
-  it 'wrong symbol length message' do
-    message = "Symbol must be 1 character long! Please try again.\n"
-    expect{ ui.wrong_symbol_length }.to output(message).to_stdout
-  end
-
-  it 'symbol must be original message' do
-    message = "Choose a different symbol to player 1!\n"
-    expect{ ui.symbol_must_be_original }.to output(message).to_stdout
-  end
-
-  it 'symbol_cant_be_integer' do
-    message = "Symbol cannot be an integer! Please try again.\n"
-    expect{ ui.symbol_cant_be_integer }.to output(message).to_stdout
+  it 'invalid_symbol_message' do
+    message = "\nSymbol invalid! Please try again...\nRemember, your choice must be 1 character long, and cannot be an integer or taken by another player!\n"
+    expect{ ui.invalid_symbol_message }.to output(message).to_stdout
   end
 
   it 'choose_board_size' do
