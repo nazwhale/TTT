@@ -17,6 +17,7 @@ describe GameMaker do
       allow(ui).to receive(:welcome)
       allow(ui).to receive(:choose_player1_symbol)
       allow(ui).to receive(:choose_player2_symbol)
+      allow(ui).to receive(:choice_confirmation)
       allow(ui).to receive(:ready_to_play)
       allow(ui).to receive(:game_type_confirmation)
       allow(ui).to receive(:print_board)
@@ -210,9 +211,7 @@ describe GameMaker do
   describe '#get_symbol' do
     before do
       allow(ui).to receive(:choose_player1_symbol)
-      allow(ui).to receive(:choice_confirmation)
       allow(ui).to receive(:invalid_symbol_message)
-      allow(ui).to receive(:choice_confirmation)
       game_maker.instance_variable_set(:@validator, validator)
     end
 

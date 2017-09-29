@@ -15,7 +15,9 @@ class GameMaker
     @ui.welcome
 
     player1_symbol = get_symbol(1, nil)
+    @ui.choice_confirmation(player1_symbol)
     player2_symbol = get_symbol(2, player1_symbol)
+    @ui.choice_confirmation(player2_symbol)
 
     choose_game_type(player1_symbol, player2_symbol, choose_board_size)
     game_type_confirmation
@@ -44,11 +46,7 @@ class GameMaker
   def get_human_move(board)
     loop do
       move = gets.chomp
-      if @validator.move_invalid?(board, move)
-        @ui.invalid_choice_message
-      else
-        return move.to_i
-      end
+      @validator.move_invalid?(board, move) ? @ui.invalid_choice_message : (return move.to_i)
     end
   end
 
@@ -56,12 +54,7 @@ class GameMaker
     player == 1 ? @ui.choose_player1_symbol : @ui.choose_player2_symbol
     loop do
       choice = gets.chomp
-      if @validator.symbol_invalid?(choice, opponent_symbol)
-        @ui.invalid_symbol_message
-      else
-        @ui.choice_confirmation(choice)
-        return choice
-      end
+      @validator.symbol_invalid?(choice, opponent_symbol) ? @ui.invalid_symbol_message : (return choice)
     end
   end
 
