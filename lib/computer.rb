@@ -65,11 +65,6 @@ class Computer
     board.state[square] = nil
   end
 
-  def make_random_move(squares)
-    random_index = rand(squares.count - 1)
-    squares[random_index]
-  end
-
   def get_empty_squares(board)
     empty_squares = []
     board.state.each_with_index do |square, index|
