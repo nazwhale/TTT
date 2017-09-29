@@ -34,27 +34,27 @@ describe Computer do
 
       it 'seizes the win' do
         player_1_game.board.state = [nil, "X", nil, "O", "X", "O", nil, nil, nil]
-        expect(computer_x.get_best_move(player_1_game)).to eq 7
+        expect(computer_x.get_best_move(player_1_game, computer_x)).to eq 7
       end
 
       it 'prevents a loss', :focus => true do
         player_1_game.board.state = ["X", nil, nil, "O", "O", nil, nil, nil, "X"]
-        expect(computer_x.get_best_move(player_1_game)).to eq 5
+        expect(computer_x.get_best_move(player_1_game, computer_x)).to eq 5
       end
 
       it 'seizes the win, even when within one move of losing' do
         player_1_game.board.state = ["X", "X", nil, nil, "O", "O", nil, nil, nil]
-        expect(computer_x.get_best_move(player_1_game)).to eq 2
+        expect(computer_x.get_best_move(player_1_game, computer_x)).to eq 2
       end
 
       it 'makes a random move if no win or loss is in sight' do
         player_1_game.board.state = ["X", "O", "O", "O", "X", "X", nil, nil, "O"]
-        expect(computer_x.get_best_move(player_1_game)).to eq(6).or(eq(7))
+        expect(computer_x.get_best_move(player_1_game, computer_x)).to eq(6).or(eq(7))
       end
 
       it 'chooses to win rather than block - player 1' do
         player_1_game.board.state = ["X",nil,"X",nil,nil,nil,"O",nil,"O"]
-        expect(computer_x.get_best_move(player_1_game)).to eq 1
+        expect(computer_x.get_best_move(player_1_game, computer_x)).to eq 1
       end
     end
 
@@ -65,17 +65,17 @@ describe Computer do
 
       it 'chooses to win rather than block - player 2'do
         player_2_game.board.state = ["X",nil,"X","X",nil,nil,"O",nil,"O"]
-        expect(computer_o.get_best_move(player_2_game)).to eq 7
+        expect(computer_o.get_best_move(player_2_game, computer_o)).to eq 7
       end
 
       it 'siezes the win - player 2' do
         player_2_game.board.state = ["X",nil,nil,"X","O",nil,"O",nil,nil]
-        expect(computer_o.get_best_move(player_2_game)).to eq 2
+        expect(computer_o.get_best_move(player_2_game, computer_o)).to eq 2
       end
 
       it "blocks a win - player 2" do
         player_2_game.board.state = [nil,nil,nil,"O",nil,nil,"X","X",nil]
-        expect(computer_o.get_best_move(player_2_game)).to eq 8
+        expect(computer_o.get_best_move(player_2_game, computer_o)).to eq 8
       end
     end
   end

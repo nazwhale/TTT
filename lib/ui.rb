@@ -59,7 +59,7 @@ class UI
   end
 
   def prompt_game_type
-    puts "What kind of game would you like to play?\n" +
+    puts "\nWhat kind of game would you like to play?\n" +
          "Select 1 for 😌  vs. 😌 \n" +
          "Select 2 for 😌  vs. 🤖 \n" +
          "Select 3 for 🤖  vs. 🤖 \n" 

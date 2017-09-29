@@ -77,7 +77,7 @@ describe UI do
   end
 
   it 'prompts choice of game type' do
-    message = "What kind of game would you like to play?\nSelect 1 for 😌  vs. 😌 \nSelect 2 for 😌  vs. 🤖 \nSelect 3 for 🤖  vs. 🤖 \nYour choice: "
+    message = "\nWhat kind of game would you like to play?\nSelect 1 for 😌  vs. 😌 \nSelect 2 for 😌  vs. 🤖 \nSelect 3 for 🤖  vs. 🤖 \nYour choice: "
     expect{ ui.prompt_game_type }.to output(message).to_stdout
   end
 

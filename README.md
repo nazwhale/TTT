@@ -45,7 +45,7 @@ Following that, I noticed that my algorithm was taking a very long time to calcu
 
 After some feedback, I extracted UI and Validator objects and set upon implementing a 4x4 board. To achieve this I realised I needed to compute everything within my Board object. Additionally, I modified my `print_board` method in UI to take in the size of the board when printing the current state of the board.
 
-Once this was achieved, I found that the Computer player took an extremely long time to choose a move on a 4x4 board (in fact, I had to quit the program before it did). After doing some research, I found the Negamax algorithm, and used [alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) to stop analysing routes that are worse than one already found. In addition to this, I also found that limiting the depth of the algorithm to 6 made no difference to the invincibility of the Computer, and speeded things up even further.
+Once this was achieved, I found that the Computer player took an extremely long time to choose a move on a 4x4 board (in fact, I had to quit the program before it did). After doing some research ([this video](https://www.youtube.com/watch?v=STjW3eH0Cik) and [this article](https://medium.com/@pelensky/ruby-tic-tac-toe-negamax-with-alpha-beta-pruning-c1126172fb5a) were both fantastic), I found the Negamax algorithm, and used [alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) to stop analysing routes that are worse than one already found. In addition to this, I also found that limiting the depth of the algorithm to 6 made no difference to the invincibility of the Computer, and speeded things up even further.
 
 ### User Stories
 
