@@ -41,17 +41,10 @@ class UI
   def choose_player2_symbol
     puts "What symbol will player 2 use?"
   end
-
-  def wrong_symbol_length
-    puts "Symbol must be 1 character long! Please try again."
-  end
-
-  def symbol_must_be_original
-    puts "Choose a different symbol to player 1!"
-  end
-
-  def symbol_cant_be_integer
-    puts "Symbol cannot be an integer! Please try again."
+  
+  def invalid_symbol_message
+    puts "\nSymbol invalid! Please try again..."
+    puts "Remember, your choice must be 1 character long, and cannot be an integer or taken by another player!"
   end
 
   def choose_board_size
@@ -59,7 +52,7 @@ class UI
   end
 
   def prompt_game_type
-    puts "What kind of game would you like to play?\n" +
+    puts "\nWhat kind of game would you like to play?\n" +
          "Select 1 for 😌  vs. 😌 \n" +
          "Select 2 for 😌  vs. 🤖 \n" +
          "Select 3 for 🤖  vs. 🤖 \n" 

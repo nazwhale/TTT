@@ -1,25 +1,16 @@
 class Validator
 
-  def symbol_invalid?(ui, choice, opponent_symbol)
-    if not_single_character?(choice)
-      ui.wrong_symbol_length
-      true
-    elsif same_as_opponent?(choice, opponent_symbol)
-      ui.symbol_must_be_original
-      true
-    elsif is_an_integer?(choice)
-      ui.symbol_cant_be_integer
-      true
-    else
-      ui.choice_confirmation(choice)
-    end
+  def symbol_invalid?(choice, opponent_symbol)
+    not_single_character?(choice)              ||
+    same_as_opponent?(choice, opponent_symbol) ||
+    is_an_integer?(choice)
   end
 
-  def move_invalid?(ui, board, move)
-    if board.occupied?(move) || not_in_range?(board, move) || empty_string?(move)
-      ui.invalid_choice_message
-      true
-    end
+  def move_invalid?(board, move)
+    board.occupied?(move)      || 
+    not_in_board?(board, move) || 
+    empty_string?(move)        || 
+    !is_an_integer?(move)
   end
 
   private
@@ -36,7 +27,7 @@ class Validator
     choice == opponent_symbol
   end
 
-  def not_in_range?(board, move)
+  def not_in_board?(board, move)
     move.to_i >= board.state.length
   end
 

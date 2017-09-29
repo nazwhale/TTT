@@ -17,6 +17,7 @@ describe GameMaker do
       allow(ui).to receive(:welcome)
       allow(ui).to receive(:choose_player1_symbol)
       allow(ui).to receive(:choose_player2_symbol)
+      allow(ui).to receive(:choice_confirmation)
       allow(ui).to receive(:ready_to_play)
       allow(ui).to receive(:game_type_confirmation)
       allow(ui).to receive(:print_board)
@@ -186,6 +187,10 @@ describe GameMaker do
   end
 
   describe '#get_human_move' do
+    before do
+      allow(ui).to receive(:invalid_choice_message)
+    end
+
     it 'accepts a valid move' do
       allow(game_maker).to receive(:gets).and_return('1')
       allow(validator).to receive(:move_invalid?).and_return(false)
@@ -206,7 +211,7 @@ describe GameMaker do
   describe '#get_symbol' do
     before do
       allow(ui).to receive(:choose_player1_symbol)
-      allow(ui).to receive(:choose_player2_symbol)
+      allow(ui).to receive(:invalid_symbol_message)
       game_maker.instance_variable_set(:@validator, validator)
     end
 

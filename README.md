@@ -43,6 +43,10 @@ After a **lot** of struggling, I eventually had something that worked. The break
 
 Following that, I noticed that my algorithm was taking a very long time to calculate the first move on an empty board, but was arriving at the same conclusion every time. I did a bit of research and found a [delicious xkcd drawing](https://xkcd.com/832/), showing that the corners give the first player the best winning possibilities. After test-driving this, I had an unbeatable (and slightly more efficient) AI for Tic-Tac-Toe!
 
+After some feedback, I extracted UI and Validator objects and set upon implementing a 4x4 board. To achieve this I realised I needed to compute everything within my Board object. Additionally, I modified my `print_board` method in UI to take in the size of the board when printing the current state of the board.
+
+Once this was achieved, I found that the Computer player took an extremely long time to choose a move on a 4x4 board (in fact, I had to quit the program before it did). After doing some research ([this video](https://www.youtube.com/watch?v=STjW3eH0Cik) and [this article](https://medium.com/@pelensky/ruby-tic-tac-toe-negamax-with-alpha-beta-pruning-c1126172fb5a) were both fantastic), I found the Negamax algorithm, and used [alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) to stop analysing routes that are worse than one already found. In addition to this, I also found that limiting the depth of the algorithm to 6 made no difference to the invincibility of the Computer, and speeded things up even further.
+
 ### User Stories
 
 ```
@@ -77,6 +81,10 @@ I would like the them to be able to choose who goes first.
 As a project manager,
 To give the game a personal touch,
 I would like the players to be able to choose the symbol with which they mark their selections on the board.
+
+As a project manager,
+So that I can play different kinds of games,
+I would like to be able to choose to play on a 4x4 board
 ```
 
 ### Example Game
@@ -86,3 +94,7 @@ I would like the players to be able to choose the symbol with which they mark th
 A few moves later...
 
 ![Screenshot](https://i.imgur.com/JADDlwN.png)
+
+And for a 4x4 game...
+
+![Screenshot](https://i.imgur.com/0qyP4pm.png)
